@@ -1,0 +1,1 @@
+enum Selected { ten, fifteen, twenty, twentyFive, thirty }
