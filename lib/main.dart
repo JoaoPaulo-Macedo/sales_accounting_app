@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lucky_triangle/app_decoration.dart';
+import 'package:lucky_triangle/widgets/app_card_info.dart';
 
 import 'enum.dart';
 
@@ -34,6 +35,11 @@ class _MyHomePageState extends State<MyHomePage> {
   TextEditingController missingController = TextEditingController();
   TextEditingController moneyPaidController = TextEditingController();
   TextEditingController depositsController = TextEditingController();
+  final FocusNode saleFocus = FocusNode();
+  final FocusNode devoluctionFocus = FocusNode();
+  final FocusNode missingFocus = FocusNode();
+  final FocusNode moneyFocus = FocusNode();
+  final FocusNode depositFocus = FocusNode();
   Size size;
   Selected selected = Selected.ten;
   double debt = 0;
@@ -63,17 +69,38 @@ class _MyHomePageState extends State<MyHomePage> {
             child: Column(
               children: [
                 priceCard('Preço da Cartela'),
-                textCard(
-                  title: 'Cartelas Vendidas',
-                  prefixIcon: Icons.add_chart,
-                  controller: soldController,
-                  topMargin: 10,
+                Row(
+                  children: [
+                    Expanded(
+                      child: textCard(
+                        title: 'Venda',
+                        prefixIcon: Icons.add_chart,
+                        controller: soldController,
+                        topMargin: 10,
+                        focus: saleFocus,
+                        cardInfo: AppCardInfo(
+
+                        ),
+                      ),
+                    ),
+                    SizedBox(width: 10),
+                    Expanded(
+                      child: textCard(
+                        title: 'Devolução',
+                        prefixIcon: Icons.add_chart,
+                        controller: soldController,
+                        topMargin: 10,
+                        focus: devoluctionFocus,
+                      ),
+                    ),
+                  ],
                 ),
                 textCard(
                   title: 'Cartelas em Falta',
                   prefixIcon: Icons.zoom_out_rounded,
                   controller: missingController,
                   topMargin: 10,
+                  focus: missingFocus,
                 ),
                 textCard(
                   title: 'Adiantamento',
@@ -81,6 +108,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   controller: moneyPaidController,
                   formatAsMoney: true,
                   topMargin: 10,
+                  focus: moneyFocus,
                 ),
                 textCard(
                   title: 'Depósitos',
@@ -88,6 +116,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   controller: depositsController,
                   formatAsMoney: true,
                   topMargin: 10,
+                  focus: depositFocus,
                 ),
                 /*Row(
                   children: [
@@ -143,45 +172,56 @@ class _MyHomePageState extends State<MyHomePage> {
     double rightMargin = 0,
     double fontSize = 20,
     double iconSize = 33,
-    Widget suffixWidget,
     Widget prefixWidget,
+    FocusNode focus,
+    AppCardInfo cardInfo,
   }) {
-    return Container(
-      margin:
-          EdgeInsets.fromLTRB(leftMargin, topMargin, rightMargin, bottomMargin),
-      decoration: AppDecoration.appTextBoxDecoration,
-      child: Padding(
-        padding: const EdgeInsets.fromLTRB(15, 5, 15, 5),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Expanded(
-              child: TextField(
-                controller: controller,
-                keyboardType: TextInputType.number,
-                decoration: InputDecoration(
-                  border: InputBorder.none,
-                  labelText: title,
-                  labelStyle: TextStyle(
-                    fontSize: fontSize,
-                    color: Colors.grey[700],
-                    fontWeight: FontWeight.bold,
+    return GestureDetector(
+      child: Container(
+        margin: EdgeInsets.fromLTRB(
+          leftMargin,
+          topMargin,
+          rightMargin,
+          bottomMargin,
+        ),
+        decoration: AppDecoration.appTextBoxDecoration,
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(15, 5, 15, 5),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Expanded(
+                child: TextField(
+                  controller: controller,
+                  keyboardType: TextInputType.number,
+                  focusNode: focus,
+                  decoration: InputDecoration(
+                    border: InputBorder.none,
+                    labelText: title,
+                    labelStyle: TextStyle(
+                      fontSize: fontSize,
+                      color: Colors.grey[700],
+                      fontWeight: FontWeight.bold,
+                    ),
+                    prefixIcon: Icon(
+                      prefixIcon,
+                      color: Colors.red[800],
+                      size: iconSize,
+                    ),
                   ),
-                  prefixIcon: Icon(
-                    prefixIcon,
-                    color: Colors.red[800],
-                    size: iconSize,
-                  ),
-                  suffixIcon: suffixWidget,
+                  cursorColor: Colors.black,
+                  onChanged: (_) => calculate(),
+                  onSubmitted: (_) => calculate(),
                 ),
-                cursorColor: Colors.black,
-                onChanged: (_) => calculate(),
-                onSubmitted: (_) => calculate(),
               ),
-            ),
-          ],
+              cardInfo != null ? SizedBox(width: 10,) : Container(),
+              cardInfo != null ? cardInfo : Container(),
+            ],
+          ),
         ),
       ),
+      onTap: () => focus.requestFocus(),
     );
   }
 
@@ -196,10 +236,10 @@ class _MyHomePageState extends State<MyHomePage> {
         margin: EdgeInsets.only(left: leftMargin, right: rightMargin),
         decoration: BoxDecoration(
           color: selection == selected
-              ? Colors.red[900]
+              ? Colors.white
               : Colors.blueGrey[50].withOpacity(0.35),
           borderRadius: BorderRadius.circular(100),
-          boxShadow: selection == selected ? AppDecoration.appShadow : null,
+          boxShadow: selection == selected ? AppDecoration.priceShadow : null,
         ),
         child: ClipRRect(
           borderRadius: BorderRadius.circular(100),
@@ -211,8 +251,8 @@ class _MyHomePageState extends State<MyHomePage> {
             child: Text(
               '${price.toString()},00',
               style: TextStyle(
-                fontSize: 17,
-                color: selection == selected ? Colors.white : Colors.grey[800],
+                fontSize: selection == selected ? 19 : 17,
+                color: selection == selected ? Colors.red[900] : Colors.grey[800],
               ),
             ),
             onPressed: () {

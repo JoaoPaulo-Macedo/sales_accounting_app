@@ -10,6 +10,15 @@ class AppDecoration {
     )
   ];
 
+  static List<BoxShadow> priceShadow = [
+    BoxShadow(
+      color: Colors.grey.withOpacity(0.4),
+      spreadRadius: 0,
+      blurRadius: 5,
+      offset: Offset(4, 4),
+    )
+  ];
+
   static BoxDecoration appTextBoxDecoration = BoxDecoration(
     color: Colors.white,
     borderRadius: BorderRadius.circular(5),
