@@ -30,19 +30,30 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  TextEditingController holdCardsController = TextEditingController();
   TextEditingController soldController = TextEditingController();
+  TextEditingController devolutionController = TextEditingController();
   TextEditingController price = TextEditingController();
-  TextEditingController missingController = TextEditingController();
   TextEditingController moneyPaidController = TextEditingController();
   TextEditingController depositsController = TextEditingController();
+  TextEditingController taxController = TextEditingController();
+  TextEditingController allowanceController = TextEditingController();
   final FocusNode saleFocus = FocusNode();
-  final FocusNode devoluctionFocus = FocusNode();
+  final FocusNode devolutionFocus = FocusNode();
   final FocusNode missingFocus = FocusNode();
   final FocusNode moneyFocus = FocusNode();
   final FocusNode depositFocus = FocusNode();
   Size size;
   Selected selected = Selected.ten;
   double debt = 0;
+
+  @override
+  void initState() {
+    super.initState();
+
+    taxController.text = '11%';
+    allowanceController.text = '200';
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -69,38 +80,35 @@ class _MyHomePageState extends State<MyHomePage> {
             child: Column(
               children: [
                 priceCard('Preço da Cartela'),
-                Row(
-                  children: [
-                    Expanded(
-                      child: textCard(
-                        title: 'Venda',
-                        prefixIcon: Icons.add_chart,
-                        controller: soldController,
-                        topMargin: 10,
-                        focus: saleFocus,
-                        cardInfo: AppCardInfo(
-
-                        ),
-                      ),
-                    ),
-                    SizedBox(width: 10),
-                    Expanded(
-                      child: textCard(
-                        title: 'Devolução',
-                        prefixIcon: Icons.add_chart,
-                        controller: soldController,
-                        topMargin: 10,
-                        focus: devoluctionFocus,
-                      ),
-                    ),
-                  ],
+                textCard(
+                    title: 'Total de Cartelas',
+                    prefixIcon: Icons.zoom_out_rounded,
+                    controller: holdCardsController,
+                    topMargin: 10,
+                    focus: missingFocus,
+                    cardInfo: AppCardInfo(
+                      text:
+                          'Informe o total de cartelas pegas para a distribuição.',
+                    )),
+                textCard(
+                  title: 'Venda',
+                  prefixIcon: Icons.add_chart,
+                  controller: soldController,
+                  topMargin: 10,
+                  focus: saleFocus,
+                  cardInfo: AppCardInfo(
+                    text: 'Informe o total de cartelas vendidas.',
+                  ),
                 ),
                 textCard(
-                  title: 'Cartelas em Falta',
-                  prefixIcon: Icons.zoom_out_rounded,
-                  controller: missingController,
+                  title: 'Devolução',
+                  prefixIcon: Icons.add_chart,
+                  controller: devolutionController,
                   topMargin: 10,
-                  focus: missingFocus,
+                  focus: devolutionFocus,
+                  cardInfo: AppCardInfo(
+                    text: 'Informe o total de cartelas devolvidas.',
+                  ),
                 ),
                 textCard(
                   title: 'Adiantamento',
@@ -109,6 +117,9 @@ class _MyHomePageState extends State<MyHomePage> {
                   formatAsMoney: true,
                   topMargin: 10,
                   focus: moneyFocus,
+                  cardInfo: AppCardInfo(
+                    text: 'Informe os adiantamentos em dinheiro.',
+                  ),
                 ),
                 textCard(
                   title: 'Depósitos',
@@ -117,46 +128,60 @@ class _MyHomePageState extends State<MyHomePage> {
                   formatAsMoney: true,
                   topMargin: 10,
                   focus: depositFocus,
+                  cardInfo: AppCardInfo(
+                    text: 'Informe os depósitos.',
+                  ),
                 ),
-                /*Row(
+                Row(
                   children: [
                     Expanded(
                       child: textCard(
                         title: 'Imposto',
                         prefixIcon: Icons.post_add_rounded,
-                        controller: depositsController,
+                        controller: taxController,
                         formatAsMoney: true,
                         topMargin: 10,
                         rightMargin: 10,
-                        fontSize: 15,
-                        suffixWidget: IconButton(
-                          icon: Icon(Icons.add_circle_outline_rounded),
-                          onPressed: () => print('===================='),
-                        ),
+                        readOnly: true,
+                        function: () {
+                          print('SOOOOU');
+                          setState(() {});
+                          showDialog(
+                            context: context,
+                            builder: (_) => AlertDialog(
+                              content: Text('SOOOOOU'),
+                            ),
+                          );
+                        },
                       ),
                     ),
                     Expanded(
                       child: textCard(
                         title: 'Ajuda de Custo',
                         prefixIcon: Icons.post_add_rounded,
-                        controller: depositsController,
+                        controller: allowanceController,
                         formatAsMoney: true,
                         topMargin: 10,
-                        fontSize: 13,
+                        readOnly: true,
+                        function: () {
+                          print('SOOOOU');
+                          setState(() {});
+                          showDialog(
+                            context: context,
+                            builder: (_) => AlertDialog(
+                              content: Text('SOOOOOU'),
+                            ),
+                          );
+                        },
                       ),
                     ),
                   ],
-                ),*/
+                ),
                 debtField(debt),
               ],
             ),
           ),
         ),
-        /*floatingActionButton: MediaQuery.of(context).viewInsets.bottom > 0 
-          ? Container() 
-          : AppButton('Calcular'),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      */
       ),
     );
   }
@@ -164,7 +189,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget textCard({
     @required String title,
     @required TextEditingController controller,
-    IconData prefixIcon,
+    bool readOnly = false,
     bool formatAsMoney = false,
     double topMargin = 0,
     double bottomMargin = 0,
@@ -173,8 +198,10 @@ class _MyHomePageState extends State<MyHomePage> {
     double fontSize = 20,
     double iconSize = 33,
     Widget prefixWidget,
+    IconData prefixIcon,
     FocusNode focus,
     AppCardInfo cardInfo,
+    var function,
   }) {
     return GestureDetector(
       child: Container(
@@ -193,6 +220,7 @@ class _MyHomePageState extends State<MyHomePage> {
             children: [
               Expanded(
                 child: TextField(
+                  readOnly: readOnly,
                   controller: controller,
                   keyboardType: TextInputType.number,
                   focusNode: focus,
@@ -213,15 +241,20 @@ class _MyHomePageState extends State<MyHomePage> {
                   cursorColor: Colors.black,
                   onChanged: (_) => calculate(),
                   onSubmitted: (_) => calculate(),
+                  onTap: function == null
+                      ? () {
+                          print('FUDEEEU');
+                        }
+                      : function,
                 ),
               ),
-              cardInfo != null ? SizedBox(width: 10,) : Container(),
+              cardInfo != null ? SizedBox(width: 10) : Container(),
               cardInfo != null ? cardInfo : Container(),
             ],
           ),
         ),
       ),
-      onTap: () => focus.requestFocus(),
+      onTap: function ?? () => focus.requestFocus(),
     );
   }
 
@@ -252,7 +285,8 @@ class _MyHomePageState extends State<MyHomePage> {
               '${price.toString()},00',
               style: TextStyle(
                 fontSize: selection == selected ? 19 : 17,
-                color: selection == selected ? Colors.red[900] : Colors.grey[800],
+                color:
+                    selection == selected ? Colors.red[900] : Colors.grey[800],
               ),
             ),
             onPressed: () {
@@ -306,7 +340,7 @@ class _MyHomePageState extends State<MyHomePage> {
     //if (debt < 0) debt = debt.abs();
 
     return Container(
-      margin: EdgeInsets.fromLTRB(35, 30, 35, 0),
+      margin: EdgeInsets.fromLTRB(35, 20, 35, 0),
       padding: EdgeInsets.fromLTRB(17, 10, 17, 10),
       decoration: AppDecoration.appDebtBoxDecoration,
       child: Row(
@@ -356,23 +390,27 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void calculate() {
+    String holdText = holdCardsController.text.trim();
     String soldText = soldController.text.trim();
 
-    if (soldText == '') {
+    if (holdText == '' || soldText == '') {
       debt = 0;
       return;
     }
 
     double price;
     double taxRate = 0.11;
-    double missing = 0;
+    double devolution = 0;
     double paid = 0;
     double deposits = 0;
     double allowance = 200;
-    double sold = double.parse(soldText);
+    double holdCards = double.parse(holdText);
+    double soldCards = double.parse(soldText);
 
-    if ((missingController.text.trim()) != '')
-      missing = double.parse(missingController.text.trim());
+    if ((devolutionController.text.trim()) != '')
+      devolution = double.parse(devolutionController.text.trim());
+    else
+      devolution = holdCards - soldCards;
 
     if ((moneyPaidController.text.trim()) != '')
       paid = double.parse(moneyPaidController.text.trim());
@@ -386,14 +424,14 @@ class _MyHomePageState extends State<MyHomePage> {
     if (selected == Selected.twentyFive) price = 25;
     if (selected == Selected.thirty) price = 30;
 
-    double grossDebt = sold * (price * 0.82);
+    double grossDebt = soldCards * (price * 0.82);
     double earnRate = price * 0.08;
-    double taxDebt = (sold * earnRate) * taxRate;
-    double missingDebt = missing * price;
+    double taxDebt = (soldCards * earnRate) * taxRate;
+    double missing = holdCards - soldCards - devolution;
+    double missingDebt = missing >= 0 ? missing * price : 0;
 
     debt = grossDebt + missingDebt + taxDebt - paid - deposits - allowance;
 
     setState(() {});
-    //ToDo: if none is selected, ask to select.
   }
 }

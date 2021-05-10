@@ -12,7 +12,7 @@ class AppDecoration {
 
   static List<BoxShadow> priceShadow = [
     BoxShadow(
-      color: Colors.grey.withOpacity(0.4),
+      color: Colors.grey.withOpacity(0.3),
       spreadRadius: 0,
       blurRadius: 5,
       offset: Offset(4, 4),
