@@ -1,6 +1,6 @@
 # Simple App for my Business' Finance
 
-A new Flutter project.
+A Flutter project made for financial calculations.
 
 ## Getting Started
 
