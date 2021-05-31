@@ -1,4 +1,4 @@
-# lucky_triangle
+# Simple App for my Business' Finance
 
 A new Flutter project.
 
