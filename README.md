@@ -4,6 +4,8 @@ A Flutter project made for financial calculations.
 
 ## Getting Started
 
+That's all about finances.
+
 This project is a starting point for a Flutter application.
 
 A few resources to get you started if this is your first Flutter project:
