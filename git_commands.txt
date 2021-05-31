@@ -1,0 +1,49 @@
+GIT Commands:
+
+Basic:
+
+-git init
+-git status
+-git add .
+-git commit -m "commit name"
+-git log --oneline
+-git shortlog
+-q > to exit git log
+======================================================
+Configurations:
+
+-git config --global user.email <...>
+-git config --global user.name <...>
+-git config --list
+The global is for your whole local git. If not global,
+changes apply only to repository's git.
+======================================================
+Deleting Commits:
+
+-git reset HEAD~1
+-git push
+-git push -f = to force a push to remote repository/to origin. Disable two factor authentication
+======================================================
+Remote Repository:
+
+Create a repository in GitHube web.
+-git remote add origin <repository url>
+-git push -u origin master
+-git push
+//git push --set-upstream origin master//this not
+-git pull
+======================================================
+Branch:
+
+-git branch = lists the branchs
+-git branch <new branch name> = create a new branch
+-git checkout <branch name> = switch branchs
+-git push -u origin <branch name> = push the branch
+
+Go to the branch you want to be updated and command:
+-git merge <the branch to come>
+======================================================
+HEAD is where you are.
+master, dev, etc, are local branches.
+origin/master, origin/dev are remote branches.
+======================================================
