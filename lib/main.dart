@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:lucky_triangle/app_decoration.dart';
+import 'package:lucky_triangle/app_designs.dart';
 import 'package:lucky_triangle/widgets/app_card_info.dart';
 
 import 'enum.dart';
@@ -35,14 +35,14 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  final double spacing = 8;
+  final double fontSize = 18;
+  final double iconSize = 33;
   final FocusNode saleFocus = FocusNode();
   final FocusNode devolutionFocus = FocusNode();
   final FocusNode missingFocus = FocusNode();
   final FocusNode moneyFocus = FocusNode();
   final FocusNode depositFocus = FocusNode();
-  final double spacing = 8;
-  final double fontSize = 18;
-  final double iconSize = 33;
 
   AppColors get appColors => AppColors.of(context);
   AppDecoration get appDecorations => AppDecoration.of(context);
@@ -137,6 +137,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       children: [
                         Expanded(
                           child: _textFieldCard(
+                            focus: null,
                             title: 'Imposto',
                             prefixIcon: Icons.post_add_rounded,
                             controller: taxController,
@@ -157,6 +158,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         SizedBox(width: spacing),
                         Expanded(
                           child: _textFieldCard(
+                            focus: null,
                             title: 'Ajuda de Custo',
                             prefixIcon: Icons.post_add_rounded,
                             controller: allowanceController,
@@ -250,7 +252,7 @@ class _MyHomePageState extends State<MyHomePage> {
     Widget _price(int price, Selected selection) {
       return Container(
         decoration: BoxDecoration(
-          color: selection == selected ? Colors.white : appColors.disabledColor,
+          color: selection == selected ? appColors.priceCardColor : appColors.disabledColor,
           borderRadius: BorderRadius.circular(100),
           boxShadow: selection == selected ? appDecorations.priceShadow : null,
         ),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../app_decoration.dart';
+import '../app_designs.dart';
 import '../enum.dart';
 
 class PriceCard extends StatefulWidget {
