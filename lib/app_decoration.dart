@@ -48,6 +48,8 @@ class AppColors {
   final BuildContext context;
 
   factory AppColors.of(BuildContext context) => AppColors._(context);
-  
+
+  Color get greyColor => Colors.grey[700];
+  Color get disabledColor => Colors.grey[100];
   Color get secondaryColor => Colors.red[900];
 }
