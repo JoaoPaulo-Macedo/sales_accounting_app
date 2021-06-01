@@ -38,7 +38,9 @@ Branch:
 -git branch = lists the branchs
 -git branch <new branch name> = create a new branch
 -git checkout <branch name> = switch branchs
--git push -u origin <branch name> = push the branch
+-git push -u origin <branch name> = push the 
+-git branch -d <branch name> = delete branch
+-git push origin --delete <branch name> = delete remote branch
 
 Go to the branch you want to be updated and command:
 -git merge <the branch to come>
