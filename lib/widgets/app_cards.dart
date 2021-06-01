@@ -21,8 +21,10 @@ class _PriceCardState extends State<PriceCard> {
 
   @override
   Widget build(BuildContext context) {
+    final decoration = AppDecoration.of(context);
+
     return Container(
-      decoration: AppDecoration.appPriceBoxDecoration,
+      decoration: decoration.appPriceBoxDecoration,
       child: Padding(
         padding: const EdgeInsets.all(10),
         child: Column(

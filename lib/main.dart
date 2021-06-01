@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:lucky_triangle/app_decoration.dart';
 import 'package:lucky_triangle/widgets/app_card_info.dart';
 
@@ -36,6 +37,7 @@ class _MyHomePageState extends State<MyHomePage> {
   final FocusNode moneyFocus = FocusNode();
   final FocusNode depositFocus = FocusNode();
   final double fontSize = 18;
+  final double spacing = 8;
 
   double debt = 0;
   Selected selected = Selected.ten;
@@ -58,119 +60,122 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final topMargin = 8.0;
+    final appColor = AppColors.of(context);
 
     return GestureDetector(
       onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
-      child: Scaffold(
-        backgroundColor: Colors.blueGrey[35],
-        body: SafeArea(
-          child: SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.all(10),
-              child: Column(
-                children: [
-                  _priceCard('Preço da Cartela'),
-                  _textCard(
-                    title: 'Total de Cartelas',
-                    prefixIcon: Icons.zoom_out_rounded,
-                    controller: holdCardsController,
-                    topMargin: topMargin,
-                    focus: missingFocus,
-                    cardInfo: AppCardInfo(
-                      text:
-                          'Informe o total de cartelas pegas para a distribuição.',
-                    ),
-                  ),
-                  _textCard(
-                    title: 'Venda',
-                    prefixIcon: Icons.add_chart,
-                    controller: soldController,
-                    topMargin: topMargin,
-                    focus: saleFocus,
-                    cardInfo: AppCardInfo(
-                      text: 'Informe o total de cartelas vendidas.',
-                    ),
-                  ),
-                  _textCard(
-                    title: 'Devolução',
-                    prefixIcon: Icons.add_chart,
-                    controller: devolutionController,
-                    topMargin: topMargin,
-                    focus: devolutionFocus,
-                    cardInfo: AppCardInfo(
-                      text: 'Informe o total de cartelas devolvidas.',
-                    ),
-                  ),
-                  _textCard(
-                    title: 'Adiantamento',
-                    prefixIcon: Icons.attach_money_rounded,
-                    controller: moneyPaidController,
-                    formatAsMoney: true,
-                    topMargin: topMargin,
-                    focus: moneyFocus,
-                    cardInfo: AppCardInfo(
-                      text: 'Informe os adiantamentos em dinheiro.',
-                    ),
-                  ),
-                  _textCard(
-                    title: 'Depósitos',
-                    prefixIcon: Icons.post_add_rounded,
-                    controller: depositsController,
-                    formatAsMoney: true,
-                    topMargin: topMargin,
-                    focus: depositFocus,
-                    cardInfo: AppCardInfo(
-                      text: 'Informe os depósitos.',
-                    ),
-                  ),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: _textCard(
-                          title: 'Imposto',
-                          prefixIcon: Icons.post_add_rounded,
-                          controller: taxController,
-                          formatAsMoney: true,
-                          topMargin: topMargin,
-                          rightMargin: 10,
-                          readOnly: true,
-                          function: () {
-                            print('SOOOOU');
-                            setState(() {});
-                            showDialog(
-                              context: context,
-                              builder: (_) => AlertDialog(
-                                content: Text('SOOOOOU'),
-                              ),
-                            );
-                          },
-                        ),
+      child: AnnotatedRegion<SystemUiOverlayStyle>(
+        value: SystemUiOverlayStyle(statusBarColor: appColor.secondaryColor),
+        child: Scaffold(
+          body: SafeArea(
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.all(10),
+                child: Column(
+                  children: [
+                    _priceCard('Preço da Cartela'),
+                    SizedBox(height: spacing),
+                    _textFieldCard(
+                      title: 'Total de Cartelas',
+                      prefixIcon: Icons.zoom_out_rounded,
+                      controller: holdCardsController,
+                      focus: missingFocus,
+                      cardInfo: AppCardInfo(
+                        text:
+                            'Informe o total de cartelas pegas para a distribuição.',
                       ),
-                      Expanded(
-                        child: _textCard(
-                          title: 'Ajuda de Custo',
-                          prefixIcon: Icons.post_add_rounded,
-                          controller: allowanceController,
-                          formatAsMoney: true,
-                          topMargin: topMargin,
-                          readOnly: true,
-                          function: () {
-                            print('SOOOOU');
-                            setState(() {});
-                            showDialog(
-                              context: context,
-                              builder: (_) => AlertDialog(
-                                content: Text('SOOOOOU'),
-                              ),
-                            );
-                          },
-                        ),
+                    ),
+                    SizedBox(height: spacing),
+                    _textFieldCard(
+                      title: 'Venda',
+                      prefixIcon: Icons.add_chart,
+                      controller: soldController,
+                      focus: saleFocus,
+                      cardInfo: AppCardInfo(
+                        text: 'Informe o total de cartelas vendidas.',
                       ),
-                    ],
-                  ),
-                  debtField(debt),
-                ],
+                    ),
+                    SizedBox(height: spacing),
+                    _textFieldCard(
+                      title: 'Devolução',
+                      prefixIcon: Icons.add_chart,
+                      controller: devolutionController,
+                      focus: devolutionFocus,
+                      cardInfo: AppCardInfo(
+                        text: 'Informe o total de cartelas devolvidas.',
+                      ),
+                    ),
+                    SizedBox(height: spacing),
+                    _textFieldCard(
+                      title: 'Adiantamento',
+                      prefixIcon: Icons.attach_money_rounded,
+                      controller: moneyPaidController,
+                      formatAsMoney: true,
+                      focus: moneyFocus,
+                      cardInfo: AppCardInfo(
+                        text: 'Informe os adiantamentos em dinheiro.',
+                      ),
+                    ),
+                    SizedBox(height: spacing),
+                    _textFieldCard(
+                      title: 'Depósitos',
+                      prefixIcon: Icons.post_add_rounded,
+                      controller: depositsController,
+                      formatAsMoney: true,
+                      focus: depositFocus,
+                      cardInfo: AppCardInfo(
+                        text: 'Informe os depósitos.',
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(top: spacing),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: _textFieldCard(
+                              title: 'Imposto',
+                              prefixIcon: Icons.post_add_rounded,
+                              controller: taxController,
+                              formatAsMoney: true,
+                              readOnly: true,
+                              function: () {
+                                print('SOOOOU');
+                                setState(() {});
+                                showDialog(
+                                  context: context,
+                                  builder: (_) => AlertDialog(
+                                    content: Text('SOOOOOU'),
+                                  ),
+                                );
+                              },
+                            ),
+                          ),
+                          SizedBox(width: spacing),
+                          Expanded(
+                            child: _textFieldCard(
+                              title: 'Ajuda de Custo',
+                              prefixIcon: Icons.post_add_rounded,
+                              controller: allowanceController,
+                              formatAsMoney: true,
+                              readOnly: true,
+                              function: () {
+                                print('SOOOOU');
+                                setState(() {});
+                                showDialog(
+                                  context: context,
+                                  builder: (_) => AlertDialog(
+                                    content: Text('SOOOOOU'),
+                                  ),
+                                );
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    debtField(debt),
+                  ],
+                ),
               ),
             ),
           ),
@@ -179,15 +184,11 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  Widget _textCard({
+  Widget _textFieldCard({
     @required String title,
     @required TextEditingController controller,
     bool readOnly = false,
     bool formatAsMoney = false,
-    double topMargin = 0,
-    double bottomMargin = 0,
-    double leftMargin = 0,
-    double rightMargin = 0,
     double fontSize = 20,
     double iconSize = 33,
     Widget prefixWidget,
@@ -198,12 +199,6 @@ class _MyHomePageState extends State<MyHomePage> {
   }) {
     return GestureDetector(
       child: Container(
-        margin: EdgeInsets.fromLTRB(
-          leftMargin,
-          topMargin,
-          rightMargin,
-          bottomMargin,
-        ),
         decoration: AppDecoration.of(context).appTextBoxDecoration,
         child: Padding(
           padding: const EdgeInsets.fromLTRB(15, 5, 15, 5),
@@ -252,13 +247,14 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Widget _priceCard(String title) {
-    Widget _price(int price, Selected selection, {bool hasMargin = true}) {
+    final decoration = AppDecoration.of(context);
+
+    Widget _price(int price, Selected selection) {
       return Container(
-        margin: EdgeInsets.only(left: hasMargin ? 2.5 : 0),
         decoration: BoxDecoration(
           color: selection == selected ? Colors.white : Colors.grey[100],
           borderRadius: BorderRadius.circular(100),
-          boxShadow: selection == selected ? AppDecoration.priceShadow : null,
+          boxShadow: selection == selected ? decoration.priceShadow : null,
         ),
         child: ClipRRect(
           borderRadius: BorderRadius.circular(100),
@@ -266,11 +262,12 @@ class _MyHomePageState extends State<MyHomePage> {
             style: ButtonStyle(
               padding: MaterialStateProperty.all(EdgeInsets.zero),
               minimumSize: MaterialStateProperty.all(Size(55, 55)),
+              overlayColor: MaterialStateProperty.all(Colors.transparent),
             ),
             child: Text(
               '${price.toString()},00',
               style: TextStyle(
-                fontSize: selection == selected ? 19 : 17,
+                fontSize: selection == selected ? 19 : 16,
                 color:
                     selection == selected ? Colors.red[900] : Colors.grey[800],
               ),
@@ -289,23 +286,21 @@ class _MyHomePageState extends State<MyHomePage> {
     }
 
     return Container(
-      decoration: AppDecoration.appPriceBoxDecoration,
+      decoration: decoration.appPriceBoxDecoration,
       child: Padding(
         padding: const EdgeInsets.all(10),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Padding(
-              padding: const EdgeInsets.only(bottom: 10),
-              child: Text(
-                title,
-                style: TextStyle(
-                  fontSize: fontSize,
-                  color: Colors.grey[700],
-                  fontWeight: FontWeight.bold,
-                ),
+            Text(
+              title,
+              style: TextStyle(
+                fontSize: fontSize,
+                color: Colors.grey[700],
+                fontWeight: FontWeight.bold,
               ),
             ),
+            SizedBox(height: spacing),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
@@ -313,7 +308,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 _price(15, Selected.fifteen),
                 _price(20, Selected.twenty),
                 _price(25, Selected.twentyFive),
-                _price(30, Selected.thirty, hasMargin: false),
+                _price(30, Selected.thirty),
               ],
             ),
           ],
@@ -323,13 +318,14 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Widget debtField(double debt) {
+    final decoration = AppDecoration.of(context);
     String text = debt >= 0 ? 'Pagar:' : 'Receber:';
     //if (debt < 0) debt = debt.abs();
 
     return Container(
       margin: EdgeInsets.fromLTRB(35, 20, 35, 0),
       padding: EdgeInsets.fromLTRB(17, 10, 17, 10),
-      decoration: AppDecoration.appDebtBoxDecoration,
+      decoration: decoration.appDebtBoxDecoration,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
