@@ -1,7 +1,14 @@
 import 'package:flutter/material.dart';
 
 class AppDecoration {
-  static List<BoxShadow> appShadow = [
+  AppDecoration._(this.context);
+  final BuildContext context;
+
+  factory AppDecoration.of(BuildContext context) {
+    return AppDecoration._(context);
+  }
+
+  List<BoxShadow> get appShadow => [
     BoxShadow(
       color: Colors.grey.withOpacity(0.2),
       spreadRadius: 0,
@@ -10,28 +17,28 @@ class AppDecoration {
     )
   ];
 
-  static List<BoxShadow> priceShadow = [
+  List<BoxShadow> get priceShadow => [
     BoxShadow(
-      color: Colors.grey.withOpacity(0.3),
+      color: Colors.grey.withOpacity(0.2),
       spreadRadius: 0,
       blurRadius: 5,
-      offset: Offset(4, 4),
+      offset: Offset(0, 0),
     )
   ];
 
-  static BoxDecoration appTextBoxDecoration = BoxDecoration(
+  BoxDecoration get appTextBoxDecoration => BoxDecoration(
     color: Colors.white,
     borderRadius: BorderRadius.circular(5),
     boxShadow: appShadow,
   );
 
-  static BoxDecoration appPriceBoxDecoration = BoxDecoration(
+  BoxDecoration get appPriceBoxDecoration => BoxDecoration(
     color: Colors.white,
     borderRadius: BorderRadius.circular(5),
     boxShadow: appShadow,
   );
 
-  static BoxDecoration appDebtBoxDecoration = BoxDecoration(
+  BoxDecoration get appDebtBoxDecoration => BoxDecoration(
     color: Colors.white,
     borderRadius: BorderRadius.circular(100),
     boxShadow: appShadow,

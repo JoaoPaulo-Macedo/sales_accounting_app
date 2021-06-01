@@ -30,6 +30,15 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  final FocusNode saleFocus = FocusNode();
+  final FocusNode devolutionFocus = FocusNode();
+  final FocusNode missingFocus = FocusNode();
+  final FocusNode moneyFocus = FocusNode();
+  final FocusNode depositFocus = FocusNode();
+  final double fontSize = 18;
+
+  double debt = 0;
+  Selected selected = Selected.ten;
   TextEditingController holdCardsController = TextEditingController();
   TextEditingController soldController = TextEditingController();
   TextEditingController devolutionController = TextEditingController();
@@ -38,14 +47,6 @@ class _MyHomePageState extends State<MyHomePage> {
   TextEditingController depositsController = TextEditingController();
   TextEditingController taxController = TextEditingController();
   TextEditingController allowanceController = TextEditingController();
-  final FocusNode saleFocus = FocusNode();
-  final FocusNode devolutionFocus = FocusNode();
-  final FocusNode missingFocus = FocusNode();
-  final FocusNode moneyFocus = FocusNode();
-  final FocusNode depositFocus = FocusNode();
-  Size size;
-  Selected selected = Selected.ten;
-  double debt = 0;
 
   @override
   void initState() {
@@ -57,128 +58,120 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    size = MediaQuery.of(context).size;
+    final topMargin = 8.0;
 
     return GestureDetector(
       onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
       child: Scaffold(
         backgroundColor: Colors.blueGrey[35],
-        appBar: AppBar(
-            backgroundColor: Colors.white,
-            title: Text(
-              widget.title,
-              style: TextStyle(
-                color: Colors.black,
-                fontSize: 18,
-                fontFamily: 'VarelaRound',
-              ),
-            ),
-            centerTitle: true),
-        body: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(10),
-            child: Column(
-              children: [
-                priceCard('Preço da Cartela'),
-                textCard(
+        body: SafeArea(
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.all(10),
+              child: Column(
+                children: [
+                  _priceCard('Preço da Cartela'),
+                  _textCard(
                     title: 'Total de Cartelas',
                     prefixIcon: Icons.zoom_out_rounded,
                     controller: holdCardsController,
-                    topMargin: 10,
+                    topMargin: topMargin,
                     focus: missingFocus,
                     cardInfo: AppCardInfo(
                       text:
                           'Informe o total de cartelas pegas para a distribuição.',
-                    )),
-                textCard(
-                  title: 'Venda',
-                  prefixIcon: Icons.add_chart,
-                  controller: soldController,
-                  topMargin: 10,
-                  focus: saleFocus,
-                  cardInfo: AppCardInfo(
-                    text: 'Informe o total de cartelas vendidas.',
-                  ),
-                ),
-                textCard(
-                  title: 'Devolução',
-                  prefixIcon: Icons.add_chart,
-                  controller: devolutionController,
-                  topMargin: 10,
-                  focus: devolutionFocus,
-                  cardInfo: AppCardInfo(
-                    text: 'Informe o total de cartelas devolvidas.',
-                  ),
-                ),
-                textCard(
-                  title: 'Adiantamento',
-                  prefixIcon: Icons.attach_money_rounded,
-                  controller: moneyPaidController,
-                  formatAsMoney: true,
-                  topMargin: 10,
-                  focus: moneyFocus,
-                  cardInfo: AppCardInfo(
-                    text: 'Informe os adiantamentos em dinheiro.',
-                  ),
-                ),
-                textCard(
-                  title: 'Depósitos',
-                  prefixIcon: Icons.post_add_rounded,
-                  controller: depositsController,
-                  formatAsMoney: true,
-                  topMargin: 10,
-                  focus: depositFocus,
-                  cardInfo: AppCardInfo(
-                    text: 'Informe os depósitos.',
-                  ),
-                ),
-                Row(
-                  children: [
-                    Expanded(
-                      child: textCard(
-                        title: 'Imposto',
-                        prefixIcon: Icons.post_add_rounded,
-                        controller: taxController,
-                        formatAsMoney: true,
-                        topMargin: 10,
-                        rightMargin: 10,
-                        readOnly: true,
-                        function: () {
-                          print('SOOOOU');
-                          setState(() {});
-                          showDialog(
-                            context: context,
-                            builder: (_) => AlertDialog(
-                              content: Text('SOOOOOU'),
-                            ),
-                          );
-                        },
-                      ),
                     ),
-                    Expanded(
-                      child: textCard(
-                        title: 'Ajuda de Custo',
-                        prefixIcon: Icons.post_add_rounded,
-                        controller: allowanceController,
-                        formatAsMoney: true,
-                        topMargin: 10,
-                        readOnly: true,
-                        function: () {
-                          print('SOOOOU');
-                          setState(() {});
-                          showDialog(
-                            context: context,
-                            builder: (_) => AlertDialog(
-                              content: Text('SOOOOOU'),
-                            ),
-                          );
-                        },
-                      ),
+                  ),
+                  _textCard(
+                    title: 'Venda',
+                    prefixIcon: Icons.add_chart,
+                    controller: soldController,
+                    topMargin: topMargin,
+                    focus: saleFocus,
+                    cardInfo: AppCardInfo(
+                      text: 'Informe o total de cartelas vendidas.',
                     ),
-                  ],
-                ),
-                debtField(debt),
-              ],
+                  ),
+                  _textCard(
+                    title: 'Devolução',
+                    prefixIcon: Icons.add_chart,
+                    controller: devolutionController,
+                    topMargin: topMargin,
+                    focus: devolutionFocus,
+                    cardInfo: AppCardInfo(
+                      text: 'Informe o total de cartelas devolvidas.',
+                    ),
+                  ),
+                  _textCard(
+                    title: 'Adiantamento',
+                    prefixIcon: Icons.attach_money_rounded,
+                    controller: moneyPaidController,
+                    formatAsMoney: true,
+                    topMargin: topMargin,
+                    focus: moneyFocus,
+                    cardInfo: AppCardInfo(
+                      text: 'Informe os adiantamentos em dinheiro.',
+                    ),
+                  ),
+                  _textCard(
+                    title: 'Depósitos',
+                    prefixIcon: Icons.post_add_rounded,
+                    controller: depositsController,
+                    formatAsMoney: true,
+                    topMargin: topMargin,
+                    focus: depositFocus,
+                    cardInfo: AppCardInfo(
+                      text: 'Informe os depósitos.',
+                    ),
+                  ),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: _textCard(
+                          title: 'Imposto',
+                          prefixIcon: Icons.post_add_rounded,
+                          controller: taxController,
+                          formatAsMoney: true,
+                          topMargin: topMargin,
+                          rightMargin: 10,
+                          readOnly: true,
+                          function: () {
+                            print('SOOOOU');
+                            setState(() {});
+                            showDialog(
+                              context: context,
+                              builder: (_) => AlertDialog(
+                                content: Text('SOOOOOU'),
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                      Expanded(
+                        child: _textCard(
+                          title: 'Ajuda de Custo',
+                          prefixIcon: Icons.post_add_rounded,
+                          controller: allowanceController,
+                          formatAsMoney: true,
+                          topMargin: topMargin,
+                          readOnly: true,
+                          function: () {
+                            print('SOOOOU');
+                            setState(() {});
+                            showDialog(
+                              context: context,
+                              builder: (_) => AlertDialog(
+                                content: Text('SOOOOOU'),
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                  debtField(debt),
+                ],
+              ),
             ),
           ),
         ),
@@ -186,7 +179,7 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  Widget textCard({
+  Widget _textCard({
     @required String title,
     @required TextEditingController controller,
     bool readOnly = false,
@@ -211,7 +204,7 @@ class _MyHomePageState extends State<MyHomePage> {
           rightMargin,
           bottomMargin,
         ),
-        decoration: AppDecoration.appTextBoxDecoration,
+        decoration: AppDecoration.of(context).appTextBoxDecoration,
         child: Padding(
           padding: const EdgeInsets.fromLTRB(15, 5, 15, 5),
           child: Row(
@@ -258,19 +251,12 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  Widget priceCard(String title) {
-    Widget price(
-      int price,
-      Selected selection, {
-      double leftMargin = 0,
-      double rightMargin = 0,
-    }) {
+  Widget _priceCard(String title) {
+    Widget _price(int price, Selected selection, {bool hasMargin = true}) {
       return Container(
-        margin: EdgeInsets.only(left: leftMargin, right: rightMargin),
+        margin: EdgeInsets.only(left: hasMargin ? 2.5 : 0),
         decoration: BoxDecoration(
-          color: selection == selected
-              ? Colors.white
-              : Colors.blueGrey[50].withOpacity(0.35),
+          color: selection == selected ? Colors.white : Colors.grey[100],
           borderRadius: BorderRadius.circular(100),
           boxShadow: selection == selected ? AppDecoration.priceShadow : null,
         ),
@@ -290,11 +276,12 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             ),
             onPressed: () {
-              if (selected == selection)
-                FocusScope.of(context).requestFocus(FocusNode());
-              selected = selection;
-              calculate();
-              setState(() {});
+              setState(() {
+                if (selected == selection)
+                  FocusScope.of(context).requestFocus(FocusNode());
+                selected = selection;
+                calculate();
+              });
             },
           ),
         ),
@@ -313,7 +300,7 @@ class _MyHomePageState extends State<MyHomePage> {
               child: Text(
                 title,
                 style: TextStyle(
-                  fontSize: 20,
+                  fontSize: fontSize,
                   color: Colors.grey[700],
                   fontWeight: FontWeight.bold,
                 ),
@@ -322,11 +309,11 @@ class _MyHomePageState extends State<MyHomePage> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                price(10, Selected.ten, leftMargin: 2.5),
-                price(15, Selected.fifteen, leftMargin: 2.5),
-                price(20, Selected.twenty, leftMargin: 2.5),
-                price(25, Selected.twentyFive, leftMargin: 2.5),
-                price(30, Selected.thirty),
+                _price(10, Selected.ten),
+                _price(15, Selected.fifteen),
+                _price(20, Selected.twenty),
+                _price(25, Selected.twentyFive),
+                _price(30, Selected.thirty, hasMargin: false),
               ],
             ),
           ],
