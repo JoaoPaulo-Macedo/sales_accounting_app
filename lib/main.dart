@@ -16,9 +16,10 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: ThemeData(brightness: Brightness.light, primaryColor: Colors.grey),
       darkTheme: ThemeData(
-          brightness: Brightness.dark,
-          primaryColor: Colors.amber,
-          scaffoldBackgroundColor: Colors.black),
+        brightness: Brightness.dark,
+        primaryColor: Colors.amber,
+        scaffoldBackgroundColor: Colors.black,
+      ),
       home: MyHomePage(title: 'ACERTO DE VENDAS'),
       debugShowCheckedModeBanner: false,
     );
@@ -68,119 +69,123 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    print('${MediaQuery.of(context).padding.top}!!!!!!!!');
+
     return GestureDetector(
       onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
-      child: Scaffold(
-        body: SafeArea(
-          child: SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.all(10),
-              child: Column(
-                children: [
-                  _priceCard('Preço da Cartela'),
-                  SizedBox(height: spacing),
-                  _textFieldCard(
-                    title: 'Total de Cartelas',
-                    prefixIcon: Icons.zoom_out_rounded,
-                    controller: holdCardsController,
-                    focus: missingFocus,
-                    cardInfo: AppCardInfo(
-                      text:
-                          'Informe o total de cartelas pegas para a distribuição.',
+      child: AnnotatedRegion<SystemUiOverlayStyle>(
+        value: SystemUiOverlayStyle(statusBarColor: Colors.black),
+        child: Scaffold(
+          body: SafeArea(
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.all(10),
+                child: Column(
+                  children: [
+                    _priceCard('Preço da Cartela'),
+                    SizedBox(height: spacing),
+                    _textFieldCard(
+                      title: 'Total de Cartelas',
+                      prefixIcon: Icons.zoom_out_rounded,
+                      controller: holdCardsController,
+                      focus: missingFocus,
+                      cardInfo: AppCardInfo(
+                        text:
+                            'Informe o total de cartelas pegas para a distribuição.',
+                      ),
                     ),
-                  ),
-                  SizedBox(height: spacing),
-                  _textFieldCard(
-                    title: 'Venda',
-                    prefixIcon: Icons.add_chart,
-                    controller: soldController,
-                    focus: saleFocus,
-                    cardInfo: AppCardInfo(
-                      text: 'Informe o total de cartelas vendidas.'
+                    SizedBox(height: spacing),
+                    _textFieldCard(
+                      title: 'Venda',
+                      prefixIcon: Icons.add_chart,
+                      controller: soldController,
+                      focus: saleFocus,
+                      cardInfo: AppCardInfo(
+                          text: 'Informe o total de cartelas vendidas.'),
                     ),
-                  ),
-                  SizedBox(height: spacing),
-                  _textFieldCard(
-                    title: 'Devolução',
-                    prefixIcon: Icons.add_chart,
-                    controller: devolutionController,
-                    focus: devolutionFocus,
-                    cardInfo: AppCardInfo(
-                      text: 'Informe o total de cartelas devolvidas.',
+                    SizedBox(height: spacing),
+                    _textFieldCard(
+                      title: 'Devolução',
+                      prefixIcon: Icons.add_chart,
+                      controller: devolutionController,
+                      focus: devolutionFocus,
+                      cardInfo: AppCardInfo(
+                        text: 'Informe o total de cartelas devolvidas.',
+                      ),
                     ),
-                  ),
-                  SizedBox(height: spacing),
-                  _textFieldCard(
-                    title: 'Adiantamento',
-                    prefixIcon: Icons.attach_money_rounded,
-                    controller: moneyPaidController,
-                    formatAsMoney: true,
-                    focus: moneyFocus,
-                    cardInfo: AppCardInfo(
-                      text: 'Informe os adiantamentos em dinheiro.',
+                    SizedBox(height: spacing),
+                    _textFieldCard(
+                      title: 'Adiantamento',
+                      prefixIcon: Icons.attach_money_rounded,
+                      controller: moneyPaidController,
+                      formatAsMoney: true,
+                      focus: moneyFocus,
+                      cardInfo: AppCardInfo(
+                        text: 'Informe os adiantamentos em dinheiro.',
+                      ),
                     ),
-                  ),
-                  SizedBox(height: spacing),
-                  _textFieldCard(
-                    title: 'Depósitos',
-                    prefixIcon: Icons.post_add_rounded,
-                    controller: depositsController,
-                    formatAsMoney: true,
-                    focus: depositFocus,
-                    cardInfo: AppCardInfo(
-                      text: 'Informe os depósitos.',
+                    SizedBox(height: spacing),
+                    _textFieldCard(
+                      title: 'Depósitos',
+                      prefixIcon: Icons.post_add_rounded,
+                      controller: depositsController,
+                      formatAsMoney: true,
+                      focus: depositFocus,
+                      cardInfo: AppCardInfo(
+                        text: 'Informe os depósitos.',
+                      ),
                     ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(top: spacing),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: _textFieldCard(
-                            focus: null,
-                            title: 'Imposto',
-                            prefixIcon: Icons.post_add_rounded,
-                            controller: taxController,
-                            formatAsMoney: true,
-                            readOnly: true,
-                            function: () {
-                              print('SOOOOU');
-                              setState(() {});
-                              showDialog(
-                                context: context,
-                                builder: (_) => AlertDialog(
-                                  content: Text('SOOOOOU'),
-                                ),
-                              );
-                            },
+                    Padding(
+                      padding: EdgeInsets.only(top: spacing),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: _textFieldCard(
+                              focus: null,
+                              title: 'Imposto',
+                              prefixIcon: Icons.post_add_rounded,
+                              controller: taxController,
+                              formatAsMoney: true,
+                              readOnly: true,
+                              function: () {
+                                print('SOOOOU');
+                                setState(() {});
+                                showDialog(
+                                  context: context,
+                                  builder: (_) => AlertDialog(
+                                    content: Text('SOOOOOU'),
+                                  ),
+                                );
+                              },
+                            ),
                           ),
-                        ),
-                        SizedBox(width: spacing),
-                        Expanded(
-                          child: _textFieldCard(
-                            focus: null,
-                            title: 'Ajuda de Custo',
-                            prefixIcon: Icons.post_add_rounded,
-                            controller: allowanceController,
-                            formatAsMoney: true,
-                            readOnly: true,
-                            function: () {
-                              print('SOOOOU');
-                              setState(() {});
-                              showDialog(
-                                context: context,
-                                builder: (_) => AlertDialog(
-                                  content: Text('SOOOOOU'),
-                                ),
-                              );
-                            },
+                          SizedBox(width: spacing),
+                          Expanded(
+                            child: _textFieldCard(
+                              focus: null,
+                              title: 'Ajuda de Custo',
+                              prefixIcon: Icons.post_add_rounded,
+                              controller: allowanceController,
+                              formatAsMoney: true,
+                              readOnly: true,
+                              function: () {
+                                print('SOOOOU');
+                                setState(() {});
+                                showDialog(
+                                  context: context,
+                                  builder: (_) => AlertDialog(
+                                    content: Text('SOOOOOU'),
+                                  ),
+                                );
+                              },
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                  ),
-                  debtField(debt),
-                ],
+                    debtField(debt),
+                  ],
+                ),
               ),
             ),
           ),
@@ -252,7 +257,9 @@ class _MyHomePageState extends State<MyHomePage> {
     Widget _price(int price, Selected selection) {
       return Container(
         decoration: BoxDecoration(
-          color: selection == selected ? appColors.priceCardColor : appColors.disabledColor,
+          color: selection == selected
+              ? appColors.priceCardColor
+              : appColors.disabledColor,
           borderRadius: BorderRadius.circular(100),
           boxShadow: selection == selected ? appDecorations.priceShadow : null,
         ),

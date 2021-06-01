@@ -58,9 +58,9 @@ class AppColors {
   bool get isDarkMode =>
       MediaQuery.of(context).platformBrightness == Brightness.dark;
 
-  Color get priceCardColor => isDarkMode ? Colors.black45 : Colors.white;
+  Color get priceCardColor => isDarkMode ? Color.fromARGB(255, 51, 48, 54) : Colors.white;
   Color get greyColor => isDarkMode ? Colors.grey[300] : Colors.grey[700];
   Color get secondaryColor => isDarkMode ? Colors.red : Colors.red[900];
   Color get cardColor => isDarkMode ? Color.fromARGB(255, 43, 40, 46) : Colors.white;
-  Color get disabledColor => isDarkMode ? Color.fromARGB(255, 53, 50, 56) : Colors.grey[100];
+  Color get disabledColor => isDarkMode ? Color.fromARGB(255, 48, 45, 51) : Colors.grey[100];
 }
