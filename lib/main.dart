@@ -39,11 +39,13 @@ class _MyHomePageState extends State<MyHomePage> {
   final double spacing = 8;
   final double fontSize = 18;
   final double iconSize = 25;
+  final double cardHeight = 68;
   final FocusNode saleFocus = FocusNode();
   final FocusNode devolutionFocus = FocusNode();
   final FocusNode missingFocus = FocusNode();
   final FocusNode moneyFocus = FocusNode();
   final FocusNode depositFocus = FocusNode();
+  final EdgeInsets cardPadding = const EdgeInsets.fromLTRB(5, 5, 0, 5);
 
   AppColors get appColors => AppColors.of(context);
   AppDecoration get appDecorations => AppDecoration.of(context);
@@ -126,7 +128,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             controller: devolutionController,
                             focus: devolutionFocus,
                             cardInfo: AppInfoIcon(
-                              text: 'Informe o total de cartelas devolvidas.',
+                              text: 'Informe o total de cartelas em falta.',
                             ),
                           ),
                         ),
@@ -158,15 +160,11 @@ class _MyHomePageState extends State<MyHomePage> {
                     Row(
                       children: [
                         Expanded(
-                          child: _textFieldCard(
-                            focus: null,
+                          child: _appCard(
                             title: 'Imposto',
                             prefixIcon: Icons.post_add_rounded,
                             controller: taxController,
-                            formatAsMoney: true,
-                            readOnly: true,
                             function: () {
-                              print('SOOOOU');
                               setState(() {});
                               showDialog(
                                 context: context,
@@ -179,15 +177,11 @@ class _MyHomePageState extends State<MyHomePage> {
                         ),
                         SizedBox(width: spacing),
                         Expanded(
-                          child: _textFieldCard(
-                            focus: null,
+                          child: _appCard(
                             title: 'Ajuda de Custo',
                             prefixIcon: Icons.post_add_rounded,
                             controller: allowanceController,
-                            formatAsMoney: true,
-                            readOnly: true,
                             function: () {
-                              print('SOOOOU');
                               setState(() {});
                               showDialog(
                                 context: context,
@@ -202,7 +196,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                     SizedBox(height: spacing),
                     _priceCard('Preço da Cartela'),
-                    debtField(debt),
+                    debtCard(debt),
                   ],
                 ),
               ),
@@ -215,21 +209,19 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Widget _textFieldCard({
     @required String title,
-    @required TextEditingController controller,
     @required FocusNode focus,
-    bool readOnly = false, //remove
-    bool formatAsMoney = false,
+    @required IconData prefixIcon,
+    @required AppInfoIcon cardInfo,
+    @required TextEditingController controller,
     double fieldFontSize,
-    IconData prefixIcon,
-    AppInfoIcon cardInfo, //remove
-    var function, //remove
+    bool formatAsMoney = false,
   }) {
-    
     return GestureDetector(
       child: Container(
+        height: cardHeight,
         decoration: AppDecoration.of(context).appTextBoxDecoration,
         child: Padding(
-          padding: const EdgeInsets.fromLTRB(5, 5, 0, 5),
+          padding: cardPadding,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -242,7 +234,6 @@ class _MyHomePageState extends State<MyHomePage> {
               SizedBox(width: 5),
               Expanded(
                 child: TextField(
-                  readOnly: readOnly,
                   controller: controller,
                   keyboardType: TextInputType.number,
                   focusNode: focus,
@@ -258,20 +249,15 @@ class _MyHomePageState extends State<MyHomePage> {
                   cursorColor: Colors.black,
                   onChanged: (_) => calculate(),
                   onSubmitted: (_) => calculate(),
-                  onTap: function == null
-                      ? () {
-                          print('FUDEEEU');
-                        }
-                      : function,
                 ),
               ),
-              cardInfo != null ? SizedBox(width: 10) : Container(),
-              cardInfo != null ? cardInfo : Container(),
+              SizedBox(width: 10),
+              cardInfo,
             ],
           ),
         ),
       ),
-      onTap: function ?? () => focus.requestFocus(),
+      onTap: () => focus.requestFocus(),
     );
   }
 
@@ -347,7 +333,7 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  Widget debtField(double debt) {
+  Widget debtCard(double debt) {
     String text = debt >= 0 ? 'Pagar:' : 'Receber:';
     //if (debt < 0) debt = debt.abs();
 
@@ -380,26 +366,57 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  // Widget _appButton(String title) {
-  //   return ElevatedButton(
-  //     child: Text(
-  //       title,
-  //       style: TextStyle(
-  //         fontSize: 25,
-  //         fontWeight: FontWeight.w400,
-  //       ),
-  //     ),
-  //     style: ElevatedButton.styleFrom(
-  //       primary: appColors.redColor,
-  //       minimumSize: Size(MediaQuery.of(context).size.width - 40, 50),
-  //       elevation: 7,
-  //       shape: RoundedRectangleBorder(
-  //         borderRadius: BorderRadius.circular(30.0),
-  //       ),
-  //     ),
-  //     onPressed: calculate,
-  //   );
-  // }
+  Widget _appCard({
+    @required String title,
+    @required TextEditingController controller,
+    @required IconData prefixIcon,
+    AppInfoIcon cardInfo,
+    double fieldFontSize,
+    var function,
+  }) {
+    return GestureDetector(
+      child: Container(
+        height: cardHeight,
+        decoration: AppDecoration.of(context).appTextBoxDecoration,
+        child: Padding(
+          padding: cardPadding,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Icon(
+                prefixIcon,
+                color: appColors.redColor,
+                size: iconSize,
+              ),
+              SizedBox(width: 5),
+              Expanded(
+                child: TextField(
+                  readOnly: true,
+                  controller: controller,
+                  keyboardType: TextInputType.number,
+                  decoration: InputDecoration(
+                    border: InputBorder.none,
+                    labelText: title,
+                    labelStyle: TextStyle(
+                      fontSize: fieldFontSize ?? fontSize,
+                      color: appColors.greyColor,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  cursorColor: Colors.black,
+                  onChanged: (_) => calculate(),
+                  onSubmitted: (_) => calculate(),
+                ),
+              ),
+              // SizedBox(width: 10),
+              // cardInfo,
+            ],
+          ),
+        ),
+      ),
+    );
+  }
 
   void calculate() {
     String holdText = holdCardsController.text.trim();
