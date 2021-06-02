@@ -38,7 +38,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   final double spacing = 8;
   final double fontSize = 18;
-  final double iconSize = 33;
+  final double iconSize = 25;
   final FocusNode saleFocus = FocusNode();
   final FocusNode devolutionFocus = FocusNode();
   final FocusNode missingFocus = FocusNode();
@@ -103,14 +103,34 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                     ),
                     SizedBox(height: spacing),
-                    _textFieldCard(
-                      title: 'Devolução',
-                      prefixIcon: Icons.add_chart,
-                      controller: devolutionController,
-                      focus: devolutionFocus,
-                      cardInfo: AppInfoIcon(
-                        text: 'Informe o total de cartelas devolvidas.',
-                      ),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: _textFieldCard(
+                            title: 'Devolução',
+                            fieldFontSize: 15,
+                            prefixIcon: Icons.add_chart,
+                            controller: devolutionController,
+                            focus: devolutionFocus,
+                            cardInfo: AppInfoIcon(
+                              text: 'Informe o total de cartelas devolvidas.',
+                            ),
+                          ),
+                        ),
+                        SizedBox(width: spacing),
+                        Expanded(
+                          child: _textFieldCard(
+                            title: 'Faltas',
+                            fieldFontSize: 15,
+                            prefixIcon: Icons.zoom_out_rounded,
+                            controller: devolutionController,
+                            focus: devolutionFocus,
+                            cardInfo: AppInfoIcon(
+                              text: 'Informe o total de cartelas devolvidas.',
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                     SizedBox(height: spacing),
                     _textFieldCard(
@@ -199,19 +219,27 @@ class _MyHomePageState extends State<MyHomePage> {
     @required FocusNode focus,
     bool readOnly = false, //remove
     bool formatAsMoney = false,
+    double fieldFontSize,
     IconData prefixIcon,
     AppInfoIcon cardInfo, //remove
     var function, //remove
   }) {
+    
     return GestureDetector(
       child: Container(
         decoration: AppDecoration.of(context).appTextBoxDecoration,
         child: Padding(
-          padding: const EdgeInsets.fromLTRB(15, 5, 5, 5),
+          padding: const EdgeInsets.fromLTRB(5, 5, 0, 5),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
+              Icon(
+                prefixIcon,
+                color: appColors.redColor,
+                size: iconSize,
+              ),
+              SizedBox(width: 5),
               Expanded(
                 child: TextField(
                   readOnly: readOnly,
@@ -222,14 +250,9 @@ class _MyHomePageState extends State<MyHomePage> {
                     border: InputBorder.none,
                     labelText: title,
                     labelStyle: TextStyle(
-                      fontSize: fontSize,
+                      fontSize: fieldFontSize ?? fontSize,
                       color: appColors.greyColor,
                       fontWeight: FontWeight.bold,
-                    ),
-                    prefixIcon: Icon(
-                      prefixIcon,
-                      color: appColors.redColor,
-                      size: iconSize,
                     ),
                   ),
                   cursorColor: Colors.black,
