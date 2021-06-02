@@ -87,7 +87,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       prefixIcon: Icons.zoom_out_rounded,
                       controller: holdCardsController,
                       focus: missingFocus,
-                      cardInfo: AppCardInfo(
+                      cardInfo: AppInfoIcon(
                         text:
                             'Informe o total de cartelas pegas para a distribuição.',
                       ),
@@ -98,8 +98,9 @@ class _MyHomePageState extends State<MyHomePage> {
                       prefixIcon: Icons.add_chart,
                       controller: soldController,
                       focus: saleFocus,
-                      cardInfo: AppCardInfo(
-                          text: 'Informe o total de cartelas vendidas.'),
+                      cardInfo: AppInfoIcon(
+                        text: 'Informe o total de cartelas vendidas.',
+                      ),
                     ),
                     SizedBox(height: spacing),
                     _textFieldCard(
@@ -107,7 +108,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       prefixIcon: Icons.add_chart,
                       controller: devolutionController,
                       focus: devolutionFocus,
-                      cardInfo: AppCardInfo(
+                      cardInfo: AppInfoIcon(
                         text: 'Informe o total de cartelas devolvidas.',
                       ),
                     ),
@@ -118,7 +119,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       controller: moneyPaidController,
                       formatAsMoney: true,
                       focus: moneyFocus,
-                      cardInfo: AppCardInfo(
+                      cardInfo: AppInfoIcon(
                         text: 'Informe os adiantamentos em dinheiro.',
                       ),
                     ),
@@ -129,7 +130,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       controller: depositsController,
                       formatAsMoney: true,
                       focus: depositFocus,
-                      cardInfo: AppCardInfo(
+                      cardInfo: AppInfoIcon(
                         text: 'Informe os depósitos.',
                       ),
                     ),
@@ -199,14 +200,14 @@ class _MyHomePageState extends State<MyHomePage> {
     bool readOnly = false, //remove
     bool formatAsMoney = false,
     IconData prefixIcon,
-    AppCardInfo cardInfo, //remove
+    AppInfoIcon cardInfo, //remove
     var function, //remove
   }) {
     return GestureDetector(
       child: Container(
         decoration: AppDecoration.of(context).appTextBoxDecoration,
         child: Padding(
-          padding: const EdgeInsets.fromLTRB(15, 5, 15, 5),
+          padding: const EdgeInsets.fromLTRB(15, 5, 5, 5),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -356,26 +357,26 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  Widget _appButton(String title) {
-    return ElevatedButton(
-      child: Text(
-        title,
-        style: TextStyle(
-          fontSize: 25,
-          fontWeight: FontWeight.w400,
-        ),
-      ),
-      style: ElevatedButton.styleFrom(
-        primary: appColors.redColor,
-        minimumSize: Size(MediaQuery.of(context).size.width - 40, 50),
-        elevation: 7,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(30.0),
-        ),
-      ),
-      onPressed: calculate,
-    );
-  }
+  // Widget _appButton(String title) {
+  //   return ElevatedButton(
+  //     child: Text(
+  //       title,
+  //       style: TextStyle(
+  //         fontSize: 25,
+  //         fontWeight: FontWeight.w400,
+  //       ),
+  //     ),
+  //     style: ElevatedButton.styleFrom(
+  //       primary: appColors.redColor,
+  //       minimumSize: Size(MediaQuery.of(context).size.width - 40, 50),
+  //       elevation: 7,
+  //       shape: RoundedRectangleBorder(
+  //         borderRadius: BorderRadius.circular(30.0),
+  //       ),
+  //     ),
+  //     onPressed: calculate,
+  //   );
+  // }
 
   void calculate() {
     String holdText = holdCardsController.text.trim();
