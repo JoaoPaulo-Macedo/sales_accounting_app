@@ -82,8 +82,6 @@ class _MyHomePageState extends State<MyHomePage> {
                 padding: const EdgeInsets.all(10),
                 child: Column(
                   children: [
-                    _priceCard('Preço da Cartela'),
-                    SizedBox(height: spacing),
                     _textFieldCard(
                       title: 'Total de Cartelas',
                       prefixIcon: Icons.zoom_out_rounded,
@@ -135,54 +133,54 @@ class _MyHomePageState extends State<MyHomePage> {
                         text: 'Informe os depósitos.',
                       ),
                     ),
-                    Padding(
-                      padding: EdgeInsets.only(top: spacing),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: _textFieldCard(
-                              focus: null,
-                              title: 'Imposto',
-                              prefixIcon: Icons.post_add_rounded,
-                              controller: taxController,
-                              formatAsMoney: true,
-                              readOnly: true,
-                              function: () {
-                                print('SOOOOU');
-                                setState(() {});
-                                showDialog(
-                                  context: context,
-                                  builder: (_) => AlertDialog(
-                                    content: Text('SOOOOOU'),
-                                  ),
-                                );
-                              },
-                            ),
+                    SizedBox(height: spacing),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: _textFieldCard(
+                            focus: null,
+                            title: 'Imposto',
+                            prefixIcon: Icons.post_add_rounded,
+                            controller: taxController,
+                            formatAsMoney: true,
+                            readOnly: true,
+                            function: () {
+                              print('SOOOOU');
+                              setState(() {});
+                              showDialog(
+                                context: context,
+                                builder: (_) => AlertDialog(
+                                  content: Text('SOOOOOU'),
+                                ),
+                              );
+                            },
                           ),
-                          SizedBox(width: spacing),
-                          Expanded(
-                            child: _textFieldCard(
-                              focus: null,
-                              title: 'Ajuda de Custo',
-                              prefixIcon: Icons.post_add_rounded,
-                              controller: allowanceController,
-                              formatAsMoney: true,
-                              readOnly: true,
-                              function: () {
-                                print('SOOOOU');
-                                setState(() {});
-                                showDialog(
-                                  context: context,
-                                  builder: (_) => AlertDialog(
-                                    content: Text('SOOOOOU'),
-                                  ),
-                                );
-                              },
-                            ),
+                        ),
+                        SizedBox(width: spacing),
+                        Expanded(
+                          child: _textFieldCard(
+                            focus: null,
+                            title: 'Ajuda de Custo',
+                            prefixIcon: Icons.post_add_rounded,
+                            controller: allowanceController,
+                            formatAsMoney: true,
+                            readOnly: true,
+                            function: () {
+                              print('SOOOOU');
+                              setState(() {});
+                              showDialog(
+                                context: context,
+                                builder: (_) => AlertDialog(
+                                  content: Text('SOOOOOU'),
+                                ),
+                              );
+                            },
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
+                    SizedBox(height: spacing),
+                    _priceCard('Preço da Cartela'),
                     debtField(debt),
                   ],
                 ),
@@ -229,7 +227,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                     prefixIcon: Icon(
                       prefixIcon,
-                      color: appColors.secondaryColor,
+                      color: appColors.redColor,
                       size: iconSize,
                     ),
                   ),
@@ -276,7 +274,7 @@ class _MyHomePageState extends State<MyHomePage> {
               style: TextStyle(
                 fontSize: selection == selected ? 19 : 16,
                 color: selection == selected
-                    ? appColors.secondaryColor
+                    ? appColors.redColor
                     : appColors.greyColor,
               ),
             ),
@@ -368,7 +366,7 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
       style: ElevatedButton.styleFrom(
-        primary: appColors.secondaryColor,
+        primary: appColors.redColor,
         minimumSize: Size(MediaQuery.of(context).size.width - 40, 50),
         elevation: 7,
         shape: RoundedRectangleBorder(
