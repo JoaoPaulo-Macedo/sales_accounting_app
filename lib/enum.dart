@@ -1,1 +1,1 @@
-enum Selected { ten, fifteen, twenty, twentyFive, thirty }
+enum Selected { none, ten, fifteen, twenty, twentyFive, thirty }

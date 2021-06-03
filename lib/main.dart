@@ -40,22 +40,26 @@ class _MyHomePageState extends State<MyHomePage> {
   final double fontSize = 18;
   final double iconSize = 25;
   final double cardHeight = 68;
+
+  final FocusNode totalFocus = FocusNode();
   final FocusNode saleFocus = FocusNode();
   final FocusNode devolutionFocus = FocusNode();
   final FocusNode missingFocus = FocusNode();
   final FocusNode moneyFocus = FocusNode();
   final FocusNode depositFocus = FocusNode();
+
   final EdgeInsets cardPadding = const EdgeInsets.fromLTRB(5, 5, 0, 5);
 
   AppColors get appColors => AppColors.of(context);
   AppDecoration get appDecorations => AppDecoration.of(context);
 
   double debt = 0;
-  Selected selected = Selected.ten;
-  TextEditingController holdCardsController = TextEditingController();
+  Selected selected = Selected.none;
+  String errorMessage = 'Selecione o Preço da Cartela';
+  TextEditingController totalCardsController = TextEditingController();
   TextEditingController soldController = TextEditingController();
   TextEditingController devolutionController = TextEditingController();
-  TextEditingController price = TextEditingController();
+  TextEditingController missingController = TextEditingController();
   TextEditingController moneyPaidController = TextEditingController();
   TextEditingController depositsController = TextEditingController();
   TextEditingController taxController = TextEditingController();
@@ -87,8 +91,8 @@ class _MyHomePageState extends State<MyHomePage> {
                     _textFieldCard(
                       title: 'Total de Cartelas',
                       prefixIcon: Icons.zoom_out_rounded,
-                      controller: holdCardsController,
-                      focus: missingFocus,
+                      controller: totalCardsController,
+                      focus: totalFocus,
                       cardInfo: AppInfoIcon(
                         text:
                             'Informe o total de cartelas pegas para a distribuição.',
@@ -125,8 +129,8 @@ class _MyHomePageState extends State<MyHomePage> {
                             title: 'Faltas',
                             fieldFontSize: 15,
                             prefixIcon: Icons.zoom_out_rounded,
-                            controller: devolutionController,
-                            focus: devolutionFocus,
+                            controller: missingController,
+                            focus: missingFocus,
                             cardInfo: AppInfoIcon(
                               text: 'Informe o total de cartelas em falta.',
                             ),
@@ -196,7 +200,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                     SizedBox(height: spacing),
                     _priceCard('Preço da Cartela'),
-                    debtCard(debt),
+                    _debtCard(debt),
                   ],
                 ),
               ),
@@ -333,36 +337,57 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  Widget debtCard(double debt) {
-    String text = debt >= 0 ? 'Pagar:' : 'Receber:';
-    //if (debt < 0) debt = debt.abs();
+  Widget _debtCard(double debt) {
+    String text = "";
+    String finalDebt = "";
+
+    if (errorMessage.isEmpty) {
+      text = debt >= 0 ? 'Pagar:' : 'Receber:';
+      finalDebt = debt.toStringAsFixed(2);
+    }
 
     return Container(
+      width: double.infinity,
+      height: 50,
       margin: EdgeInsets.fromLTRB(35, 20, 35, 0),
       padding: EdgeInsets.fromLTRB(17, 10, 17, 10),
       decoration: appDecorations.appDebtBoxDecoration,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(
-            text,
-            style: TextStyle(
-              fontSize: 20,
-              color: appColors.greyColor,
-              fontWeight: FontWeight.bold,
-              fontFamily: 'VarelaRound',
+      child: errorMessage.isEmpty
+          ? Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  text,
+                  style: TextStyle(
+                    fontSize: 20,
+                    color: appColors.greyColor,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: 'VarelaRound',
+                  ),
+                ),
+                Text(
+                  'R\$ $finalDebt',
+                  style: TextStyle(
+                    fontSize: 20,
+                    color: appColors.greyColor,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
+            )
+          : Center(
+              child: Text(
+                errorMessage,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 13,
+                  color: appColors.redColor,
+                  fontWeight: FontWeight.bold,
+                  fontFamily: 'VarelaRound',
+                ),
+                textScaleFactor: 1,
+              ),
             ),
-          ),
-          Text(
-            'R\$ ${debt.toStringAsFixed(2)}',
-            style: TextStyle(
-              fontSize: 20,
-              color: appColors.greyColor,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ],
-      ),
     );
   }
 
@@ -419,48 +444,58 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void calculate() {
-    String holdText = holdCardsController.text.trim();
-    String soldText = soldController.text.trim();
+    setState(() {
+      String holdText = totalCardsController.text.trim();
+      String soldText = soldController.text.trim();
 
-    if (holdText == '' || soldText == '') {
-      debt = 0;
-      return;
-    }
+      if (selected == Selected.none) {
+        errorMessage = 'Selecione o Preço da Cartela';
+        return;
+      }
+      if (holdText == '' || soldText == '') {
+        errorMessage = 'Informe Total de Cartelas e a Venda';
+        return;
+      }
+      if (double.parse(holdText) < double.parse(soldText)) {
+        errorMessage = 'Venda não pode ser maior que Total de Cartelas';
+        return;
+      }
 
-    double price;
-    double taxRate = 0.11;
-    double devolution = 0;
-    double paid = 0;
-    double deposits = 0;
-    double allowance = 200;
-    double holdCards = double.parse(holdText);
-    double soldCards = double.parse(soldText);
+      errorMessage = '';
 
-    if ((devolutionController.text.trim()) != '')
-      devolution = double.parse(devolutionController.text.trim());
-    else
-      devolution = holdCards - soldCards;
+      double price;
+      double taxRate = 0.11;
+      double devolution = 0;
+      double paid = 0;
+      double deposits = 0;
+      double allowance = 200;
+      double holdCards = double.parse(holdText);
+      double soldCards = double.parse(soldText);
 
-    if ((moneyPaidController.text.trim()) != '')
-      paid = double.parse(moneyPaidController.text.trim());
+      if ((devolutionController.text.trim()) != '')
+        devolution = double.parse(devolutionController.text.trim());
+      else
+        devolution = holdCards - soldCards;
 
-    if ((depositsController.text.trim()) != '')
-      deposits = double.parse(depositsController.text.trim());
+      if ((moneyPaidController.text.trim()) != '')
+        paid = double.parse(moneyPaidController.text.trim());
 
-    if (selected == Selected.ten) price = 10;
-    if (selected == Selected.fifteen) price = 15;
-    if (selected == Selected.twenty) price = 20;
-    if (selected == Selected.twentyFive) price = 25;
-    if (selected == Selected.thirty) price = 30;
+      if ((depositsController.text.trim()) != '')
+        deposits = double.parse(depositsController.text.trim());
 
-    double grossDebt = soldCards * (price * 0.82);
-    double earnRate = price * 0.08;
-    double taxDebt = (soldCards * earnRate) * taxRate;
-    double missing = holdCards - soldCards - devolution;
-    double missingDebt = missing >= 0 ? missing * price : 0;
+      if (selected == Selected.ten) price = 10;
+      if (selected == Selected.fifteen) price = 15;
+      if (selected == Selected.twenty) price = 20;
+      if (selected == Selected.twentyFive) price = 25;
+      if (selected == Selected.thirty) price = 30;
 
-    debt = grossDebt + missingDebt + taxDebt - paid - deposits - allowance;
+      double grossDebt = soldCards * (price * 0.82);
+      double earnRate = price * 0.08;
+      double taxDebt = (soldCards * earnRate) * taxRate;
+      double missing = holdCards - soldCards - devolution;
+      double missingDebt = missing >= 0 ? missing * price : 0;
 
-    setState(() {});
+      debt = grossDebt + missingDebt + taxDebt - paid - deposits - allowance;
+    });
   }
 }
