@@ -14,10 +14,13 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      theme: ThemeData(brightness: Brightness.light, primaryColor: Colors.grey),
+      theme: ThemeData(
+        brightness: Brightness.light,
+        primaryColor: Colors.grey,
+        scaffoldBackgroundColor: Colors.grey[100],
+      ),
       darkTheme: ThemeData(
         brightness: Brightness.dark,
-        primaryColor: Colors.amber,
         scaffoldBackgroundColor: Colors.black,
       ),
       home: MyHomePage(title: 'ACERTO DE VENDAS'),
@@ -56,7 +59,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   double debt = 0;
   Selected selected = Selected.none;
-  String errorMessage = 'Informe Total de Cartelas e a Venda';
+  String errorMessage = 'Informe o \"Total de Cartelas\" e a \"Venda\"';
   TextEditingController totalCtrl = TextEditingController();
   TextEditingController soldCtrl = TextEditingController();
   TextEditingController devCtrl = TextEditingController();
@@ -248,7 +251,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     labelText: title,
                     labelStyle: TextStyle(
                       fontSize: fieldFontSize ?? fontSize,
-                      color: appColors.greyColor,
+                      color: appColors.textColor,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -264,6 +267,7 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
       onTap: () => focus.requestFocus(),
+      onLongPress: () => print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"),
     );
   }
 
@@ -291,7 +295,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 fontSize: selection == selected ? 19 : 16,
                 color: selection == selected
                     ? appColors.redColor
-                    : appColors.greyColor,
+                    : appColors.textColor,
               ),
             ),
             onPressed: () {
@@ -318,7 +322,7 @@ class _MyHomePageState extends State<MyHomePage> {
               title,
               style: TextStyle(
                 fontSize: fontSize,
-                color: appColors.greyColor,
+                color: appColors.textColor,
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -344,7 +348,8 @@ class _MyHomePageState extends State<MyHomePage> {
     String finalDebt = "";
 
     if (errorMessage.isEmpty) {
-      text = debt >= 0 ? 'Pagar:' : 'Receber:';
+      text = debt >= -0.01 ? 'Pagar:' : 'Receber:';
+      if (debt < 0) debt = debt * -1;
       finalDebt = debt.toStringAsFixed(2);
     }
 
@@ -362,7 +367,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   text,
                   style: TextStyle(
                     fontSize: 20,
-                    color: appColors.greyColor,
+                    color: appColors.textColor,
                     fontWeight: FontWeight.bold,
                     fontFamily: 'VarelaRound',
                   ),
@@ -371,7 +376,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   'R\$ $finalDebt',
                   style: TextStyle(
                     fontSize: 20,
-                    color: appColors.greyColor,
+                    color: appColors.textColor,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -427,7 +432,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     labelText: title,
                     labelStyle: TextStyle(
                       fontSize: fieldFontSize ?? fontSize,
-                      color: appColors.greyColor,
+                      color: appColors.textColor,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -456,16 +461,16 @@ class _MyHomePageState extends State<MyHomePage> {
       String soldText = soldCtrl.text.trim();
 
       if (holdText == '' || soldText == '') {
-        errorMessage = 'Informe Total de Cartelas e a Venda';
+        errorMessage = 'Informe o \"Total de Cartelas\" e a \"Venda\"';
         return;
       }
       if (double.parse(holdText) < double.parse(soldText)) {
-        errorMessage = 'Venda não pode ser maior que Total de Cartelas';
+        errorMessage = '\"Venda\" não pode ser maior que \"Total de Cartelas\"';
         return;
       }
 
       if (double.parse(taxCtrl.text.trim()) < 0) {
-        errorMessage = 'Imposto não pode ser negativo';
+        errorMessage = '\"Imposto\" não pode ser negativo';
         return;
       }
 
@@ -535,7 +540,6 @@ class _MyHomePageState extends State<MyHomePage> {
       double missingDebt = missing > 0 ? missing * price : 0;
 
       debt = grossDebt + missingDebt + taxDebt - paid - deposits - allowance;
-      if (debt < 0) debt = debt * -1;
     });
   }
 }

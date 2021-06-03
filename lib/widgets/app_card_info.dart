@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lucky_triangle/app_designs.dart';
 
 class AppInfoIcon extends StatelessWidget {
   AppInfoIcon({@required this.text});
@@ -24,7 +25,7 @@ class AppInfoIcon extends StatelessWidget {
             content: Text(
               text,
               style: TextStyle(
-                color: Colors.grey[800],
+                color: AppColors.of(context).textColor,
                 fontSize: 17,
               ),
             ),
