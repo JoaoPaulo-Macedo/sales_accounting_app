@@ -36,7 +36,8 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  final double spacing = 8;
+  final double smallSpacing = 6;
+  final double bigSpacing = 17;
   final double fontSize = 18;
   final double iconSize = 25;
   final double cardHeight = 68;
@@ -55,7 +56,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   double debt = 0;
   Selected selected = Selected.none;
-  String errorMessage = 'Selecione o Preço da Cartela';
+  String errorMessage = 'Informe Total de Cartelas e a Venda';
   TextEditingController totalCardsController = TextEditingController();
   TextEditingController soldController = TextEditingController();
   TextEditingController devolutionController = TextEditingController();
@@ -69,13 +70,13 @@ class _MyHomePageState extends State<MyHomePage> {
   void initState() {
     super.initState();
 
-    taxController.text = '11%';
+    taxController.text = '0';
     allowanceController.text = '200';
   }
 
   @override
   Widget build(BuildContext context) {
-    print('${MediaQuery.of(context).padding.top}!!!!!!!!');
+    // print('${MediaQuery.of(context).padding.top}!!!!!!!!');
 
     return GestureDetector(
       onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
@@ -98,7 +99,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             'Informe o total de cartelas pegas para a distribuição.',
                       ),
                     ),
-                    SizedBox(height: spacing),
+                    SizedBox(height: smallSpacing),
                     _textFieldCard(
                       title: 'Venda',
                       prefixIcon: Icons.add_chart,
@@ -108,7 +109,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         text: 'Informe o total de cartelas vendidas.',
                       ),
                     ),
-                    SizedBox(height: spacing),
+                    SizedBox(height: smallSpacing),
                     Row(
                       children: [
                         Expanded(
@@ -123,7 +124,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             ),
                           ),
                         ),
-                        SizedBox(width: spacing),
+                        SizedBox(width: smallSpacing),
                         Expanded(
                           child: _textFieldCard(
                             title: 'Faltas',
@@ -138,7 +139,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         ),
                       ],
                     ),
-                    SizedBox(height: spacing),
+                    SizedBox(height: bigSpacing),
                     _textFieldCard(
                       title: 'Adiantamento',
                       prefixIcon: Icons.attach_money_rounded,
@@ -149,7 +150,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         text: 'Informe os adiantamentos em dinheiro.',
                       ),
                     ),
-                    SizedBox(height: spacing),
+                    SizedBox(height: smallSpacing),
                     _textFieldCard(
                       title: 'Depósitos',
                       prefixIcon: Icons.post_add_rounded,
@@ -160,7 +161,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         text: 'Informe os depósitos.',
                       ),
                     ),
-                    SizedBox(height: spacing),
+                    SizedBox(height: smallSpacing),
                     Row(
                       children: [
                         Expanded(
@@ -179,7 +180,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             },
                           ),
                         ),
-                        SizedBox(width: spacing),
+                        SizedBox(width: smallSpacing),
                         Expanded(
                           child: _appCard(
                             title: 'Ajuda de Custo',
@@ -198,7 +199,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         ),
                       ],
                     ),
-                    SizedBox(height: spacing),
+                    SizedBox(height: bigSpacing),
                     _priceCard('Preço da Cartela'),
                     _debtCard(debt),
                   ],
@@ -217,6 +218,7 @@ class _MyHomePageState extends State<MyHomePage> {
     @required IconData prefixIcon,
     @required AppInfoIcon cardInfo,
     @required TextEditingController controller,
+    Function function,
     double fieldFontSize,
     bool formatAsMoney = false,
   }) {
@@ -251,8 +253,8 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                   ),
                   cursorColor: Colors.black,
-                  onChanged: (_) => calculate(),
-                  onSubmitted: (_) => calculate(),
+                  onChanged: (_) => calculate(function: function),
+                  onSubmitted: (_) => calculate(function: function),
                 ),
               ),
               SizedBox(width: 10),
@@ -320,7 +322,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            SizedBox(height: spacing),
+            SizedBox(height: smallSpacing),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
@@ -443,15 +445,13 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  void calculate() {
+  void calculate({Function function}) {
     setState(() {
+      if (function != null) function();
+
       String holdText = totalCardsController.text.trim();
       String soldText = soldController.text.trim();
 
-      if (selected == Selected.none) {
-        errorMessage = 'Selecione o Preço da Cartela';
-        return;
-      }
       if (holdText == '' || soldText == '') {
         errorMessage = 'Informe Total de Cartelas e a Venda';
         return;
@@ -461,39 +461,71 @@ class _MyHomePageState extends State<MyHomePage> {
         return;
       }
 
+      if (taxController.text == null || taxController.text.trim() == '') {
+        taxController.text = '0';
+      }
+      if (double.parse(taxController.text.trim()) < 0) {
+        errorMessage = 'Imposto não pode ser negativo';
+        return;
+      }
+
+      //TODO: Pass all verifications to another file.
+
       errorMessage = '';
 
+      double hold = double.parse(holdText);
+      double sold = double.parse(soldText);
       double price;
-      double taxRate = 0.11;
-      double devolution = 0;
+      double devolution = hold - sold;
+      double missing = hold - sold - devolution;
       double paid = 0;
+      double taxRate = 0;
       double deposits = 0;
-      double allowance = 200;
-      double holdCards = double.parse(holdText);
-      double soldCards = double.parse(soldText);
-
-      if ((devolutionController.text.trim()) != '')
+      double allowance = 0;
+      //Devolution
+      if (devolutionController.text.trim() != '' && devolutionFocus.hasFocus) {
         devolution = double.parse(devolutionController.text.trim());
-      else
-        devolution = holdCards - soldCards;
 
-      if ((moneyPaidController.text.trim()) != '')
+        missing = hold - sold - devolution;
+        missingController.text = (hold - sold - devolution).toStringAsFixed(0);
+      } else if (missingController.text.trim() != '' && missingFocus.hasFocus) {
+        missing = double.parse(missingController.text.trim());
+
+        devolution = hold - sold - missing;
+        devolutionController.text = (hold - sold - missing).toStringAsFixed(0);
+      } else if (devolutionFocus.hasFocus || missingFocus.hasFocus) {
+        devolution = hold - sold;
+        missing = hold - sold - missing;
+
+        missingController.text = '';
+        devolutionController.text = '';
+      }
+      //Select Card Price
+      if (selected == Selected.none) {
+        errorMessage = 'Selecione o Preço da Cartela';
+        return;
+      }
+
+      //Money
+      if (moneyPaidController.text.trim() != '')
         paid = double.parse(moneyPaidController.text.trim());
-
-      if ((depositsController.text.trim()) != '')
+      //Deposits
+      if (depositsController.text.trim() != '')
         deposits = double.parse(depositsController.text.trim());
-
+      //Tax
+      if (taxController.text.trim() != '')
+        taxRate = double.parse(taxController.text.trim());
+      //Selected
       if (selected == Selected.ten) price = 10;
       if (selected == Selected.fifteen) price = 15;
       if (selected == Selected.twenty) price = 20;
       if (selected == Selected.twentyFive) price = 25;
       if (selected == Selected.thirty) price = 30;
 
-      double grossDebt = soldCards * (price * 0.82);
+      double grossDebt = sold * (price * 0.82);
       double earnRate = price * 0.08;
-      double taxDebt = (soldCards * earnRate) * taxRate;
-      double missing = holdCards - soldCards - devolution;
-      double missingDebt = missing >= 0 ? missing * price : 0;
+      double taxDebt = (sold * earnRate) * taxRate;
+      double missingDebt = missing > 0 ? missing * price : 0;
 
       debt = grossDebt + missingDebt + taxDebt - paid - deposits - allowance;
       if (debt < 0) debt = debt * -1;
