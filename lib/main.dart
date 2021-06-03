@@ -57,21 +57,21 @@ class _MyHomePageState extends State<MyHomePage> {
   double debt = 0;
   Selected selected = Selected.none;
   String errorMessage = 'Informe Total de Cartelas e a Venda';
-  TextEditingController totalCardsController = TextEditingController();
-  TextEditingController soldController = TextEditingController();
-  TextEditingController devolutionController = TextEditingController();
-  TextEditingController missingController = TextEditingController();
-  TextEditingController moneyPaidController = TextEditingController();
-  TextEditingController depositsController = TextEditingController();
-  TextEditingController taxController = TextEditingController();
-  TextEditingController allowanceController = TextEditingController();
+  TextEditingController totalCtrl = TextEditingController();
+  TextEditingController soldCtrl = TextEditingController();
+  TextEditingController devCtrl = TextEditingController();
+  TextEditingController missCtrl = TextEditingController();
+  TextEditingController paidCtrl = TextEditingController();
+  TextEditingController depositCtrl = TextEditingController();
+  TextEditingController taxCtrl = TextEditingController();
+  TextEditingController allowanceCtrl = TextEditingController();
 
   @override
   void initState() {
     super.initState();
 
-    taxController.text = '0';
-    allowanceController.text = '200';
+    taxCtrl.text = '11';
+    allowanceCtrl.text = '200';
   }
 
   @override
@@ -92,7 +92,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     _textFieldCard(
                       title: 'Total de Cartelas',
                       prefixIcon: Icons.zoom_out_rounded,
-                      controller: totalCardsController,
+                      controller: totalCtrl,
                       focus: totalFocus,
                       cardInfo: AppInfoIcon(
                         text:
@@ -103,7 +103,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     _textFieldCard(
                       title: 'Venda',
                       prefixIcon: Icons.add_chart,
-                      controller: soldController,
+                      controller: soldCtrl,
                       focus: saleFocus,
                       cardInfo: AppInfoIcon(
                         text: 'Informe o total de cartelas vendidas.',
@@ -117,7 +117,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             title: 'Devolução',
                             fieldFontSize: 15,
                             prefixIcon: Icons.add_chart,
-                            controller: devolutionController,
+                            controller: devCtrl,
                             focus: devolutionFocus,
                             cardInfo: AppInfoIcon(
                               text: 'Informe o total de cartelas devolvidas.',
@@ -130,7 +130,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             title: 'Faltas',
                             fieldFontSize: 15,
                             prefixIcon: Icons.zoom_out_rounded,
-                            controller: missingController,
+                            controller: missCtrl,
                             focus: missingFocus,
                             cardInfo: AppInfoIcon(
                               text: 'Informe o total de cartelas em falta.',
@@ -143,7 +143,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     _textFieldCard(
                       title: 'Adiantamento',
                       prefixIcon: Icons.attach_money_rounded,
-                      controller: moneyPaidController,
+                      controller: paidCtrl,
                       formatAsMoney: true,
                       focus: moneyFocus,
                       cardInfo: AppInfoIcon(
@@ -154,7 +154,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     _textFieldCard(
                       title: 'Depósitos',
                       prefixIcon: Icons.post_add_rounded,
-                      controller: depositsController,
+                      controller: depositCtrl,
                       formatAsMoney: true,
                       focus: depositFocus,
                       cardInfo: AppInfoIcon(
@@ -168,7 +168,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           child: _appCard(
                             title: 'Imposto',
                             prefixIcon: Icons.post_add_rounded,
-                            controller: taxController,
+                            controller: taxCtrl,
                             function: () {
                               setState(() {});
                               showDialog(
@@ -185,7 +185,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           child: _appCard(
                             title: 'Ajuda de Custo',
                             prefixIcon: Icons.post_add_rounded,
-                            controller: allowanceController,
+                            controller: allowanceCtrl,
                             function: () {
                               setState(() {});
                               showDialog(
@@ -445,12 +445,15 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
+  double devolution;
+  double missing;
+
   void calculate({Function function}) {
     setState(() {
       if (function != null) function();
 
-      String holdText = totalCardsController.text.trim();
-      String soldText = soldController.text.trim();
+      String holdText = totalCtrl.text.trim();
+      String soldText = soldCtrl.text.trim();
 
       if (holdText == '' || soldText == '') {
         errorMessage = 'Informe Total de Cartelas e a Venda';
@@ -461,44 +464,42 @@ class _MyHomePageState extends State<MyHomePage> {
         return;
       }
 
-      if (taxController.text == null || taxController.text.trim() == '') {
-        taxController.text = '0';
-      }
-      if (double.parse(taxController.text.trim()) < 0) {
+      if (double.parse(taxCtrl.text.trim()) < 0) {
         errorMessage = 'Imposto não pode ser negativo';
         return;
       }
 
       //TODO: Pass all verifications to another file.
+      //TODO: If Missing pass of 10 ask if he is sure.
 
       errorMessage = '';
 
       double hold = double.parse(holdText);
       double sold = double.parse(soldText);
       double price;
-      double devolution = hold - sold;
-      double missing = hold - sold - devolution;
       double paid = 0;
       double taxRate = 0;
       double deposits = 0;
       double allowance = 0;
       //Devolution
-      if (devolutionController.text.trim() != '' && devolutionFocus.hasFocus) {
-        devolution = double.parse(devolutionController.text.trim());
+      if (devCtrl.text.trim() != '' && devolutionFocus.hasFocus) {
+        devolution = double.parse(devCtrl.text.trim());
 
         missing = hold - sold - devolution;
-        missingController.text = (hold - sold - devolution).toStringAsFixed(0);
-      } else if (missingController.text.trim() != '' && missingFocus.hasFocus) {
-        missing = double.parse(missingController.text.trim());
+        missCtrl.text = (hold - sold - devolution).toStringAsFixed(0);
+      } //
+      else if (missCtrl.text.trim() != '' && missingFocus.hasFocus) {
+        missing = double.parse(missCtrl.text.trim());
 
         devolution = hold - sold - missing;
-        devolutionController.text = (hold - sold - missing).toStringAsFixed(0);
-      } else if (devolutionFocus.hasFocus || missingFocus.hasFocus) {
+        devCtrl.text = (hold - sold - missing).toStringAsFixed(0);
+      } //
+      else if (devCtrl.text.trim() == '' || missCtrl.text.trim() == '') {
         devolution = hold - sold;
-        missing = hold - sold - missing;
+        missing = hold - sold - devolution;
 
-        missingController.text = '';
-        devolutionController.text = '';
+        missCtrl.text = '';
+        devCtrl.text = '';
       }
       //Select Card Price
       if (selected == Selected.none) {
@@ -507,20 +508,26 @@ class _MyHomePageState extends State<MyHomePage> {
       }
 
       //Money
-      if (moneyPaidController.text.trim() != '')
-        paid = double.parse(moneyPaidController.text.trim());
+      if (paidCtrl.text.trim() != '') paid = double.parse(paidCtrl.text.trim());
       //Deposits
-      if (depositsController.text.trim() != '')
-        deposits = double.parse(depositsController.text.trim());
+      if (depositCtrl.text.trim() != '')
+        deposits = double.parse(depositCtrl.text.trim());
       //Tax
-      if (taxController.text.trim() != '')
-        taxRate = double.parse(taxController.text.trim());
+      if (taxCtrl.text.trim() != '')
+        taxRate = double.parse(taxCtrl.text.trim()) / 100;
+      //Allowance
+      if (allowanceCtrl.text.trim() != '')
+        allowance = double.parse(allowanceCtrl.text.trim());
       //Selected
-      if (selected == Selected.ten) price = 10;
-      if (selected == Selected.fifteen) price = 15;
-      if (selected == Selected.twenty) price = 20;
-      if (selected == Selected.twentyFive) price = 25;
-      if (selected == Selected.thirty) price = 30;
+      if (selected == Selected.ten)
+        price = 10;
+      else if (selected == Selected.fifteen)
+        price = 15;
+      else if (selected == Selected.twenty)
+        price = 20;
+      else if (selected == Selected.twentyFive)
+        price = 25;
+      else if (selected == Selected.thirty) price = 30;
 
       double grossDebt = sold * (price * 0.82);
       double earnRate = price * 0.08;
