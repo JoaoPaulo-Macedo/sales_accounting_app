@@ -496,6 +496,7 @@ class _MyHomePageState extends State<MyHomePage> {
       double missingDebt = missing >= 0 ? missing * price : 0;
 
       debt = grossDebt + missingDebt + taxDebt - paid - deposits - allowance;
+      if (debt < 0) debt = debt * -1;
     });
   }
 }
