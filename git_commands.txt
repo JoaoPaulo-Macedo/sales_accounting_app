@@ -17,6 +17,13 @@ Configurations:
 -git config --list
 The global is for your whole local git. If not global,
 changes apply only to repository's git.
+
+-git tag -n = show all tags with title.
+-git show <tag name>
+-git show --tags
+-git tag -a <tag name> -m <tag title> = add a new tag in the current commit.
+-git checkout <tag name> = go to tag, in detached head state (no branch).
+-git tag -d <tag name> = delete tag.
 ======================================================
 Deleting Commits:
 
@@ -49,4 +56,6 @@ Go to the branch you want to be updated and command:
 HEAD is where you are.
 master, dev, etc, are local branches.
 origin/master, origin/dev are remote branches.
+
+Command -m is to add a message in commit, tag, etc
 ======================================================
