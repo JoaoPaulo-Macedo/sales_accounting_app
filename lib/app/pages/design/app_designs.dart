@@ -7,8 +7,7 @@ class AppDecoration {
   factory AppDecoration.of(BuildContext context) => AppDecoration._(context);
 
   AppColors get appColors => AppColors.of(context);
-  bool get isDarkMode =>
-      MediaQuery.of(context).platformBrightness == Brightness.dark;
+  bool get isDarkMode => MediaQuery.of(context).platformBrightness == Brightness.dark;
 
   List<BoxShadow> get appShadow => [
         BoxShadow(
@@ -20,15 +19,15 @@ class AppDecoration {
       ];
 
   List<BoxShadow> get priceShadow => isDarkMode
-    ? null
-    : [
-      BoxShadow(
-        color: Colors.grey.withOpacity(0.3),
-        spreadRadius: 0,
-        blurRadius: 5,
-        offset: Offset(0, 0),
-      )
-    ];
+      ? null
+      : [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.3),
+            spreadRadius: 0,
+            blurRadius: 5,
+            offset: Offset(0, 0),
+          )
+        ];
 
   BoxDecoration get appTextBoxDecoration => BoxDecoration(
         color: appColors.cardColor,
@@ -55,8 +54,7 @@ class AppColors {
 
   factory AppColors.of(BuildContext context) => AppColors._(context);
 
-  bool get isDarkMode =>
-      MediaQuery.of(context).platformBrightness == Brightness.dark;
+  bool get isDarkMode => MediaQuery.of(context).platformBrightness == Brightness.dark;
 
   Color get redColor => isDarkMode ? Colors.red : Colors.red[900];
   Color get textColor => isDarkMode ? Colors.grey[300] : Colors.grey[700];

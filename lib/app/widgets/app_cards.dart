@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-
-import '../app_designs.dart';
-import '../enum.dart';
+import 'package:lucky_triangle/app/pages/design/app_designs.dart';
+import '../../enum.dart';
 
 class PriceCard extends StatefulWidget {
   PriceCard({
@@ -76,13 +75,10 @@ class _PriceCardState extends State<PriceCard> {
         ),
         child: Text(
           '${price.toString()},00',
-          style: TextStyle(
-              fontSize: 17,
-              color: selection == selected ? Colors.white : Colors.grey[800]),
+          style: TextStyle(fontSize: 17, color: selection == selected ? Colors.white : Colors.grey[800]),
         ),
         onPressed: () {
-          if (selected == selection)
-            FocusScope.of(context).requestFocus(FocusNode());
+          if (selected == selection) FocusScope.of(context).requestFocus(FocusNode());
           selected = selection;
           //calculate();
           setState(() {});

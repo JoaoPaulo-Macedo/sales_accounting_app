@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:lucky_triangle/app_designs.dart';
+import 'package:lucky_triangle/app/pages/design/app_designs.dart';
 
 class AppInfoIcon extends StatelessWidget {
   AppInfoIcon({@required this.text});
+
+  //Use Statelles as pattern for components/widgets
 
   final String text;
 
