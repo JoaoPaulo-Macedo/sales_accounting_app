@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:lucky_triangle/app/design/app_designs.dart';
 import 'package:lucky_triangle/app/pages/home/widgets/app_info_icon.dart';
+import 'package:lucky_triangle/app/root_controller.dart';
 import 'enum.dart';
 
 class HomePage extends StatefulWidget {
@@ -65,6 +66,18 @@ class _HomePageState extends State<HomePage> {
                 padding: const EdgeInsets.all(10),
                 child: Column(
                   children: [
+                    GestureDetector(
+                      child: Container(
+                        margin: const EdgeInsets.all(10),
+                        height: 25,
+                        width: 25,
+                        color: Colors.red,
+                      ),
+                      onTap: () {
+                        RootController.instance.changeTheme();
+                        print('!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
+                      },
+                    ),
                     _textFieldCard(
                       title: 'Total de Cartelas',
                       prefixIcon: Icons.zoom_out_rounded,

@@ -9,6 +9,14 @@ ctrl + alt + h = list all bookmarks.
 ctrl + alt + 5 = list from all files.
 ctrl + alt + c = clear all bookmarks.
 
-A singleton allows you to access the same instace with the same state anywhere.
-By making the constructor private you prevent it from being initialized and stop being a singleton.
-By making instance as final you prevent it from being changed.
+Singleton:
+-A singleton allows you to access the same instace with the same state anywhere.
+-By making the constructor private you prevent it from being initialized and stop being a singleton.
+-By making instance as final you prevent it from being changed.
+
+Some packages for storing local data:
+-shared preferences
+-hive
+-sqlite
+-many more...
+Before storing, the data is only on the app state, it means in the RAM memory. => Search if it is correct.
