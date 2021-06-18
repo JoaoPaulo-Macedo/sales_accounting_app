@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:lucky_triangle/app/pages/design/app_designs.dart';
-import 'package:lucky_triangle/app/widgets/app_card_info.dart';
-import '../../../enum.dart';
+import 'package:lucky_triangle/app/design/app_designs.dart';
+import 'package:lucky_triangle/app/pages/home/widgets/app_info_icon.dart';
+import 'enum.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key key, this.title}) : super(key: key);
@@ -57,6 +57,10 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     // print('${MediaQuery.of(context).padding.top}!!!!!!!!');
+    //ctrl + alt + k = toogle bookmark
+    //ctrl + alt + j = previous
+    //ctrl + alt + l = next
+    //ctrl + alt + h = list all bookmarks
 
     return GestureDetector(
       onTap: () => FocusScope.of(context).requestFocus(FocusNode()),

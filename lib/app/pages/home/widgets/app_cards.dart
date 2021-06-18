@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:lucky_triangle/app/pages/design/app_designs.dart';
-import '../../enum.dart';
+import 'package:lucky_triangle/app/design/app_designs.dart';
+import '../enum.dart';
 
 class PriceCard extends StatefulWidget {
   PriceCard({
