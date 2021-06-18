@@ -7,8 +7,6 @@ import 'enum.dart';
 class HomePage extends StatefulWidget {
   HomePage({Key key, this.title}) : super(key: key);
 
-  //Use stateful as a pattern for every page.
-
   final String title;
 
   @override
@@ -56,12 +54,6 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    // print('${MediaQuery.of(context).padding.top}!!!!!!!!');
-    //ctrl + alt + k = toogle bookmark
-    //ctrl + alt + j = previous
-    //ctrl + alt + l = next
-    //ctrl + alt + h = list all bookmarks
-
     return GestureDetector(
       onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
       child: AnnotatedRegion<SystemUiOverlayStyle>(

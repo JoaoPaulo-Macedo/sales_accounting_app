@@ -1,0 +1,14 @@
+Use stateful as a pattern for pages.
+Use Statelles as a pattern for components/widgets.
+
+MediaQuery.of(context).padding.top = get the app status bar size.
+ctrl + alt + k = toogle bookmark.
+ctrl + alt + j = previous.
+ctrl + alt + l = next.
+ctrl + alt + h = list all bookmarks.
+ctrl + alt + 5 = list from all files.
+ctrl + alt + c = clear all bookmarks.
+
+A singleton allows you to access the same instace with the same state anywhere.
+By making the constructor private you prevent it from being initialized and stop being a singleton.
+By making instance as final you prevent it from being changed.

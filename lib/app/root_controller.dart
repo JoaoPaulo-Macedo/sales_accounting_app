@@ -1,21 +1,22 @@
 import 'package:flutter/foundation.dart';
 
-enum ThemeSwitch { auto, dark, light }
+import 'models/app_config.dart';
 
-class AppController {
-  AppController._();
+class RootController {
+  RootController._();
 
   /// A singleton allows you to access the same instace with the same state anywhere.
   /// By making the constructor private you prevent it from being initialized and stop being a singleton.
   /// By making instance as final you prevent it from being changed.
-  static final AppController instance = AppController._(); //Singleton?
+  static final RootController instance = RootController._(); //Singleton?
 
-  final themeSwitch = ValueNotifier<ThemeSwitch>(ThemeSwitch.auto);
+  final AppConfig config = AppConfig();
+  ValueNotifier<ThemeSwitch> get theme => config.themeSwitch;
 
   changeTheme() {
     ThemeSwitch value;
 
-    switch (themeSwitch.value) {
+    switch (theme.value) {
       case ThemeSwitch.auto:
         value = ThemeSwitch.light;
         break;
@@ -27,6 +28,6 @@ class AppController {
         break;
     }
 
-    themeSwitch.value = value;
+    theme.value = value;
   }
 }

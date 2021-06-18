@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:lucky_triangle/app/root_controller.dart';
+import 'models/app_config.dart';
 import 'pages/home/home_page.dart';
 
-class MaterialHome extends StatelessWidget {
+class Root extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     //Difference ValueListenableBuilder, StreamBuilder, HeritedWidget
     return ValueListenableBuilder<ThemeSwitch>(
-      valueListenable: AppController.instance.themeSwitch,
+      valueListenable: RootController.instance.theme,
       builder: (context, value, child) {
         ThemeMode themeMode;
         if (value == ThemeSwitch.light) themeMode = ThemeMode.light;

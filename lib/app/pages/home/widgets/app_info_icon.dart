@@ -4,8 +4,6 @@ import 'package:lucky_triangle/app/design/app_designs.dart';
 class AppInfoIcon extends StatelessWidget {
   AppInfoIcon({@required this.text});
 
-  //Use Statelles as pattern for components/widgets
-
   final String text;
 
   @override
