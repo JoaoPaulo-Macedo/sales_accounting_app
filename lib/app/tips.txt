@@ -2,6 +2,8 @@ Use stateful as a pattern for pages.
 Use Statelles as a pattern for components/widgets.
 
 MediaQuery.of(context).padding.top = get the app status bar size.
+
+Bookmarks:
 ctrl + alt + k = toogle bookmark.
 ctrl + alt + j = previous.
 ctrl + alt + l = next.
@@ -13,6 +15,10 @@ Singleton:
 -A singleton allows you to access the same instace with the same state anywhere.
 -By making the constructor private you prevent it from being initialized and stop being a singleton.
 -By making instance as final you prevent it from being changed.
+
+Interface:
+-Always set the variable as the interface and then instantiate some of this interface's implementation:
+--final LocalStorageInterface storage = LocalStorage();
 
 Some packages for storing local data:
 -shared preferences

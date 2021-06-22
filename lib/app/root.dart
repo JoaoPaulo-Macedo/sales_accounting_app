@@ -8,14 +8,20 @@ class Root extends StatelessWidget {
   Widget build(BuildContext context) {
     //Difference ValueListenableBuilder, StreamBuilder, HeritedWidget
     return ValueListenableBuilder<ThemeSwitch>(
-      valueListenable: RootController.instance.theme,
+      valueListenable: RootController.instance.changeTheme.theme,
       builder: (context, value, child) {
+        print('Before');
+        if (value == null) return null;
+        print('After');
+
         ThemeMode themeMode;
         if (value == ThemeSwitch.light) themeMode = ThemeMode.light;
         else if (value == ThemeSwitch.dark) themeMode = ThemeMode.dark;
+        print('$themeMode');
 
         return MaterialApp(
           title: 'Flutter Demo',
+          themeMode: themeMode,
           theme: ThemeData(
             brightness: Brightness.light,
             primaryColor: Colors.grey,
@@ -25,7 +31,6 @@ class Root extends StatelessWidget {
             brightness: Brightness.dark,
             scaffoldBackgroundColor: Colors.black,
           ),
-          themeMode: themeMode,
           home: HomePage(title: 'ACERTO DE VENDAS'),
           debugShowCheckedModeBanner: false,
         );

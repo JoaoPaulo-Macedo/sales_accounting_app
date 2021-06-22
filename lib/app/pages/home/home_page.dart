@@ -74,8 +74,7 @@ class _HomePageState extends State<HomePage> {
                         color: Colors.red,
                       ),
                       onTap: () {
-                        RootController.instance.changeTheme();
-                        print('!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
+                        RootController.instance.changeTheme.changeTheme();
                       },
                     ),
                     _textFieldCard(
