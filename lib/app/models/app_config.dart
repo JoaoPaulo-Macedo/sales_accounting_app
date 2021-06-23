@@ -9,5 +9,22 @@ class AppConfig {
 
   static final AppConfig singleton = AppConfig._();
 
-  ValueNotifier<ThemeMode> get themeMode => ValueNotifier<ThemeMode>(ThemeMode.system);
+  bool checkedStorage = false;
+  ValueNotifier<ThemeMode> themeMode = ValueNotifier<ThemeMode>(ThemeMode.system);
+
+  Brightness themeModeToBrightness(BuildContext context) {
+    switch (themeMode.value) {
+      case ThemeMode.light:
+        return Brightness.light;
+        break;
+      case ThemeMode.dark:
+        return Brightness.dark;
+        break;
+      default:
+        if (MediaQuery.of(context).platformBrightness == Brightness.light)
+          return Brightness.light;
+        else
+          return Brightness.dark;
+    }
+  }
 }

@@ -13,6 +13,7 @@ class AppColors {
   Color get cardColor => isDarkMode ? Color.fromARGB(255, 43, 40, 46) : Colors.white;
   Color get priceCardColor => isDarkMode ? Color.fromARGB(255, 51, 48, 54) : Colors.white;
   Color get disabledColor => isDarkMode ? Color.fromARGB(255, 48, 45, 51) : Colors.grey[100];
+  Color get loadingScreen => Colors.blueGrey;
 }
 
 class AppDecoration {

@@ -1,5 +1,5 @@
 import 'package:lucky_triangle/app/services/local_storage.dart';
-import 'package:lucky_triangle/app/viewmodels/change_theme.dart';
+import 'package:lucky_triangle/app/viewmodels/theme_viewmodel.dart';
 
 class RootController {
   RootController._() {

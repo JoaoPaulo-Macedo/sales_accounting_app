@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lucky_triangle/app/models/app_config.dart';
 import 'package:lucky_triangle/app/root_controller.dart';
 import 'pages/home/home_page.dart';
 
@@ -7,12 +8,13 @@ class Root extends StatelessWidget {
   Widget build(BuildContext context) {
     //Difference ValueListenableBuilder, StreamBuilder, HeritedWidget
     return ValueListenableBuilder<ThemeMode>(
-      valueListenable: RootController.instance.themeController.theme, //Change the notifier
+      valueListenable: RootController.instance.themeController.themeMode, //Change the notifier
       builder: (context, value, child) {
         if (value == null) return Container();
 
         ThemeMode themeMode = ThemeMode.system;
-        if (value == ThemeMode.light) themeMode = ThemeMode.light;
+        if (value == ThemeMode.light)
+          themeMode = ThemeMode.light;
         else if (value == ThemeMode.dark) themeMode = ThemeMode.dark;
 
         return MaterialApp(

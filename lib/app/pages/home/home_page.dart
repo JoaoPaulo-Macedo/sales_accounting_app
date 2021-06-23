@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:lucky_triangle/app/design/app_designs.dart';
+import 'package:lucky_triangle/app/models/app_config.dart';
 import 'package:lucky_triangle/app/pages/home/widgets/app_info_icon.dart';
 import 'package:lucky_triangle/app/pages/home/widgets/debt_card.dart';
 import 'package:lucky_triangle/app/pages/home/widgets/info_card.dart';
@@ -35,6 +36,12 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    if (AppConfig.singleton.checkedStorage == false) return Container(color: appColors.loadingScreen);
+    // This one was necessary because Flutter was rendering screen with old brightness, eventhough it was already
+    // changed by listenable builder.
+    if (Theme.of(context).brightness != AppConfig.singleton.themeModeToBrightness(context))
+      return Container(color: appColors.loadingScreen);
+
     return GestureDetector(
       onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
       child: AnnotatedRegion<SystemUiOverlayStyle>(

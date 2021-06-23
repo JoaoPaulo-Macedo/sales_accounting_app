@@ -8,11 +8,13 @@ class ThemeViewModel {
   ThemeViewModel(this.storage);
 
   final LocalStorage storage;
-  ValueNotifier<ThemeMode> theme = AppConfig.singleton.themeMode;
+  ValueNotifier<ThemeMode> themeMode = AppConfig.singleton.themeMode;
 
   Future init() async {
     await storage.get('theme').then(
-      (value) {
+      (value) async {
+        AppConfig.singleton.checkedStorage = true;
+
         if (value != null) {
           ThemeMode configTheme;
           switch (value) {
@@ -30,7 +32,7 @@ class ThemeViewModel {
               print("Throw error"); //TODO: Throw error.
               break;
           }
-          theme.value = configTheme;
+          themeMode.value = configTheme;
           //TODO: The auto theme is being set before verifing the local storage...
         }
       },
@@ -40,15 +42,18 @@ class ThemeViewModel {
   void changeTheme() {
     ThemeMode value;
 
-    if (theme.value == ThemeMode.system) value = ThemeMode.light;
-    else if (theme.value == ThemeMode.light) value = ThemeMode.dark;
-    else if (theme.value == ThemeMode.dark) value = ThemeMode.system;
+    if (themeMode.value == ThemeMode.system)
+      value = ThemeMode.light;
+    else if (themeMode.value == ThemeMode.light)
+      value = ThemeMode.dark;
+    else if (themeMode.value == ThemeMode.dark)
+      value = ThemeMode.system;
     else {
       value = ThemeMode.system;
       print("Throw error"); //Throw error.
     }
 
-    theme.value = value;
+    themeMode.value = value;
     storage.put('theme', value);
   }
 }
