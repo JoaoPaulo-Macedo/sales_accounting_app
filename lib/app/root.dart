@@ -10,14 +10,11 @@ class Root extends StatelessWidget {
     return ValueListenableBuilder<ThemeSwitch>(
       valueListenable: RootController.instance.changeTheme.theme,
       builder: (context, value, child) {
-        print('Before');
         if (value == null) return null;
-        print('After');
-
+        
         ThemeMode themeMode;
         if (value == ThemeSwitch.light) themeMode = ThemeMode.light;
         else if (value == ThemeSwitch.dark) themeMode = ThemeMode.dark;
-        print('$themeMode');
 
         return MaterialApp(
           title: 'Flutter Demo',

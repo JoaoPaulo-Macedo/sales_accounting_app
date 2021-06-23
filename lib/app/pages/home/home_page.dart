@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:lucky_triangle/app/design/app_designs.dart';
 import 'package:lucky_triangle/app/pages/home/widgets/app_info_icon.dart';
+import 'package:lucky_triangle/app/pages/home/widgets/debt_card.dart';
+import 'package:lucky_triangle/app/pages/home/widgets/info_card.dart';
+import 'package:lucky_triangle/app/pages/home/widgets/price_card.dart';
+import 'package:lucky_triangle/app/pages/home/widgets/textfield_card.dart';
 import 'package:lucky_triangle/app/root_controller.dart';
 import 'enum.dart';
 
@@ -15,12 +19,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final double smallSpacing = 6;
-  final double bigSpacing = 17;
-  final double fontSize = 18;
-  final double iconSize = 25;
-  final double cardHeight = 68;
-
   final FocusNode totalFocus = FocusNode();
   final FocusNode saleFocus = FocusNode();
   final FocusNode devolutionFocus = FocusNode();
@@ -28,8 +26,7 @@ class _HomePageState extends State<HomePage> {
   final FocusNode moneyFocus = FocusNode();
   final FocusNode depositFocus = FocusNode();
 
-  final EdgeInsets cardPadding = const EdgeInsets.fromLTRB(5, 5, 0, 5);
-
+  AppSizes get appSizes => AppSizes.singleton;
   AppColors get appColors => AppColors.of(context);
   AppDecoration get appDecorations => AppDecoration.of(context);
 
@@ -77,7 +74,7 @@ class _HomePageState extends State<HomePage> {
                         RootController.instance.changeTheme.changeTheme();
                       },
                     ),
-                    _textFieldCard(
+                    TextFieldCard(
                       title: 'Total de Cartelas',
                       prefixIcon: Icons.zoom_out_rounded,
                       controller: totalCtrl,
@@ -86,8 +83,8 @@ class _HomePageState extends State<HomePage> {
                         text: 'Informe o total de cartelas pegas para a distribuição.',
                       ),
                     ),
-                    SizedBox(height: smallSpacing),
-                    _textFieldCard(
+                    SizedBox(height: appSizes.smallSpacing),
+                    TextFieldCard(
                       title: 'Venda',
                       prefixIcon: Icons.add_chart,
                       controller: soldCtrl,
@@ -96,11 +93,11 @@ class _HomePageState extends State<HomePage> {
                         text: 'Informe o total de cartelas vendidas.',
                       ),
                     ),
-                    SizedBox(height: smallSpacing),
+                    SizedBox(height: appSizes.smallSpacing),
                     Row(
                       children: [
                         Expanded(
-                          child: _textFieldCard(
+                          child: TextFieldCard(
                             title: 'Devolução',
                             fieldFontSize: 15,
                             prefixIcon: Icons.add_chart,
@@ -111,9 +108,9 @@ class _HomePageState extends State<HomePage> {
                             ),
                           ),
                         ),
-                        SizedBox(width: smallSpacing),
+                        SizedBox(width: appSizes.smallSpacing),
                         Expanded(
-                          child: _textFieldCard(
+                          child: TextFieldCard(
                             title: 'Faltas',
                             fieldFontSize: 15,
                             prefixIcon: Icons.zoom_out_rounded,
@@ -126,8 +123,8 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ],
                     ),
-                    SizedBox(height: bigSpacing),
-                    _textFieldCard(
+                    SizedBox(height: appSizes.bigSpacing),
+                    TextFieldCard(
                       title: 'Adiantamento',
                       prefixIcon: Icons.attach_money_rounded,
                       controller: paidCtrl,
@@ -137,8 +134,8 @@ class _HomePageState extends State<HomePage> {
                         text: 'Informe os adiantamentos em dinheiro.',
                       ),
                     ),
-                    SizedBox(height: smallSpacing),
-                    _textFieldCard(
+                    SizedBox(height: appSizes.smallSpacing),
+                    TextFieldCard(
                       title: 'Depósitos',
                       prefixIcon: Icons.post_add_rounded,
                       controller: depositCtrl,
@@ -148,11 +145,11 @@ class _HomePageState extends State<HomePage> {
                         text: 'Informe os depósitos.',
                       ),
                     ),
-                    SizedBox(height: smallSpacing),
+                    SizedBox(height: appSizes.smallSpacing),
                     Row(
                       children: [
                         Expanded(
-                          child: _appCard(
+                          child: InfoCard(
                             title: 'Imposto',
                             prefixIcon: Icons.post_add_rounded,
                             controller: taxCtrl,
@@ -167,9 +164,9 @@ class _HomePageState extends State<HomePage> {
                             },
                           ),
                         ),
-                        SizedBox(width: smallSpacing),
+                        SizedBox(width: appSizes.smallSpacing),
                         Expanded(
-                          child: _appCard(
+                          child: InfoCard(
                             title: 'Ajuda de Custo',
                             prefixIcon: Icons.post_add_rounded,
                             controller: allowanceCtrl,
@@ -186,243 +183,13 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ],
                     ),
-                    SizedBox(height: bigSpacing),
-                    _priceCard('Preço da Cartela'),
-                    _debtCard(debt),
+                    SizedBox(height: appSizes.bigSpacing),
+                    PriceCard(title: 'Preço da Cartela', selected: selected),
+                    DebtCard(widgetDebt: debt, errorMessage: errorMessage),
                   ],
                 ),
               ),
             ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _textFieldCard({
-    @required String title,
-    @required FocusNode focus,
-    @required IconData prefixIcon,
-    @required AppInfoIcon cardInfo,
-    @required TextEditingController controller,
-    Function function,
-    double fieldFontSize,
-    bool formatAsMoney = false,
-  }) {
-    return GestureDetector(
-      child: Container(
-        height: cardHeight,
-        decoration: AppDecoration.of(context).appTextBoxDecoration,
-        child: Padding(
-          padding: cardPadding,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Icon(
-                prefixIcon,
-                color: appColors.redColor,
-                size: iconSize,
-              ),
-              SizedBox(width: 5),
-              Expanded(
-                child: TextField(
-                  controller: controller,
-                  keyboardType: TextInputType.number,
-                  focusNode: focus,
-                  decoration: InputDecoration(
-                    border: InputBorder.none,
-                    labelText: title,
-                    labelStyle: TextStyle(
-                      fontSize: fieldFontSize ?? fontSize,
-                      color: appColors.textColor,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  cursorColor: Colors.black,
-                  onChanged: (_) => calculate(function: function),
-                  onSubmitted: (_) => calculate(function: function),
-                ),
-              ),
-              SizedBox(width: 10),
-              cardInfo,
-            ],
-          ),
-        ),
-      ),
-      onTap: () => focus.requestFocus(),
-      onLongPress: () => print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"),
-    );
-  }
-
-  Widget _priceCard(String title) {
-    Widget _price(int price, Selected selection) {
-      return Container(
-        decoration: BoxDecoration(
-          color: selection == selected ? appColors.priceCardColor : appColors.disabledColor,
-          borderRadius: BorderRadius.circular(100),
-          boxShadow: selection == selected ? appDecorations.priceShadow : null,
-        ),
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(100),
-          child: TextButton(
-            style: ButtonStyle(
-              padding: MaterialStateProperty.all(EdgeInsets.zero),
-              minimumSize: MaterialStateProperty.all(Size(55, 55)),
-              overlayColor: MaterialStateProperty.all(Colors.transparent),
-            ),
-            child: Text(
-              '${price.toString()},00',
-              style: TextStyle(
-                fontSize: selection == selected ? 19 : 16,
-                color: selection == selected ? appColors.redColor : appColors.textColor,
-              ),
-            ),
-            onPressed: () {
-              setState(() {
-                if (selected == selection) FocusScope.of(context).requestFocus(FocusNode());
-                selected = selection;
-                calculate();
-              });
-            },
-          ),
-        ),
-      );
-    }
-
-    return Container(
-      decoration: appDecorations.appPriceBoxDecoration,
-      child: Padding(
-        padding: const EdgeInsets.all(10),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Text(
-              title,
-              style: TextStyle(
-                fontSize: fontSize,
-                color: appColors.textColor,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            SizedBox(height: smallSpacing),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                _price(10, Selected.ten),
-                _price(15, Selected.fifteen),
-                _price(20, Selected.twenty),
-                _price(25, Selected.twentyFive),
-                _price(30, Selected.thirty),
-              ],
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _debtCard(double debt) {
-    String text = "";
-    String finalDebt = "";
-
-    if (errorMessage.isEmpty) {
-      text = debt >= -0.01 ? 'Pagar:' : 'Receber:';
-      if (debt < 0) debt = debt * -1;
-      finalDebt = debt.toStringAsFixed(2);
-    }
-
-    return Container(
-      width: double.infinity,
-      height: 50,
-      margin: EdgeInsets.fromLTRB(35, 20, 35, 0),
-      padding: EdgeInsets.fromLTRB(17, 10, 17, 10),
-      decoration: appDecorations.appDebtBoxDecoration,
-      child: errorMessage.isEmpty
-          ? Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  text,
-                  style: TextStyle(
-                    fontSize: 20,
-                    color: appColors.textColor,
-                    fontWeight: FontWeight.bold,
-                    fontFamily: 'VarelaRound',
-                  ),
-                ),
-                Text(
-                  'R\$ $finalDebt',
-                  style: TextStyle(
-                    fontSize: 20,
-                    color: appColors.textColor,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ],
-            )
-          : Center(
-              child: Text(
-                errorMessage,
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 13,
-                  color: appColors.redColor,
-                  fontWeight: FontWeight.bold,
-                  fontFamily: 'VarelaRound',
-                ),
-                textScaleFactor: 1,
-              ),
-            ),
-    );
-  }
-
-  Widget _appCard({
-    @required String title,
-    @required TextEditingController controller,
-    @required IconData prefixIcon,
-    AppInfoIcon cardInfo,
-    double fieldFontSize,
-    var function,
-  }) {
-    return GestureDetector(
-      child: Container(
-        height: cardHeight,
-        decoration: AppDecoration.of(context).appTextBoxDecoration,
-        child: Padding(
-          padding: cardPadding,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Icon(
-                prefixIcon,
-                color: appColors.redColor,
-                size: iconSize,
-              ),
-              SizedBox(width: 5),
-              Expanded(
-                child: TextField(
-                  readOnly: true,
-                  controller: controller,
-                  keyboardType: TextInputType.number,
-                  decoration: InputDecoration(
-                    border: InputBorder.none,
-                    labelText: title,
-                    labelStyle: TextStyle(
-                      fontSize: fieldFontSize ?? fontSize,
-                      color: appColors.textColor,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  cursorColor: Colors.black,
-                  onChanged: (_) => calculate(),
-                  onSubmitted: (_) => calculate(),
-                ),
-              ),
-              // SizedBox(width: 10),
-              // cardInfo,
-            ],
           ),
         ),
       ),

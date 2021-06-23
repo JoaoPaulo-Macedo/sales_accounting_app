@@ -15,6 +15,15 @@ Singleton:
 -A singleton allows you to access the same instace with the same state anywhere.
 -By making the constructor private you prevent it from being initialized and stop being a singleton.
 -By making instance as final you prevent it from being changed.
+--static final RootController instance = RootController._();
+
+A .of(context) class:
+class AppColors {
+  AppColors._(this.context);
+  final BuildContext context;
+
+  factory AppColors.of(BuildContext context) => AppColors._(context);
+}
 
 Interface:
 -Always set the variable as the interface and then instantiate some of this interface's implementation:
@@ -26,3 +35,6 @@ Some packages for storing local data:
 -sqlite
 -many more...
 Before storing, the data is only on the app state, it means in the RAM memory. => Search if it is correct.
+
+Services: local work
+Repository: remote work
