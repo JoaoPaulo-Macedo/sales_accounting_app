@@ -2,6 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:lucky_triangle/app/models/app_config.dart';
 import 'package:lucky_triangle/app/root_controller.dart';
 
+class AppColors {
+  AppColors._(this.context);
+  final BuildContext context;
+
+  factory AppColors.of(BuildContext context) => AppColors._(context);
+
+  bool get isDarkMode => Theme.of(context).brightness == Brightness.dark;
+
+  Color get redColor => isDarkMode ? Colors.red : Colors.red[900];
+  Color get textColor => isDarkMode ? Colors.grey[300] : Colors.grey[700];
+  Color get cardColor => isDarkMode ? Color.fromARGB(255, 43, 40, 46) : Colors.white;
+  Color get priceCardColor => isDarkMode ? Color.fromARGB(255, 51, 48, 54) : Colors.white;
+  Color get disabledColor => isDarkMode ? Color.fromARGB(255, 48, 45, 51) : Colors.grey[100];
+}
+
 class AppDecoration {
   AppDecoration._(this.context);
   final BuildContext context;
@@ -9,7 +24,7 @@ class AppDecoration {
   factory AppDecoration.of(BuildContext context) => AppDecoration._(context);
 
   AppColors get appColors => AppColors.of(context);
-  bool get isDarkMode => MediaQuery.of(context).platformBrightness == Brightness.dark;
+  bool get isDarkMode => Theme.of(context).brightness == Brightness.dark;
 
   List<BoxShadow> get appShadow => [
         BoxShadow(
@@ -48,22 +63,6 @@ class AppDecoration {
         borderRadius: BorderRadius.circular(100),
         boxShadow: isDarkMode ? null : appShadow,
       );
-}
-
-class AppColors {
-  AppColors._(this.context);
-  final BuildContext context;
-
-  factory AppColors.of(BuildContext context) => AppColors._(context);
-
-  // bool get isDarkMode => MediaQuery.of(context).platformBrightness == Brightness.dark;
-  bool get isDarkMode => Theme.of(context).brightness == Brightness.dark;
-
-  Color get redColor => isDarkMode ? Colors.red : Colors.red[900];
-  Color get textColor => isDarkMode ? Colors.grey[300] : Colors.grey[700];
-  Color get cardColor => isDarkMode ? Color.fromARGB(255, 43, 40, 46) : Colors.white;
-  Color get priceCardColor => isDarkMode ? Color.fromARGB(255, 51, 48, 54) : Colors.white;
-  Color get disabledColor => isDarkMode ? Color.fromARGB(255, 48, 45, 51) : Colors.grey[100];
 }
 
 class AppSizes {

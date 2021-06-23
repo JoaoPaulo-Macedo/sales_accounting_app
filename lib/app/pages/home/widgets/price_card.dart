@@ -84,7 +84,7 @@ class PriceCard extends StatelessWidget {
   }
 }
 
-class PricedCard extends StatefulWidget {
+/* class PricedCard extends StatefulWidget {
   PricedCard({
     @required this.title,
     @required this.context,
@@ -168,4 +168,4 @@ class _PricedCardState extends State<PricedCard> {
       ),
     );
   }
-}
+} */

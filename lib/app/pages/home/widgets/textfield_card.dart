@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lucky_triangle/app/design/app_designs.dart';
 import 'app_info_icon.dart';
 
 class TextFieldCard extends StatelessWidget {
@@ -21,9 +22,55 @@ class TextFieldCard extends StatelessWidget {
   final Function function;
   final double fieldFontSize;
   final bool formatAsMoney;
+  final AppSizes appSizes = AppSizes.singleton;
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    AppColors appColors = AppColors.of(context);
+
+    return GestureDetector(
+      child: Container(
+        height: appSizes.cardHeight,
+        decoration: AppDecoration.of(context).appTextBoxDecoration,
+        child: Padding(
+          padding: appSizes.cardPadding,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Icon(
+                prefixIcon,
+                color: appColors.redColor,
+                size: appSizes.iconSize,
+              ),
+              SizedBox(width: 5),
+              Expanded(
+                child: TextField(
+                  controller: controller,
+                  keyboardType: TextInputType.number,
+                  focusNode: focus,
+                  decoration: InputDecoration(
+                    border: InputBorder.none,
+                    labelText: title,
+                    labelStyle: TextStyle(
+                      fontSize: fieldFontSize ?? appSizes.fontSize,
+                      color: appColors.textColor,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  cursorColor: Colors.black,
+                  // onChanged: (_) => calculate(function: function),
+                  // onSubmitted: (_) => calculate(function: function),
+                ),
+              ),
+              SizedBox(width: 10),
+              cardInfo,
+            ],
+          ),
+        ),
+      ),
+      onTap: () => focus.requestFocus(),
+      onLongPress: () => print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"),
+    );
   }
 }

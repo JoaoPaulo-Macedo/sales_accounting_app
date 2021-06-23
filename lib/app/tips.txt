@@ -1,35 +1,37 @@
 Use stateful as a pattern for pages.
 Use Statelles as a pattern for components/widgets.
 
-MediaQuery.of(context).padding.top = get the app status bar size.
+MediaQuery.of(context).padding.top = the app status bar size.
+MediaQuery.of(context).platformBrightness =  the current platform brightness.
+Theme.of(context).brightness = the current context's brightness, can be different from device's one.
 
-Bookmarks:
-ctrl + alt + k = toogle bookmark.
-ctrl + alt + j = previous.
-ctrl + alt + l = next.
-ctrl + alt + h = list all bookmarks.
+BOOKMARKS:
+alt + k = toogle bookmark.
+alt + \ = previous.
+alt + z = next.
+alt + x = list bookmarks from file.
 ctrl + alt + 5 = list from all files.
-ctrl + alt + c = clear all bookmarks.
+ctrl + shift + alt + c = clear all bookmarks.
 
-Singleton:
+SINGLETON:
 -A singleton allows you to access the same instace with the same state anywhere.
 -By making the constructor private you prevent it from being initialized and stop being a singleton.
 -By making instance as final you prevent it from being changed.
 --static final RootController instance = RootController._();
 
-A .of(context) class:
-class AppColors {
-  AppColors._(this.context);
-  final BuildContext context;
+A .OF(CONTEXT) CLASS:
+-class AppColors {
+-  AppColors._(this.context);
+-  final BuildContext context;
+-
+-  factory AppColors.of(BuildContext context) => AppColors._(context);
+-}
 
-  factory AppColors.of(BuildContext context) => AppColors._(context);
-}
-
-Interface:
+INTERFACE:
 -Always set the variable as the interface and then instantiate some of this interface's implementation:
 --final LocalStorageInterface storage = LocalStorage();
 
-Some packages for storing local data:
+SOME PACKAGES FOR STORING LOCAL DATA:
 -shared preferences
 -hive
 -sqlite
