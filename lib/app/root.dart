@@ -1,20 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:lucky_triangle/app/root_controller.dart';
-import 'models/app_config.dart';
 import 'pages/home/home_page.dart';
 
 class Root extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     //Difference ValueListenableBuilder, StreamBuilder, HeritedWidget
-    return ValueListenableBuilder<ThemeSwitch>(
-      valueListenable: RootController.instance.changeTheme.theme,
+    return ValueListenableBuilder<ThemeMode>(
+      valueListenable: RootController.instance.themeController.theme, //Change the notifier
       builder: (context, value, child) {
-        if (value == null) return null;
-        
-        ThemeMode themeMode;
-        if (value == ThemeSwitch.light) themeMode = ThemeMode.light;
-        else if (value == ThemeSwitch.dark) themeMode = ThemeMode.dark;
+        if (value == null) return Container();
+
+        ThemeMode themeMode = ThemeMode.system;
+        if (value == ThemeMode.light) themeMode = ThemeMode.light;
+        else if (value == ThemeMode.dark) themeMode = ThemeMode.dark;
 
         return MaterialApp(
           title: 'Flutter Demo',

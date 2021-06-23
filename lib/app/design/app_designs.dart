@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:lucky_triangle/app/models/app_config.dart';
-import 'package:lucky_triangle/app/root_controller.dart';
 
 class AppColors {
   AppColors._(this.context);
@@ -68,7 +66,7 @@ class AppDecoration {
 class AppSizes {
   AppSizes._();
 
-  static final singleton = AppSizes._();
+  static final AppSizes singleton = AppSizes._();
 
   final double smallSpacing = 6;
   final double bigSpacing = 17;

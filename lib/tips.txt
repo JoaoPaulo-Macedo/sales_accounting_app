@@ -19,7 +19,7 @@ SINGLETON:
 -By making instance as final you prevent it from being changed.
 --static final RootController instance = RootController._();
 
-A .OF(CONTEXT) CLASS:
+.OF(CONTEXT) CLASS:
 -class AppColors {
 -  AppColors._(this.context);
 -  final BuildContext context;

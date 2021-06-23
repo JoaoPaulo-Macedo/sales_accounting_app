@@ -7,7 +7,7 @@ import 'package:lucky_triangle/app/pages/home/widgets/info_card.dart';
 import 'package:lucky_triangle/app/pages/home/widgets/price_card.dart';
 import 'package:lucky_triangle/app/pages/home/widgets/textfield_card.dart';
 import 'package:lucky_triangle/app/root_controller.dart';
-import 'enum.dart';
+import 'home_controller.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key key, this.title}) : super(key: key);
@@ -19,35 +19,18 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final FocusNode totalFocus = FocusNode();
-  final FocusNode saleFocus = FocusNode();
-  final FocusNode devolutionFocus = FocusNode();
-  final FocusNode missingFocus = FocusNode();
-  final FocusNode moneyFocus = FocusNode();
-  final FocusNode depositFocus = FocusNode();
-
   AppSizes get appSizes => AppSizes.singleton;
   AppColors get appColors => AppColors.of(context);
   AppDecoration get appDecorations => AppDecoration.of(context);
 
-  double debt = 0;
-  Selected selected = Selected.none;
-  String errorMessage = 'Informe o \"Total de Cartelas\" e a \"Venda\"';
-  TextEditingController totalCtrl = TextEditingController();
-  TextEditingController soldCtrl = TextEditingController();
-  TextEditingController devCtrl = TextEditingController();
-  TextEditingController missCtrl = TextEditingController();
-  TextEditingController paidCtrl = TextEditingController();
-  TextEditingController depositCtrl = TextEditingController();
-  TextEditingController taxCtrl = TextEditingController();
-  TextEditingController allowanceCtrl = TextEditingController();
+  final HomeController controller = HomeController();
 
   @override
   void initState() {
     super.initState();
 
-    taxCtrl.text = '11';
-    allowanceCtrl.text = '200';
+    controller.taxCtrl.text = '11';
+    controller.allowanceCtrl.text = '200';
   }
 
   @override
@@ -71,14 +54,14 @@ class _HomePageState extends State<HomePage> {
                         color: Colors.red,
                       ),
                       onTap: () {
-                        RootController.instance.changeTheme.changeTheme();
+                        RootController.instance.themeController.changeTheme();
                       },
                     ),
                     TextFieldCard(
                       title: 'Total de Cartelas',
                       prefixIcon: Icons.zoom_out_rounded,
-                      controller: totalCtrl,
-                      focus: totalFocus,
+                      controller: controller.totalCtrl,
+                      focus: controller.totalFocus,
                       cardInfo: AppInfoIcon(
                         text: 'Informe o total de cartelas pegas para a distribuição.',
                       ),
@@ -87,8 +70,8 @@ class _HomePageState extends State<HomePage> {
                     TextFieldCard(
                       title: 'Venda',
                       prefixIcon: Icons.add_chart,
-                      controller: soldCtrl,
-                      focus: saleFocus,
+                      controller: controller.soldCtrl,
+                      focus: controller.saleFocus,
                       cardInfo: AppInfoIcon(
                         text: 'Informe o total de cartelas vendidas.',
                       ),
@@ -101,8 +84,8 @@ class _HomePageState extends State<HomePage> {
                             title: 'Devolução',
                             fieldFontSize: 15,
                             prefixIcon: Icons.add_chart,
-                            controller: devCtrl,
-                            focus: devolutionFocus,
+                            controller: controller.devCtrl,
+                            focus: controller.devolutionFocus,
                             cardInfo: AppInfoIcon(
                               text: 'Informe o total de cartelas devolvidas.',
                             ),
@@ -114,8 +97,8 @@ class _HomePageState extends State<HomePage> {
                             title: 'Faltas',
                             fieldFontSize: 15,
                             prefixIcon: Icons.zoom_out_rounded,
-                            controller: missCtrl,
-                            focus: missingFocus,
+                            controller: controller.missCtrl,
+                            focus: controller.missingFocus,
                             cardInfo: AppInfoIcon(
                               text: 'Informe o total de cartelas em falta.',
                             ),
@@ -127,9 +110,9 @@ class _HomePageState extends State<HomePage> {
                     TextFieldCard(
                       title: 'Adiantamento',
                       prefixIcon: Icons.attach_money_rounded,
-                      controller: paidCtrl,
+                      controller: controller.paidCtrl,
                       formatAsMoney: true,
-                      focus: moneyFocus,
+                      focus: controller.moneyFocus,
                       cardInfo: AppInfoIcon(
                         text: 'Informe os adiantamentos em dinheiro.',
                       ),
@@ -138,9 +121,9 @@ class _HomePageState extends State<HomePage> {
                     TextFieldCard(
                       title: 'Depósitos',
                       prefixIcon: Icons.post_add_rounded,
-                      controller: depositCtrl,
+                      controller: controller.depositCtrl,
                       formatAsMoney: true,
-                      focus: depositFocus,
+                      focus: controller.depositFocus,
                       cardInfo: AppInfoIcon(
                         text: 'Informe os depósitos.',
                       ),
@@ -152,7 +135,7 @@ class _HomePageState extends State<HomePage> {
                           child: InfoCard(
                             title: 'Imposto',
                             prefixIcon: Icons.post_add_rounded,
-                            controller: taxCtrl,
+                            controller: controller.taxCtrl,
                             function: () {
                               setState(() {});
                               showDialog(
@@ -169,7 +152,7 @@ class _HomePageState extends State<HomePage> {
                           child: InfoCard(
                             title: 'Ajuda de Custo',
                             prefixIcon: Icons.post_add_rounded,
-                            controller: allowanceCtrl,
+                            controller: controller.allowanceCtrl,
                             function: () {
                               setState(() {});
                               showDialog(
@@ -184,8 +167,8 @@ class _HomePageState extends State<HomePage> {
                       ],
                     ),
                     SizedBox(height: appSizes.bigSpacing),
-                    PriceCard(title: 'Preço da Cartela', selected: selected),
-                    DebtCard(widgetDebt: debt, errorMessage: errorMessage),
+                    PriceCard(title: 'Preço da Cartela', selected: controller.selected),
+                    DebtCard(widgetDebt: controller.debt, errorMessage: controller.errorMessage),
                   ],
                 ),
               ),
@@ -194,95 +177,5 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
     );
-  }
-
-  double devolution;
-  double missing;
-
-  void calculate({Function function}) {
-    setState(() {
-      if (function != null) function();
-
-      String holdText = totalCtrl.text.trim();
-      String soldText = soldCtrl.text.trim();
-
-      if (holdText == '' || soldText == '') {
-        errorMessage = 'Informe o \"Total de Cartelas\" e a \"Venda\"';
-        return;
-      }
-      if (double.parse(holdText) < double.parse(soldText)) {
-        errorMessage = '\"Venda\" não pode ser maior que \"Total de Cartelas\"';
-        return;
-      }
-
-      if (double.parse(taxCtrl.text.trim()) < 0) {
-        errorMessage = '\"Imposto\" não pode ser negativo';
-        return;
-      }
-
-      //TODO: Pass all verifications to another file.
-      //TODO: If Missing pass of 10 ask if he is sure.
-
-      errorMessage = '';
-
-      double hold = double.parse(holdText);
-      double sold = double.parse(soldText);
-      double price;
-      double paid = 0;
-      double taxRate = 0;
-      double deposits = 0;
-      double allowance = 0;
-      //Devolution
-      if (devCtrl.text.trim() != '' && devolutionFocus.hasFocus) {
-        devolution = double.parse(devCtrl.text.trim());
-
-        missing = hold - sold - devolution;
-        missCtrl.text = (hold - sold - devolution).toStringAsFixed(0);
-      } //
-      else if (missCtrl.text.trim() != '' && missingFocus.hasFocus) {
-        missing = double.parse(missCtrl.text.trim());
-
-        devolution = hold - sold - missing;
-        devCtrl.text = (hold - sold - missing).toStringAsFixed(0);
-      } //
-      else if (devCtrl.text.trim() == '' || missCtrl.text.trim() == '') {
-        devolution = hold - sold;
-        missing = hold - sold - devolution;
-
-        missCtrl.text = '';
-        devCtrl.text = '';
-      }
-      //Select Card Price
-      if (selected == Selected.none) {
-        errorMessage = 'Selecione o Preço da Cartela';
-        return;
-      }
-
-      //Money
-      if (paidCtrl.text.trim() != '') paid = double.parse(paidCtrl.text.trim());
-      //Deposits
-      if (depositCtrl.text.trim() != '') deposits = double.parse(depositCtrl.text.trim());
-      //Tax
-      if (taxCtrl.text.trim() != '') taxRate = double.parse(taxCtrl.text.trim()) / 100;
-      //Allowance
-      if (allowanceCtrl.text.trim() != '') allowance = double.parse(allowanceCtrl.text.trim());
-      //Selected
-      if (selected == Selected.ten)
-        price = 10;
-      else if (selected == Selected.fifteen)
-        price = 15;
-      else if (selected == Selected.twenty)
-        price = 20;
-      else if (selected == Selected.twentyFive)
-        price = 25;
-      else if (selected == Selected.thirty) price = 30;
-
-      double grossDebt = sold * (price * 0.82);
-      double earnRate = price * 0.08;
-      double taxDebt = (sold * earnRate) * taxRate;
-      double missingDebt = missing > 0 ? missing * price : 0;
-
-      debt = grossDebt + missingDebt + taxDebt - paid - deposits - allowance;
-    });
   }
 }

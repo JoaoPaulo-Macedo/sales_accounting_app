@@ -1,5 +1,5 @@
+import 'package:flutter/material.dart';
 import 'package:lucky_triangle/app/interfaces/local_storage_interface.dart';
-import 'package:lucky_triangle/app/models/app_config.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LocalStorage implements LocalStorageInterface {
@@ -18,7 +18,7 @@ class LocalStorage implements LocalStorageInterface {
   @override
   Future put(String key, dynamic value) async {
     var shared = await SharedPreferences.getInstance();
-    if (value is ThemeSwitch) {
+    if (value is ThemeMode) {
       shared.setString(key, value.toString());
     }
   }
