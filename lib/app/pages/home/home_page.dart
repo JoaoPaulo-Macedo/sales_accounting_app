@@ -36,11 +36,14 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    print('========');
+    print('config: ${AppConfig.singleton.themeMode.value}');
+    print('theme: ${Theme.of(context).brightness}');
     if (AppConfig.singleton.checkedStorage == false) return Container(color: appColors.loadingScreen);
     // This one was necessary because Flutter was rendering screen with old brightness, eventhough it was already
     // changed by listenable builder.
     if (Theme.of(context).brightness != AppConfig.singleton.themeModeToBrightness(context))
-      return Container(color: appColors.loadingScreen);
+      Theme.of(context).brightness == AppConfig.singleton.themeMode.value;
 
     return GestureDetector(
       onTap: () => FocusScope.of(context).requestFocus(FocusNode()),

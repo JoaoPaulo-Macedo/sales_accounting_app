@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lucky_triangle/app/models/app_config.dart';
 import 'package:lucky_triangle/app/root_controller.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'pages/home/home_page.dart';
 
 class Root extends StatelessWidget {
@@ -12,10 +13,13 @@ class Root extends StatelessWidget {
       builder: (context, value, child) {
         if (value == null) return Container();
 
-        ThemeMode themeMode = ThemeMode.system;
+        ThemeMode themeMode = AppConfig.singleton.themeMode.value;
         if (value == ThemeMode.light)
           themeMode = ThemeMode.light;
         else if (value == ThemeMode.dark) themeMode = ThemeMode.dark;
+        print('config: ${AppConfig.singleton.themeMode.value}');
+        print('value: $value');
+        print('theme: $themeMode');
 
         return MaterialApp(
           title: 'Flutter Demo',
