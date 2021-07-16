@@ -1,1 +1,3 @@
 Social media where there is communication between companies, truckers, localizations, ads, etc.
+
+Make a channel straight to the point, sem enrolação. Ex: How to add sqflite, go straight to it.

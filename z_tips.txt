@@ -1,6 +1,11 @@
 Use stateful as a pattern for pages.
 Use Statelles as a pattern for components/widgets.
 ============================================================================================================
+APK = Android 
+AAB = Android APP Bundle
+flutter build apk --release
+flutter build appbundle --release
+============================================================================================================
 MediaQuery.of(context).padding.top = the app status bar size.
 MediaQuery.of(context).platformBrightness =  the current platform brightness.
 Theme.of(context).brightness = the current context's brightness, can be different from device's one.
@@ -77,8 +82,9 @@ DATA BANK:
 --Query Language (Structured Querry Language)
 --Aditional Programs
 
--Empresarial Soluctions: Oracle, IBM, dBase, SQL Server...
--Free Soluctions: MySQL and MariaDB, PostgreSQL, SQLite...
+SOLUCTIONS:
+-Empresarial: Oracle, IBM, dBase, SQL Server...
+-Free: MySQL and MariaDB, PostgreSQL, SQLite...
 
 DDL definição, DML manipulação, MQL solicitações, DCL controle, DTL transações.
 DICA:
@@ -91,6 +97,8 @@ SQLite:
 -An SQL DB embedded (embutido), serverless (sem server), no configuration and transactional.
 -SQLite works directly on devices' disk.
 -Suitable for small amounts of data.
+
+-Operations take time, so they are async
 ============================================================================================================
 SERVICES: local work, local storage, local functionalities (bluetooth, etc)
 REPOSITORY: remote work
