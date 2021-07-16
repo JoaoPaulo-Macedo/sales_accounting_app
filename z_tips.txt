@@ -26,6 +26,12 @@ SINGLETON:
 ---RootController._();
 
 ---static final RootController instance = RootController._();
+or:
+---static RootController? controller;
+---factory RootController() {
+----if (controller == null) controller = RootController._();
+----return controller!;
+---}
 --}
 ============================================================================================================
 .OF(CONTEXT) CLASS:

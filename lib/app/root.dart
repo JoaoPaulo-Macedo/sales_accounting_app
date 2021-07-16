@@ -5,11 +5,15 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'pages/home/home_page.dart';
 
 class Root extends StatelessWidget {
+  RootController? controller;
+
   @override
   Widget build(BuildContext context) {
+    controller = RootController();
+
     //Difference ValueListenableBuilder, StreamBuilder, HeritedWidget
     return ValueListenableBuilder<ThemeMode>(
-      valueListenable: RootController.instance.themeController.themeMode, //Change the notifier
+      valueListenable: controller?.themeController.themeMode, //Change the notifier
       builder: (context, value, child) {
         if (value == null) return Container();
 
