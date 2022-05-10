@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:lucky_triangle/app/pages/home/home_page.dart';
+import 'package:lucky_triangle/app/presentation/pages/home/home_page.dart';
+import 'package:lucky_triangle/core/inject/inject.dart';
 import 'package:lucky_triangle/core/utils/routes_name.dart';
 
 void main() {
+  Inject.init();
+
   runApp(const MyApp());
 }
 

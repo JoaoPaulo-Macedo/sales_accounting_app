@@ -1,50 +1,40 @@
 import 'package:flutter/material.dart';
-import 'package:lucky_triangle/app/design/app_designs.dart';
-import 'app_info_icon.dart';
+import 'package:lucky_triangle/app/presentation/common/app_design.dart';
 
 class TextFieldCard extends StatelessWidget {
-  TextFieldCard({
+  const TextFieldCard({
     Key? key,
     required this.title,
     required this.focus,
     required this.prefixIcon,
     required this.controller,
-    this.function,
-    this.fieldFontSize,
+    this.fieldFontSize = 18,
     this.formatAsMoney = false,
-    this.cardInfo,
   }) : super(key: key);
 
   final String title;
   final FocusNode focus;
   final IconData prefixIcon;
-  final AppInfoIcon? cardInfo;
   final TextEditingController controller;
-  final Function? function;
-  final double? fieldFontSize;
+  final double fieldFontSize;
   final bool formatAsMoney;
-  final AppSizes appSizes = AppSizes.instance;
 
   @override
   Widget build(BuildContext context) {
-    AppColors appColors = AppColors.of(context);
-
+    var design = AppDesign();
+    
     return GestureDetector(
       child: Container(
-        height: appSizes.cardHeight,
-        decoration: AppDecoration.of(context).appTextBoxDecoration,
+        height: 63,
+        decoration: design.boxDecoration,
         child: Padding(
-          padding: appSizes.cardPadding,
+          padding: const EdgeInsets.fromLTRB(5, 5, 0, 5),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Icon(
-                prefixIcon,
-                color: appColors.redColor,
-                size: appSizes.iconSize,
-              ),
-              SizedBox(width: 5),
+              Icon(prefixIcon, color: Colors.red, size: 25),
+              const SizedBox(width: 5),
               Expanded(
                 child: TextField(
                   controller: controller,
@@ -54,24 +44,21 @@ class TextFieldCard extends StatelessWidget {
                     border: InputBorder.none,
                     labelText: title,
                     labelStyle: TextStyle(
-                      fontSize: fieldFontSize ?? appSizes.fontSize,
-                      color: appColors.textColor,
+                      fontSize: fieldFontSize,
+                      color: Colors.grey[300],
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                   cursorColor: Colors.black,
-                  // onChanged: (_) => calculate(function: function),
-                  // onSubmitted: (_) => calculate(function: function),
                 ),
               ),
-              SizedBox(width: 10),
+              const SizedBox(width: 10),
               // cardInfo,
             ],
           ),
         ),
       ),
       onTap: () => focus.requestFocus(),
-      onLongPress: () => print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"),
     );
   }
 }

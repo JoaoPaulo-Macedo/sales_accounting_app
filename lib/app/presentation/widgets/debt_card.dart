@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:lucky_triangle/app/design/app_designs.dart';
+import 'package:lucky_triangle/app/presentation/common/app_design.dart';
 
 class DebtCard extends StatelessWidget {
-  DebtCard({required this.widgetDebt, required this.errorMessage});
+  const DebtCard({Key? key, required this.widgetDebt, required this.errorMessage}) : super(key: key);
 
   final double widgetDebt;
   final String errorMessage;
@@ -12,8 +12,7 @@ class DebtCard extends StatelessWidget {
     String text = "";
     String finalDebt = "";
     double debt = widgetDebt;
-    AppDecoration appDecorations = AppDecoration.of(context);
-    AppColors appColors = AppColors.of(context);
+    var design = AppDesign();
 
     if (errorMessage.isEmpty) {
       text = debt >= -0.01 ? 'Pagar:' : 'Receber:';
@@ -26,7 +25,7 @@ class DebtCard extends StatelessWidget {
       // height: 50,
       margin: const EdgeInsets.symmetric(horizontal: 35),
       padding: const EdgeInsets.symmetric(horizontal: 17, vertical: 12),
-      decoration: appDecorations.appDebtBoxDecoration,
+      decoration: design.boxDecoration,
       child: errorMessage.isEmpty
           ? Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -35,7 +34,7 @@ class DebtCard extends StatelessWidget {
                   text,
                   style: TextStyle(
                     fontSize: 20,
-                    color: appColors.textColor,
+                    color: Colors.grey[300],
                     fontWeight: FontWeight.bold,
                     fontFamily: 'VarelaRound',
                   ),
@@ -44,7 +43,7 @@ class DebtCard extends StatelessWidget {
                   'R\$ $finalDebt',
                   style: TextStyle(
                     fontSize: 20,
-                    color: appColors.textColor,
+                    color: Colors.grey[300],
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -54,9 +53,9 @@ class DebtCard extends StatelessWidget {
               child: Text(
                 errorMessage,
                 textAlign: TextAlign.center,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 13,
-                  color: appColors.redColor,
+                  color: Colors.red,
                   fontWeight: FontWeight.bold,
                   fontFamily: 'VarelaRound',
                 ),

@@ -12,6 +12,7 @@ dependencies:
   shared_preferences: ^2.0.13
   bloc: ^8.0.2
   flutter_bloc: ^8.0.1
+  get_it: ^7.2.0
 
 dev_dependencies:
   flutter_test:
