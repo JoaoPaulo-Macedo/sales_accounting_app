@@ -1,7 +1,30 @@
 import 'package:flutter/material.dart';
-import 'package:lucky_triangle/app/root.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:lucky_triangle/app/pages/home/home_page.dart';
+import 'package:lucky_triangle/core/utils/routes_name.dart';
 
 void main() {
-  runApp(Root());
+  runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Flutter Demo',
+      theme: ThemeData.dark().copyWith(
+        scaffoldBackgroundColor: Colors.black,
+        drawerTheme: const DrawerThemeData(
+          backgroundColor: Colors.black87,
+          elevation: 0,
+        ),
+      ),
+      debugShowCheckedModeBanner: false,
+      initialRoute: RoutesName.initial,
+      routes: {
+        RoutesName.initial: (context) => const HomePage(),
+      },
+    );
+  }
 }

@@ -1,10 +1,8 @@
-# Simple App for my Business' Finance
+# lucky_triangle
 
-A Flutter project made for financial calculations.
+A new Flutter project.
 
 ## Getting Started
-
-That's all about finances.
 
 This project is a starting point for a Flutter application.
 

@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:lucky_triangle/app/pages/home/enum.dart';
+
+enum Selected { none, ten, fifteen, twenty, twentyFive, thirty }
 
 class HomeController {
   HomeController();
 
   double debt = 0;
-  double devolution;
-  double missing;
+  double devolution = 0;
+  double missing = 0;
   Selected selected = Selected.none;
   String errorMessage = 'Informe o \"Total de Cartelas\" e a \"Venda\"';
   final FocusNode totalFocus = FocusNode();
@@ -24,7 +25,7 @@ class HomeController {
   final TextEditingController taxCtrl = TextEditingController();
   final TextEditingController allowanceCtrl = TextEditingController();
 
-  void calculate({Function function}) {
+  void calculate({Function? function}) {
     // setState(() {
       if (function != null) function();
 
@@ -52,7 +53,7 @@ class HomeController {
 
       double hold = double.parse(holdText);
       double sold = double.parse(soldText);
-      double price;
+      double price = 0;
       double paid = 0;
       double taxRate = 0;
       double deposits = 0;

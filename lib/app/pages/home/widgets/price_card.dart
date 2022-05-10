@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:lucky_triangle/app/design/app_designs.dart';
-import '../enum.dart';
+import 'package:lucky_triangle/app/pages/home/home_controller.dart';
 
 class PriceCard extends StatelessWidget {
-  PriceCard({@required this.title, @required this.selected});
+  PriceCard({required this.title, required this.selected});
 
   final String title;
   final Selected selected;

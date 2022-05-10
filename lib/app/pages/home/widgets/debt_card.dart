@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lucky_triangle/app/design/app_designs.dart';
 
 class DebtCard extends StatelessWidget {
-  DebtCard({@required this.widgetDebt, @required this.errorMessage});
+  DebtCard({required this.widgetDebt, required this.errorMessage});
 
   final double widgetDebt;
   final String errorMessage;

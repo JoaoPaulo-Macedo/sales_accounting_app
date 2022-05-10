@@ -8,11 +8,11 @@ class AppColors {
 
   bool get isDarkMode => Theme.of(context).brightness == Brightness.dark;
 
-  Color get redColor => isDarkMode ? Colors.red : Colors.red[900];
-  Color get textColor => isDarkMode ? Colors.grey[300] : Colors.grey[700];
+  Color? get redColor => isDarkMode ? Colors.red : Colors.red[900];
+  Color? get textColor => isDarkMode ? Colors.grey[300] : Colors.grey[700];
   Color get cardColor => isDarkMode ? Color.fromARGB(255, 43, 40, 46) : Colors.white;
   Color get priceCardColor => isDarkMode ? Color.fromARGB(255, 51, 48, 54) : Colors.white;
-  Color get disabledColor => isDarkMode ? Color.fromARGB(255, 48, 45, 51) : Colors.grey[100];
+  Color? get disabledColor => isDarkMode ? Color.fromARGB(255, 48, 45, 51) : Colors.grey[100];
   Color get loadingScreen => Colors.blueGrey;
 }
 
@@ -34,7 +34,7 @@ class AppDecoration {
         )
       ];
 
-  List<BoxShadow> get priceShadow => isDarkMode
+  List<BoxShadow>? get priceShadow => isDarkMode
       ? null
       : [
           BoxShadow(

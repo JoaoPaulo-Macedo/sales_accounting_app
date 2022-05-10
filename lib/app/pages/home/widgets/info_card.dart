@@ -4,9 +4,9 @@ import 'app_info_icon.dart';
 
 class InfoCard extends StatelessWidget {
   InfoCard({
-    @required this.title,
-    @required this.prefixIcon,
-    @required this.controller,
+    required this.title,
+    required this.prefixIcon,
+    required this.controller,
     this.cardInfo,
     this.fieldFontSize,
     this.function,
@@ -15,9 +15,9 @@ class InfoCard extends StatelessWidget {
   final String title;
   final IconData prefixIcon;
   final TextEditingController controller;
-  final AppInfoIcon cardInfo;
-  final double fieldFontSize;
-  final Function function;
+  final AppInfoIcon? cardInfo;
+  final double? fieldFontSize;
+  final Function? function;
 
   @override
   Widget build(BuildContext context) {
