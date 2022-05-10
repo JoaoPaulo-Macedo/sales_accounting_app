@@ -33,10 +33,13 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    bool isKeyboardOpen = MediaQuery.of(context).viewInsets.bottom != 0;
+
     return GestureDetector(
       onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
       child: Scaffold(
         body: SingleChildScrollView(
+          physics: isKeyboardOpen ? null : const NeverScrollableScrollPhysics(),
           child: SizedBox(
             height: MediaQuery.of(context).size.height,
             child: SafeArea(

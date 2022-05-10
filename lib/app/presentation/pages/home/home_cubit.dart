@@ -32,7 +32,7 @@ class Calculated extends HomeState {
 
 class HomeCubit extends Cubit<HomeState> with HomeControllers {
   HomeCubit(this._getCommonValuesUseCase) : super(Loading()) {
-    _fetch();
+    _init();
   }
 
   final GetWeekCommonValuesUseCase _getCommonValuesUseCase;
@@ -47,12 +47,21 @@ class HomeCubit extends Cubit<HomeState> with HomeControllers {
   double? allowance;
   double? price;
 
-  void _fetch() async {
+  void _init() async {
     final values = await _getCommonValuesUseCase();
 
     totalCtrl.text = values?.totalCards.toString() ?? '';
     taxCtrl.text = values?.tax.toString() ?? '';
     allowanceCtrl.text = values?.allowance.toString() ?? '';
+
+    totalCtrl.addListener(() => _calculate());
+    soldCtrl.addListener(() => _calculate());
+    devCtrl.addListener(() => _calculate());
+    missCtrl.addListener(() => _calculate());
+    paidCtrl.addListener(() => _calculate());
+    depositCtrl.addListener(() => _calculate());
+    taxCtrl.addListener(() => _calculate());
+    allowanceCtrl.addListener(() => _calculate());
 
     emit(Fetched());
   }
@@ -110,8 +119,9 @@ class HomeCubit extends Cubit<HomeState> with HomeControllers {
   }
 
   void _calculate() {
-    print('calculate');
-
+    print('calc');
+    if (state.price == Price.none) return;
+    print('calc2');
     if (!_validateFields()) throw Exception();
 
     double grossDebt = sold! * (price! * 0.82);
