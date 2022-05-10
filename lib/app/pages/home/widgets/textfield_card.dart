@@ -22,7 +22,7 @@ class TextFieldCard extends StatelessWidget {
   final Function? function;
   final double? fieldFontSize;
   final bool formatAsMoney;
-  final AppSizes appSizes = AppSizes.singleton;
+  final AppSizes appSizes = AppSizes.instance;
 
   @override
   Widget build(BuildContext context) {

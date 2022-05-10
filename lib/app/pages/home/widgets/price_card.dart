@@ -7,7 +7,7 @@ class PriceCard extends StatelessWidget {
 
   final String title;
   final Selected selected;
-  final AppSizes appSizes = AppSizes.singleton;
+  final AppSizes appSizes = AppSizes.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -16,32 +16,30 @@ class PriceCard extends StatelessWidget {
 
     return Container(
       decoration: appDecorations.appPriceBoxDecoration,
-      child: Padding(
-        padding: const EdgeInsets.all(10),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Text(
-              title,
-              style: TextStyle(
-                fontSize: appSizes.fontSize,
-                color: appColors.textColor,
-                fontWeight: FontWeight.bold,
-              ),
+      padding: const EdgeInsets.all(10),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Text(
+            title,
+            style: TextStyle(
+              fontSize: appSizes.fontSize,
+              color: appColors.textColor,
+              fontWeight: FontWeight.bold,
             ),
-            SizedBox(height: appSizes.smallSpacing),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                _price(10, Selected.ten, context),
-                _price(15, Selected.fifteen, context),
-                _price(20, Selected.twenty, context),
-                _price(25, Selected.twentyFive, context),
-                _price(30, Selected.thirty, context),
-              ],
-            ),
-          ],
-        ),
+          ),
+          SizedBox(height: appSizes.smallSpacing),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              _price(10, Selected.ten, context),
+              _price(15, Selected.fifteen, context),
+              _price(20, Selected.twenty, context),
+              _price(25, Selected.twentyFive, context),
+              _price(30, Selected.thirty, context),
+            ],
+          ),
+        ],
       ),
     );
   }

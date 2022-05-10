@@ -67,12 +67,12 @@ class AppDecoration {
 class AppSizes {
   AppSizes._();
 
-  static final AppSizes singleton = AppSizes._();
+  static final AppSizes instance = AppSizes._();
 
   final double smallSpacing = 6;
   final double bigSpacing = 17;
   final double fontSize = 18;
   final double iconSize = 25;
-  final double cardHeight = 68;
+  final double cardHeight = 63;
   final EdgeInsets cardPadding = const EdgeInsets.fromLTRB(5, 5, 0, 5);
 }

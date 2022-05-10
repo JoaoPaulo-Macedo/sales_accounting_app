@@ -21,7 +21,7 @@ class InfoCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    AppSizes appSizes = AppSizes.singleton;
+    AppSizes appSizes = AppSizes.instance;
     AppColors appColors = AppColors.of(context);
 
     return GestureDetector(

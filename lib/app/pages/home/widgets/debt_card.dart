@@ -22,10 +22,10 @@ class DebtCard extends StatelessWidget {
     }
 
     return Container(
-      width: double.infinity,
-      height: 50,
-      margin: EdgeInsets.fromLTRB(35, 20, 35, 0),
-      padding: EdgeInsets.fromLTRB(17, 10, 17, 10),
+      // width: double.infinity,
+      // height: 50,
+      margin: const EdgeInsets.symmetric(horizontal: 35),
+      padding: const EdgeInsets.symmetric(horizontal: 17, vertical: 12),
       decoration: appDecorations.appDebtBoxDecoration,
       child: errorMessage.isEmpty
           ? Row(
