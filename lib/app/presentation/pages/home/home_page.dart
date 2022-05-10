@@ -59,7 +59,8 @@ class _HomePageState extends State<HomePage> {
                           ReckoningComponent(cubit),
                           DebtComponent(
                             price: state.price,
-                            reckoning: state.reckoning,
+                            situation: state.situation,
+                            debt: state.debt,
                             onPressed: cubit.changeSelected,
                           ),
                         ],

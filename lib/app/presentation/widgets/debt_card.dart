@@ -6,11 +6,11 @@ class DebtCard extends StatelessWidget {
   const DebtCard({
     Key? key,
     required this.value,
-    required this.reckoning,
+    required this.situation,
   }) : super(key: key);
 
   final double? value;
-  final Reckoning reckoning;
+  final Situation situation;
 
   @override
   Widget build(BuildContext context) {
@@ -23,19 +23,19 @@ class DebtCard extends StatelessWidget {
     if (this.value == null) {
       value = '';
     } else {
-      value = 'R\$ this.value';
+      value = 'R\$ ${this.value!.toStringAsFixed(2)}';
     }
 
-    switch (reckoning) {
-      case Reckoning.none:
+    switch (situation) {
+      case Situation.none:
         message = 'Preencha os campos';
         color = Colors.grey[300];
         break;
-      case Reckoning.debt:
+      case Situation.debt:
         message = 'Pagar';
         color = Colors.red;
         break;
-      case Reckoning.credit:
+      case Situation.credit:
         message = 'Receber';
         color = Colors.lightGreen[400];
         break;
@@ -46,63 +46,18 @@ class DebtCard extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 17, vertical: 12),
       decoration: design.boxDecoration,
       child: Row(
-        mainAxisAlignment: reckoning == Reckoning.none ? MainAxisAlignment.center : MainAxisAlignment.spaceBetween,
+        mainAxisAlignment: situation == Situation.none ? MainAxisAlignment.center : MainAxisAlignment.spaceBetween,
         children: [
           Text(
             message,
-            style: TextStyle(
-              fontSize: 20,
-              color: color,
-              fontWeight: FontWeight.bold,
-              fontFamily: 'VarelaRound',
-            ),
+            style: TextStyle(fontSize: 20, color: color, fontWeight: FontWeight.bold),
           ),
           Text(
             value,
-            style: TextStyle(
-              fontSize: 20,
-              color: color,
-              fontWeight: FontWeight.bold,
-            ),
+            style: TextStyle(fontSize: 20, color: color, fontWeight: FontWeight.bold),
           ),
         ],
       ),
-      /* child: errorMessage.isEmpty
-          ? Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  text,
-                  style: TextStyle(
-                    fontSize: 20,
-                    color: Colors.grey[300],
-                    fontWeight: FontWeight.bold,
-                    fontFamily: 'VarelaRound',
-                  ),
-                ),
-                Text(
-                  'R\$ $finalDebt',
-                  style: TextStyle(
-                    fontSize: 20,
-                    color: Colors.grey[300],
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ],
-            )
-          : Center(
-              child: Text(
-                errorMessage,
-                textAlign: TextAlign.center,
-                style: const TextStyle(
-                  fontSize: 13,
-                  color: Colors.red,
-                  fontWeight: FontWeight.bold,
-                  fontFamily: 'VarelaRound',
-                ),
-                textScaleFactor: 1,
-              ),
-            ), */
     );
   }
 }

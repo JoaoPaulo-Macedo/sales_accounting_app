@@ -8,12 +8,14 @@ class DebtComponent extends StatelessWidget {
   const DebtComponent({
     Key? key,
     required this.price,
-    required this.reckoning,
+    required this.situation,
+    required this.debt,
     required this.onPressed,
   }) : super(key: key);
 
   final Price price;
-  final Reckoning reckoning;
+  final Situation situation;
+  final double? debt;
   final Function(Price price) onPressed;
   final sizes = const AppSizes();
 
@@ -24,7 +26,7 @@ class DebtComponent extends StatelessWidget {
       children: [
         PriceCard(price: price, onPressed: onPressed),
         SizedBox(height: sizes.smallSpacing),
-        DebtCard(value: null, reckoning: reckoning),
+        DebtCard(value: debt, situation: situation),
       ],
     );
   }
