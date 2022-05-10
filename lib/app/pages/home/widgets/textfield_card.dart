@@ -4,20 +4,21 @@ import 'app_info_icon.dart';
 
 class TextFieldCard extends StatelessWidget {
   TextFieldCard({
+    Key? key,
     required this.title,
     required this.focus,
     required this.prefixIcon,
-    required this.cardInfo,
     required this.controller,
     this.function,
     this.fieldFontSize,
     this.formatAsMoney = false,
-  });
+    this.cardInfo,
+  }) : super(key: key);
 
   final String title;
   final FocusNode focus;
   final IconData prefixIcon;
-  final AppInfoIcon cardInfo;
+  final AppInfoIcon? cardInfo;
   final TextEditingController controller;
   final Function? function;
   final double? fieldFontSize;
@@ -64,7 +65,7 @@ class TextFieldCard extends StatelessWidget {
                 ),
               ),
               SizedBox(width: 10),
-              cardInfo,
+              // cardInfo,
             ],
           ),
         ),

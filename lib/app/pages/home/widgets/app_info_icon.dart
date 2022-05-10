@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+
 import 'package:lucky_triangle/app/design/app_designs.dart';
 
 class AppInfoIcon extends StatelessWidget {
-  AppInfoIcon({required this.text});
+  const AppInfoIcon({Key? key, required this.text}) : super(key: key);
 
   final String text;
 
@@ -10,7 +11,7 @@ class AppInfoIcon extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
-      child: SizedBox(
+      child: const SizedBox(
         width: 40,
         height: 45,
         child: Icon(

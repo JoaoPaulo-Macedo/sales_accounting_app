@@ -9,7 +9,7 @@ class HomeController {
   double devolution = 0;
   double missing = 0;
   Selected selected = Selected.none;
-  String errorMessage = 'Informe o \"Total de Cartelas\" e a \"Venda\"';
+  String errorMessage = 'Informe o "Total de Cartelas" e a "Venda"';
   final FocusNode totalFocus = FocusNode();
   final FocusNode saleFocus = FocusNode();
   final FocusNode devolutionFocus = FocusNode();
@@ -33,16 +33,16 @@ class HomeController {
       String soldText = soldCtrl.text.trim();
 
       if (holdText == '' || soldText == '') {
-        errorMessage = 'Informe o \"Total de Cartelas\" e a \"Venda\"';
+        errorMessage = 'Informe o "Total de Cartelas" e a "Venda"';
         return;
       }
       if (double.parse(holdText) < double.parse(soldText)) {
-        errorMessage = '\"Venda\" não pode ser maior que \"Total de Cartelas\"';
+        errorMessage = '"Venda" não pode ser maior que "Total de Cartelas"';
         return;
       }
 
       if (double.parse(taxCtrl.text.trim()) < 0) {
-        errorMessage = '\"Imposto\" não pode ser negativo';
+        errorMessage = '"Imposto" não pode ser negativo';
         return;
       }
 

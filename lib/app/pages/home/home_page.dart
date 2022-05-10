@@ -27,16 +27,16 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
 
+    controller.totalCtrl.text = '8000';
     controller.taxCtrl.text = '11';
     controller.allowanceCtrl.text = '200';
   }
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return GestureDetector( 
       onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
       child: Scaffold(
-        // resizeToAvoidBottomInset: false,
         body: SingleChildScrollView(
           child: SizedBox(
             height: MediaQuery.of(context).size.height,
@@ -54,9 +54,6 @@ class _HomePageState extends State<HomePage> {
                           prefixIcon: Icons.view_headline_rounded,
                           controller: controller.totalCtrl,
                           focus: controller.totalFocus,
-                          cardInfo: AppInfoIcon(
-                            text: 'Informe o total de cartelas pegas para a distribuição.',
-                          ),
                         ),
                         SizedBox(height: appSizes.smallSpacing),
                         TextFieldCard(
@@ -64,9 +61,6 @@ class _HomePageState extends State<HomePage> {
                           prefixIcon: Icons.add_chart_rounded,
                           controller: controller.soldCtrl,
                           focus: controller.saleFocus,
-                          cardInfo: AppInfoIcon(
-                            text: 'Informe o total de cartelas vendidas.',
-                          ),
                         ),
                         SizedBox(height: appSizes.smallSpacing),
                         TextFieldCard(
@@ -74,9 +68,6 @@ class _HomePageState extends State<HomePage> {
                           prefixIcon: Icons.multiline_chart_rounded,
                           controller: controller.devCtrl,
                           focus: controller.devolutionFocus,
-                          cardInfo: AppInfoIcon(
-                            text: 'Informe o total de cartelas devolvidas.',
-                          ),
                         ),
                         SizedBox(height: appSizes.smallSpacing),
                         TextFieldCard(
@@ -84,9 +75,6 @@ class _HomePageState extends State<HomePage> {
                           prefixIcon: Icons.zoom_out_rounded,
                           controller: controller.missCtrl,
                           focus: controller.missingFocus,
-                          cardInfo: AppInfoIcon(
-                            text: 'Informe o total de cartelas em falta.',
-                          ),
                         ),
                       ],
                     ),
@@ -99,20 +87,14 @@ class _HomePageState extends State<HomePage> {
                           controller: controller.paidCtrl,
                           formatAsMoney: true,
                           focus: controller.moneyFocus,
-                          cardInfo: AppInfoIcon(
-                            text: 'Informe os adiantamentos em dinheiro.',
-                          ),
                         ),
                         SizedBox(height: appSizes.smallSpacing),
                         TextFieldCard(
                           title: 'Depósitos',
-                          prefixIcon: Icons.request_quote_rounded,
+                          prefixIcon: Icons.request_quote_outlined,
                           controller: controller.depositCtrl,
                           formatAsMoney: true,
                           focus: controller.depositFocus,
-                          cardInfo: AppInfoIcon(
-                            text: 'Informe os depósitos.',
-                          ),
                         ),
                         SizedBox(height: appSizes.smallSpacing),
                         Row(
@@ -137,7 +119,7 @@ class _HomePageState extends State<HomePage> {
                             Expanded(
                               child: InfoCard(
                                 title: 'Ajuda de Custo',
-                                prefixIcon: Icons.health_and_safety_rounded,
+                                prefixIcon: Icons.health_and_safety_outlined,
                                 controller: controller.allowanceCtrl,
                                 function: () {
                                   setState(() {});
