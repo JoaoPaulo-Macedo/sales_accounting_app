@@ -1,5 +1,5 @@
-class RaffleWeek {
-  RaffleWeek({
+class RaffleWeekEntity {
+  RaffleWeekEntity({
     required this.sold,
     required this.devolution,
     required this.missing,

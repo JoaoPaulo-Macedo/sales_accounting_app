@@ -1,5 +1,5 @@
-class Reckoning {
-  Reckoning({
+class ReckoningEntity {
+  ReckoningEntity({
     required this.money,
     required this.deposits,
   });

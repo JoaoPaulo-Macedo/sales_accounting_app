@@ -1,13 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:lucky_triangle/app/presentation/common/app_sizes.dart';
-import 'package:lucky_triangle/app/presentation/pages/home/home_controller.dart';
+import 'package:lucky_triangle/app/presentation/pages/home/home_cubit.dart';
 import 'package:lucky_triangle/app/presentation/widgets/debt_card.dart';
 import 'package:lucky_triangle/app/presentation/widgets/price_card.dart';
 
 class DebtComponent extends StatelessWidget {
-  const DebtComponent(this.controller, {Key? key}) : super(key: key);
+  const DebtComponent({
+    Key? key,
+    required this.price,
+    required this.reckoning,
+    required this.onPressed,
+  }) : super(key: key);
 
-  final HomeController controller;
+  final Price price;
+  final Reckoning reckoning;
+  final Function(Price price) onPressed;
   final sizes = const AppSizes();
 
   @override
@@ -15,9 +22,9 @@ class DebtComponent extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        PriceCard(title: 'Preço da Cartela', selected: controller.selected),
+        PriceCard(price: price, onPressed: onPressed),
         SizedBox(height: sizes.smallSpacing),
-        DebtCard(widgetDebt: controller.debt, errorMessage: controller.errorMessage),
+        DebtCard(value: null, reckoning: reckoning),
       ],
     );
   }

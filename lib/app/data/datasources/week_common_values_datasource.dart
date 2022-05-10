@@ -1,4 +1,4 @@
-import 'package:lucky_triangle/app/domain/entities/week_common_values.dart';
+import 'package:lucky_triangle/app/domain/entities/week_common_values_entity.dart';
 
 abstract class WeekCommonValuesDataSource {
   Future<WeekCommonValuesEntity?> getValues();

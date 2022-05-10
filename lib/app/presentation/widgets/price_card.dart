@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
+
 import 'package:lucky_triangle/app/presentation/common/app_design.dart';
 import 'package:lucky_triangle/app/presentation/common/app_sizes.dart';
-import 'package:lucky_triangle/app/presentation/pages/home/home_controller.dart';
+import 'package:lucky_triangle/app/presentation/pages/home/home_cubit.dart';
 
 class PriceCard extends StatelessWidget {
-  PriceCard({required this.title, required this.selected});
+  const PriceCard({Key? key, required this.price, required this.onPressed}) : super(key: key);
 
-  final String title;
-  final Selected selected;
+  final Price price;
+  final Function(Price price) onPressed;
   final sizes = const AppSizes();
 
   @override
@@ -21,7 +22,8 @@ class PriceCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Text(
-            title,
+            'Preço da Cartela',
+            //TODO: from material
             style: TextStyle(
               fontSize: 18,
               color: Colors.grey[300],
@@ -32,11 +34,11 @@ class PriceCard extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              _price(10, Selected.ten, context),
-              _price(15, Selected.fifteen, context),
-              _price(20, Selected.twenty, context),
-              _price(25, Selected.twentyFive, context),
-              _price(30, Selected.thirty, context),
+              _price(10, Price.ten, context),
+              _price(15, Price.fifteen, context),
+              _price(20, Price.twenty, context),
+              _price(25, Price.twentyFive, context),
+              _price(30, Price.thirty, context),
             ],
           ),
         ],
@@ -44,10 +46,12 @@ class PriceCard extends StatelessWidget {
     );
   }
 
-  Widget _price(int price, Selected selection, BuildContext context) {
+  Widget _price(int cardPrice, Price price, BuildContext context) {
+    bool isSelected = price == this.price;
+
     return Container(
       decoration: BoxDecoration(
-        color: selection == selected ? const Color.fromARGB(255, 51, 48, 54) : const Color.fromARGB(255, 48, 45, 51),
+        color: isSelected ? const Color.fromARGB(255, 51, 48, 54) : const Color.fromARGB(255, 48, 45, 51),
         borderRadius: BorderRadius.circular(100),
       ),
       child: ClipRRect(
@@ -56,16 +60,16 @@ class PriceCard extends StatelessWidget {
           style: ButtonStyle(
             padding: MaterialStateProperty.all(EdgeInsets.zero),
             minimumSize: MaterialStateProperty.all(const Size(55, 55)),
-            overlayColor: MaterialStateProperty.all(Colors.transparent),
+            overlayColor: MaterialStateProperty.all(Colors.red.withOpacity(0.2)),
           ),
           child: Text(
-            '${price.toString()},00',
+            '${cardPrice.toString()},00',
             style: TextStyle(
-              fontSize: selection == selected ? 19 : 16,
-              color: selection == selected ? Colors.red : Colors.grey[300],
+              fontSize: isSelected ? 19 : 16,
+              color: isSelected ? Colors.red : Colors.grey[300],
             ),
           ),
-          onPressed: () {},
+          onPressed: () => onPressed(price),
         ),
       ),
     );

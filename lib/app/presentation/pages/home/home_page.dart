@@ -5,7 +5,7 @@ import 'package:lucky_triangle/app/domain/usecases/get_week_common_values_usecas
 import 'package:lucky_triangle/app/presentation/pages/home/components/cards_component.dart';
 import 'package:lucky_triangle/app/presentation/pages/home/components/debt_component.dart';
 import 'package:lucky_triangle/app/presentation/pages/home/components/reckoning_component.dart';
-import 'package:lucky_triangle/app/presentation/pages/home/home_controller.dart';
+import 'package:lucky_triangle/app/presentation/pages/home/home_cubit.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -15,18 +15,18 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  late HomeController controller;
+  late HomeCubit cubit;
 
   @override
   void initState() {
     super.initState();
 
-    controller = HomeController(GetIt.I.get<GetWeekCommonValuesUseCase>());
+    cubit = HomeCubit(GetIt.I.get<GetWeekCommonValuesUseCase>());
   }
 
   @override
   void dispose() {
-    controller.close();
+    cubit.close();
 
     super.dispose();
   }
@@ -43,8 +43,8 @@ class _HomePageState extends State<HomePage> {
               child: Padding(
                 padding: const EdgeInsets.all(15),
                 child: BlocProvider.value(
-                  value: controller,
-                  child: BlocBuilder<HomeController, HomeState>(
+                  value: cubit,
+                  child: BlocBuilder<HomeCubit, HomeState>(
                     builder: (context, state) {
                       if (state is Loading) {
                         return const Center(
@@ -55,9 +55,13 @@ class _HomePageState extends State<HomePage> {
                       return Column(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          CardsComponent(controller),
-                          ReckoningComponent(controller),
-                          DebtComponent(controller),
+                          CardsComponent(cubit),
+                          ReckoningComponent(cubit),
+                          DebtComponent(
+                            price: state.price,
+                            reckoning: state.reckoning,
+                            onPressed: cubit.changeSelected,
+                          ),
                         ],
                       );
                     },

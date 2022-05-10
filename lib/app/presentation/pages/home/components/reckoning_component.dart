@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:lucky_triangle/app/presentation/common/app_sizes.dart';
-import 'package:lucky_triangle/app/presentation/pages/home/home_controller.dart';
+import 'package:lucky_triangle/app/presentation/pages/home/home_cubit.dart';
 import 'package:lucky_triangle/app/presentation/widgets/text_field_card.dart';
 
 class ReckoningComponent extends StatelessWidget {
   const ReckoningComponent(this.controller, {Key? key}) : super(key: key);
 
-  final HomeController controller;
+  final HomeCubit controller;
   final sizes = const AppSizes();
 
   @override

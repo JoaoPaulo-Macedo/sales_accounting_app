@@ -2,18 +2,29 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:lucky_triangle/app/domain/usecases/get_week_common_values_usecase.dart';
 
-enum Selected { none, ten, fifteen, twenty, twentyFive, thirty }
+enum Price { none, ten, fifteen, twenty, twentyFive, thirty }
 
-abstract class HomeState {}
+enum Reckoning { none, debt, credit }
+
+abstract class HomeState {
+  HomeState({this.price = Price.none, this.reckoning = Reckoning.none});
+
+  Price price;
+  Reckoning reckoning;
+}
 
 class Loading extends HomeState {}
 
 class Fetched extends HomeState {}
 
+class Selected extends HomeState {
+  Selected(Price price) : super(price: price);
+}
+
 class Calculated extends HomeState {}
 
-class HomeController extends Cubit<HomeState> with HomeHelper {
-  HomeController(this._getCommonValuesUseCase) : super(Loading()) {
+class HomeCubit extends Cubit<HomeState> with HomeControllers {
+  HomeCubit(this._getCommonValuesUseCase) : super(Loading()) {
     _fetch();
   }
 
@@ -28,12 +39,28 @@ class HomeController extends Cubit<HomeState> with HomeHelper {
 
     emit(Fetched());
   }
+
+  bool _validate() {
+    return totalCtrl.text.isNotEmpty &&
+        soldCtrl.text.isNotEmpty &&
+        devCtrl.text.isNotEmpty &&
+        missCtrl.text.isNotEmpty &&
+        taxCtrl.text.isNotEmpty &&
+        allowanceCtrl.text.isNotEmpty;
+  }
+
+  void _calculate() {
+    print('calculate');
+  }
+
+  void changeSelected(Price price) {
+    emit(Selected(price));
+
+    if (_validate()) _calculate();
+  }
 }
 
-class HomeHelper {
-  double debt = 0;
-  Selected selected = Selected.none;
-  String errorMessage = 'Informe o "Total de Cartelas" e a "Venda"';
+abstract class HomeControllers {
   final totalFocus = FocusNode();
   final saleFocus = FocusNode();
   final devolutionFocus = FocusNode();

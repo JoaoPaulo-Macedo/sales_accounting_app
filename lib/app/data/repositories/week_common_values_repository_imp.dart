@@ -1,5 +1,5 @@
 import 'package:lucky_triangle/app/data/datasources/week_common_values_datasource.dart';
-import 'package:lucky_triangle/app/domain/entities/week_common_values.dart';
+import 'package:lucky_triangle/app/domain/entities/week_common_values_entity.dart';
 import 'package:lucky_triangle/app/domain/repositories/week_common_values_repository.dart';
 
 class WeekCommonValuesRepositoryImp extends WeekCommonValuesRepository {
