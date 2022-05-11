@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:lucky_triangle/app/presentation/common/app_sizes.dart';
 import 'package:lucky_triangle/app/presentation/pages/home/home_cubit.dart';
-import 'package:lucky_triangle/app/presentation/widgets/text_field_card.dart';
+import 'package:lucky_triangle/app/presentation/pages/home/widgets/text_field_card.dart';
 
 class CardsComponent extends StatelessWidget {
-  const CardsComponent(this.controller, {Key? key}) : super(key: key);
+  const CardsComponent(this.cubit, {Key? key, required this.missingColor}) : super(key: key);
 
-  final HomeCubit controller;
+  final HomeCubit cubit;
   final sizes = const AppSizes();
+  final Color? missingColor;
 
   @override
   Widget build(BuildContext context) {
@@ -17,29 +18,35 @@ class CardsComponent extends StatelessWidget {
         TextFieldCard(
           title: 'Total de Cartelas',
           prefixIcon: Icons.view_headline_rounded,
-          controller: controller.totalCtrl,
-          focus: controller.totalFocus,
+          controller: cubit.totalCtrl,
+          focus: cubit.totalFocus,
+          maxLength: 5,
         ),
         SizedBox(height: sizes.smallSpacing),
         TextFieldCard(
           title: 'Venda',
           prefixIcon: Icons.add_chart_rounded,
-          controller: controller.soldCtrl,
-          focus: controller.saleFocus,
+          controller: cubit.soldCtrl,
+          focus: cubit.saleFocus,
+          maxLength: 5,
         ),
         SizedBox(height: sizes.smallSpacing),
         TextFieldCard(
           title: 'Devolução',
           prefixIcon: Icons.multiline_chart_rounded,
-          controller: controller.devCtrl,
-          focus: controller.devolutionFocus,
+          controller: cubit.devCtrl,
+          focus: cubit.devolutionFocus,
+          maxLength: 5,
         ),
         SizedBox(height: sizes.smallSpacing),
         TextFieldCard(
           title: 'Faltas',
           prefixIcon: Icons.zoom_out_rounded,
-          controller: controller.missCtrl,
-          focus: controller.missingFocus,
+          controller: cubit.missCtrl,
+          focus: cubit.missingFocus,
+          maxLength: 5,
+          textColor: missingColor,
+          readOnly: true,
         ),
       ],
     );

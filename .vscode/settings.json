@@ -1,4 +1,6 @@
 {
     "html.format.wrapLineLength": 120,
-    "dart.lineLength": 120
+    "dart.lineLength": 120,
+    "editor.bracketPairColorization.enabled": true,
+    "editor.guides.bracketPairs":"active"
 }

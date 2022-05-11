@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:lucky_triangle/app/presentation/common/app_sizes.dart';
 import 'package:lucky_triangle/app/presentation/pages/home/home_cubit.dart';
-import 'package:lucky_triangle/app/presentation/widgets/text_field_card.dart';
+import 'package:lucky_triangle/app/presentation/pages/home/widgets/text_field_card.dart';
 
 class ReckoningComponent extends StatelessWidget {
-  const ReckoningComponent(this.controller, {Key? key}) : super(key: key);
+  const ReckoningComponent(this.cubit, {Key? key}) : super(key: key);
 
-  final HomeCubit controller;
+  final HomeCubit cubit;
   final sizes = const AppSizes();
 
   @override
@@ -17,17 +17,19 @@ class ReckoningComponent extends StatelessWidget {
         TextFieldCard(
           title: 'Adiantamento',
           prefixIcon: Icons.attach_money_rounded,
-          controller: controller.paidCtrl,
+          controller: cubit.paidCtrl,
           formatAsMoney: true,
-          focus: controller.moneyFocus,
+          focus: cubit.moneyFocus,
+          maxLength: 6,
         ),
         SizedBox(height: sizes.smallSpacing),
         TextFieldCard(
           title: 'Depósitos',
           prefixIcon: Icons.request_quote_outlined,
-          controller: controller.depositCtrl,
+          controller: cubit.depositCtrl,
           formatAsMoney: true,
-          focus: controller.depositFocus,
+          focus: cubit.depositFocus,
+          maxLength: 6,
         ),
         SizedBox(height: sizes.smallSpacing),
         Row(
@@ -36,8 +38,8 @@ class ReckoningComponent extends StatelessWidget {
               child: TextFieldCard(
                 title: 'Imposto',
                 prefixIcon: Icons.price_check_rounded,
-                controller: controller.taxCtrl,
-                focus: controller.taxFocus,
+                controller: cubit.taxCtrl,
+                focus: cubit.taxFocus,
               ),
             ),
             SizedBox(width: sizes.smallSpacing),
@@ -45,8 +47,8 @@ class ReckoningComponent extends StatelessWidget {
               child: TextFieldCard(
                 title: 'Ajuda de Custo',
                 prefixIcon: Icons.health_and_safety_outlined,
-                controller: controller.allowanceCtrl,
-                focus: controller.allowanceFocus,
+                controller: cubit.allowanceCtrl,
+                focus: cubit.allowanceFocus,
               ),
             ),
           ],

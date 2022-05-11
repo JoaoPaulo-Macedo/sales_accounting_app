@@ -6,6 +6,7 @@ import 'package:lucky_triangle/app/presentation/pages/home/components/cards_comp
 import 'package:lucky_triangle/app/presentation/pages/home/components/debt_component.dart';
 import 'package:lucky_triangle/app/presentation/pages/home/components/reckoning_component.dart';
 import 'package:lucky_triangle/app/presentation/pages/home/home_cubit.dart';
+import 'package:lucky_triangle/app/presentation/pages/home/home_states.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -16,6 +17,10 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   late HomeCubit cubit;
+  Color? missingColor;
+  Situation situation = Situation.none;
+  double? debt;
+  //TODO: isn't it state? Shouldn't it be on HomeState abstract class?
 
   @override
   void initState() {
@@ -55,15 +60,28 @@ class _HomePageState extends State<HomePage> {
                         );
                       }
 
+                      if (state is MissingChanged) {
+                        missingColor = state.missingColor;
+                      }
+
+                      // if (state is Selected) {
+                      //   price = state.price;
+                      // }
+
+                      if (state is Calculated) {
+                        situation = state.situation;
+                        debt = state.debt;
+                      }
+
                       return Column(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          CardsComponent(cubit),
+                          CardsComponent(cubit, missingColor: missingColor),
                           ReckoningComponent(cubit),
                           DebtComponent(
                             price: state.price,
-                            situation: state.situation,
-                            debt: state.debt,
+                            situation: situation,
+                            debt: debt,
                             onPressed: cubit.changeSelected,
                           ),
                         ],

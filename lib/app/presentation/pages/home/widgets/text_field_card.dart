@@ -10,6 +10,9 @@ class TextFieldCard extends StatelessWidget {
     required this.controller,
     this.fieldFontSize = 18,
     this.formatAsMoney = false,
+    this.readOnly = false,
+    this.maxLength,
+    this.textColor,
   }) : super(key: key);
 
   final String title;
@@ -18,11 +21,21 @@ class TextFieldCard extends StatelessWidget {
   final TextEditingController controller;
   final double fieldFontSize;
   final bool formatAsMoney;
+  final int? maxLength;
+  final Color? textColor;
+  final bool readOnly;
 
   @override
   Widget build(BuildContext context) {
     var design = AppDesign();
-    
+    Color? textColor;
+
+    if (this.textColor == null) {
+      textColor = Colors.grey[300];
+    } else {
+      textColor = this.textColor;
+    }
+
     return GestureDetector(
       child: Container(
         height: 63,
@@ -38,9 +51,13 @@ class TextFieldCard extends StatelessWidget {
               Expanded(
                 child: TextField(
                   controller: controller,
+                  maxLength: maxLength,
                   keyboardType: TextInputType.number,
                   focusNode: focus,
+                  style: TextStyle(color: textColor),
+                  readOnly: readOnly,
                   decoration: InputDecoration(
+                    counterText: '',
                     border: InputBorder.none,
                     labelText: title,
                     labelStyle: TextStyle(
