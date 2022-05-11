@@ -18,8 +18,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   late HomeCubit cubit;
-  Color? missingColor;
-  Situation situation = Situation.none;
+  Situation? situation;
   double? debt;
   //TODO: isn't it state? Shouldn't it be on HomeState abstract class?
 
@@ -52,13 +51,7 @@ class _HomePageState extends State<HomePage> {
           child: BlocBuilder<HomeCubit, HomeState>(
             builder: (context, state) {
               if (state is Loading) {
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              }
-
-              if (state is Changed) {
-                missingColor = state.missingColor;
+                return const SizedBox();
               }
 
               if (state is Calculated) {

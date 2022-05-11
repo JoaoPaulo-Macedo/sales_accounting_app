@@ -10,7 +10,7 @@ class DebtCard extends StatelessWidget {
   }) : super(key: key);
 
   final double? value;
-  final Situation situation;
+  final Situation? situation;
 
   @override
   Widget build(BuildContext context) {
@@ -28,6 +28,7 @@ class DebtCard extends StatelessWidget {
 
     switch (situation) {
       case Situation.none:
+      case null:
         message = 'Preencha os campos';
         color = Colors.grey[300];
         break;

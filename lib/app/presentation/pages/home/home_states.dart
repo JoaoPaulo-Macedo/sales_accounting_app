@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:lucky_triangle/app/presentation/pages/home/home_cubit.dart';
 
 abstract class HomeState {
@@ -12,21 +11,11 @@ class Loading extends HomeState {}
 class Fetched extends HomeState {}
 
 class Saving extends HomeState {
-  Saving(Price price) : super(price: price);
+  Saving({required Price price}) : super(price: price);
 }
 
-class Saved extends HomeState {
-  Saved(Price price) : super(price: price);
-}
-
-class Changed extends HomeState {
-  Changed({required Price price}) : super(price: price);
-
-  Color? missingColor;
-}
-
-class Selected extends HomeState {
-  Selected(Price price) : super(price: price);
+class Reload extends HomeState {
+  Reload({required Price price}) : super(price: price);
 }
 
 class Calculated extends HomeState {

@@ -14,7 +14,7 @@ class DebtComponent extends StatelessWidget {
   }) : super(key: key);
 
   final Price price;
-  final Situation situation;
+  final Situation? situation;
   final double? debt;
   final Function(Price price) onPressed;
   final sizes = const AppSizes();
