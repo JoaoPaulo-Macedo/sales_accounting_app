@@ -15,16 +15,17 @@ class WeekCommonValuesDataSourceImp extends WeekCommonValuesDataSource {
   Future<WeekCommonValuesEntity?> getValues() async {
     final json = await _service.getString(_key);
 
-    // if (json == null) return null;
-    if (json == null) return WeekCommonValuesEntity(totalCards: 8000, tax: 11, allowance: 200);
+    if (json == null) return null;
+    // if (json == null) return WeekCommonValuesEntity(totalCards: 8000, tax: 11, allowance: 200);
 
     return WeekCommonValuesDTO.fromJson(jsonDecode(json));
   }
 
   @override
-  Future setValues() {
-    // TODO: implement setValues
-    throw UnimplementedError();
+  Future setValues(WeekCommonValuesEntity values) async {
+    var value = values.toJson();
+
+    await _service.setString(_key, jsonEncode(value));
   }
 
   @override

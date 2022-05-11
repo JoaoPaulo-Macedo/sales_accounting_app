@@ -11,8 +11,16 @@ class Loading extends HomeState {}
 
 class Fetched extends HomeState {}
 
-class MissingChanged extends HomeState {
-  MissingChanged({required Price price, this.missingColor}) : super(price: price);
+class Saving extends HomeState {
+  Saving(Price price) : super(price: price);
+}
+
+class Saved extends HomeState {
+  Saved(Price price) : super(price: price);
+}
+
+class Changed extends HomeState {
+  Changed({required Price price}) : super(price: price);
 
   Color? missingColor;
 }

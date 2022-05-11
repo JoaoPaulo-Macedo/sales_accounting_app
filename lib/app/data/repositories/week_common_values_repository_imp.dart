@@ -13,9 +13,8 @@ class WeekCommonValuesRepositoryImp extends WeekCommonValuesRepository {
   }
 
   @override
-  Future setValues() {
-    // TODO: implement setValues
-    throw UnimplementedError();
+  Future setValues(WeekCommonValuesEntity values) async {
+    await _dataSource.setValues(values);
   }
 
   @override

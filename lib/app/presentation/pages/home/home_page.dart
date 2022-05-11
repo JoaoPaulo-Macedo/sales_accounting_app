@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:lucky_triangle/app/domain/usecases/get_week_common_values_usecase.dart';
+import 'package:lucky_triangle/app/domain/usecases/set_week_common_values_usecase.dart';
 import 'package:lucky_triangle/app/presentation/pages/home/components/cards_component.dart';
 import 'package:lucky_triangle/app/presentation/pages/home/components/debt_component.dart';
 import 'package:lucky_triangle/app/presentation/pages/home/components/reckoning_component.dart';
@@ -26,7 +27,10 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
 
-    cubit = HomeCubit(GetIt.I.get<GetWeekCommonValuesUseCase>());
+    cubit = HomeCubit(
+      GetIt.I.get<GetWeekCommonValuesUseCase>(),
+      GetIt.I.get<SetWeekCommonValuesUseCase>(),
+    );
   }
 
   @override
@@ -43,54 +47,58 @@ class _HomePageState extends State<HomePage> {
     return GestureDetector(
       onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
       child: Scaffold(
-        body: SingleChildScrollView(
-          physics: isKeyboardOpen ? null : const NeverScrollableScrollPhysics(),
-          child: SizedBox(
-            height: MediaQuery.of(context).size.height,
-            child: SafeArea(
-              child: Padding(
-                padding: const EdgeInsets.all(15),
-                child: BlocProvider.value(
-                  value: cubit,
-                  child: BlocBuilder<HomeCubit, HomeState>(
-                    builder: (context, state) {
-                      if (state is Loading) {
-                        return const Center(
-                          child: CircularProgressIndicator(),
-                        );
-                      }
+        body: BlocProvider.value(
+          value: cubit,
+          child: BlocBuilder<HomeCubit, HomeState>(
+            builder: (context, state) {
+              if (state is Loading) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
 
-                      if (state is MissingChanged) {
-                        missingColor = state.missingColor;
-                      }
+              if (state is Changed) {
+                missingColor = state.missingColor;
+              }
 
-                      // if (state is Selected) {
-                      //   price = state.price;
-                      // }
+              if (state is Calculated) {
+                situation = state.situation;
+                debt = state.debt;
+              }
 
-                      if (state is Calculated) {
-                        situation = state.situation;
-                        debt = state.debt;
-                      }
-
-                      return Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          CardsComponent(cubit, missingColor: missingColor),
-                          ReckoningComponent(cubit),
-                          DebtComponent(
-                            price: state.price,
-                            situation: situation,
-                            debt: debt,
-                            onPressed: cubit.changeSelected,
+              return Stack(
+                children: [
+                  SingleChildScrollView(
+                    physics: isKeyboardOpen ? null : const NeverScrollableScrollPhysics(),
+                    child: SizedBox(
+                      height: MediaQuery.of(context).size.height,
+                      child: SafeArea(
+                        child: Padding(
+                          padding: const EdgeInsets.all(15),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              CardsComponent(cubit),
+                              ReckoningComponent(cubit),
+                              DebtComponent(
+                                price: state.price,
+                                situation: situation,
+                                debt: debt,
+                                onPressed: cubit.changeSelected,
+                              ),
+                            ],
                           ),
-                        ],
-                      );
-                    },
+                        ),
+                      ),
+                    ),
                   ),
-                ),
-              ),
-            ),
+                  Visibility(
+                    visible: state is Saving,
+                    child: const Center(child: CircularProgressIndicator()),
+                  ),
+                ],
+              );
+            },
           ),
         ),
       ),

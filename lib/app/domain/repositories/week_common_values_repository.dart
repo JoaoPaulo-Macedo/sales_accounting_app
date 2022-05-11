@@ -2,6 +2,6 @@ import 'package:lucky_triangle/app/domain/entities/week_common_values_entity.dar
 
 abstract class WeekCommonValuesRepository {
   Future<WeekCommonValuesEntity?> getValues();
-  Future setValues();
+  Future setValues(WeekCommonValuesEntity values);
   Future updateValue();
 }

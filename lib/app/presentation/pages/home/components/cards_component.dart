@@ -4,14 +4,22 @@ import 'package:lucky_triangle/app/presentation/pages/home/home_cubit.dart';
 import 'package:lucky_triangle/app/presentation/pages/home/widgets/text_field_card.dart';
 
 class CardsComponent extends StatelessWidget {
-  const CardsComponent(this.cubit, {Key? key, required this.missingColor}) : super(key: key);
+  const CardsComponent(this.cubit, {Key? key}) : super(key: key);
 
   final HomeCubit cubit;
   final sizes = const AppSizes();
-  final Color? missingColor;
 
   @override
   Widget build(BuildContext context) {
+    Color? missingColor;
+    int missing = int.tryParse(cubit.missCtrl.text) ?? 0;
+
+    if (missing > 0 && missing <= 10) {
+      missingColor = Colors.amber;
+    } else if (missing > 10) {
+      missingColor = Colors.red;
+    }
+
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
@@ -46,7 +54,7 @@ class CardsComponent extends StatelessWidget {
           focus: cubit.missingFocus,
           maxLength: 5,
           textColor: missingColor,
-          readOnly: true,
+          // readOnly: true,
         ),
       ],
     );

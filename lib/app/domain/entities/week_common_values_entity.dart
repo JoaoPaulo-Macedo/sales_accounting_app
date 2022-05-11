@@ -5,7 +5,12 @@ class WeekCommonValuesEntity {
     required this.allowance,
   });
 
-  final int totalCards;
-  final double tax;
-  final double allowance;
+  int? totalCards;
+  double? tax;
+  double? allowance;
+
+  @override
+  String toString() {
+    return 'cards: $totalCards, tax: $tax, allowance: $allowance.';
+  }
 }
