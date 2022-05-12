@@ -47,7 +47,7 @@ class DebtCard extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 17, vertical: 12),
       decoration: design.boxDecoration,
       child: Row(
-        mainAxisAlignment: situation == Situation.none ? MainAxisAlignment.center : MainAxisAlignment.spaceBetween,
+        mainAxisAlignment: situation == null ? MainAxisAlignment.center : MainAxisAlignment.spaceBetween,
         children: [
           Text(
             message,

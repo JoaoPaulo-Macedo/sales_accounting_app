@@ -25,6 +25,6 @@ class Calculated extends HomeState {
     required this.debt,
   }) : super(price: price);
 
-  final Situation situation;
-  final double debt;
+  final Situation? situation;
+  final double? debt;
 }

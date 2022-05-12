@@ -73,7 +73,11 @@ class HomeCubit extends Cubit<HomeState> with HomeProperties {
   }
 
   void _calculate() {
-    if (!_validateToCalculate()) return;
+    if (!_validateToCalculate()) {
+      emit(Calculated(price: state.price, debt: null, situation: null));
+
+      return;
+    }
 
     try {
       if (state.price == Price.none) return;
