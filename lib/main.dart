@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:lucky_triangle/app/presentation/pages/home/home_page.dart';
 import 'package:lucky_triangle/core/inject/inject.dart';
 import 'package:lucky_triangle/core/utils/routes_name.dart';
@@ -14,6 +15,11 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
+
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData.dark().copyWith(
