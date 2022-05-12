@@ -3,9 +3,11 @@ import 'package:flutter/cupertino.dart';
 class AppDesign {
   AppDesign();
 
-  final boxDecoration = BoxDecoration(
+  BorderRadius get borderRadius => BorderRadius.circular(7);
+
+  BoxDecoration get boxDecoration => BoxDecoration(
     //TODO: from material
     color: const Color.fromARGB(255, 43, 40, 46),
-    borderRadius: BorderRadius.circular(7),
+    borderRadius: borderRadius,
   );
 }

@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:lucky_triangle/app/domain/usecases/get_week_common_values_usecase.dart';
 import 'package:lucky_triangle/app/domain/usecases/set_week_common_values_usecase.dart';
+import 'package:lucky_triangle/app/presentation/common/app_design.dart';
 import 'package:lucky_triangle/app/presentation/pages/home/components/cards_component.dart';
 import 'package:lucky_triangle/app/presentation/pages/home/components/debt_component.dart';
 import 'package:lucky_triangle/app/presentation/pages/home/components/reckoning_component.dart';
@@ -87,7 +88,18 @@ class _HomePageState extends State<HomePage> {
                   ),
                   Visibility(
                     visible: state is Saving,
-                    child: const Center(child: CircularProgressIndicator()),
+                    child: Center(
+                      child: Container(
+                        height: 50,
+                        width: 50,
+                        padding: const EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                          color: Colors.blue.withOpacity(0.2),
+                          borderRadius: AppDesign().borderRadius,
+                        ),
+                        child: const CircularProgressIndicator(),
+                      ),
+                    ),
                   ),
                 ],
               );
