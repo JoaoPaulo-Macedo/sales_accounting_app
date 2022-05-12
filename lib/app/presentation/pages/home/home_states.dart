@@ -1,7 +1,8 @@
 import 'package:lucky_triangle/app/presentation/pages/home/home_cubit.dart';
+import 'package:lucky_triangle/core/utils/app_exception.dart';
 
 abstract class HomeState {
-  HomeState({this.price = Price.none});
+  const HomeState({this.price = Price.none});
 
   final Price price;
 }
@@ -11,7 +12,7 @@ class Loading extends HomeState {}
 class Fetched extends HomeState {}
 
 class Saving extends HomeState {
-  Saving({required Price price}) : super(price: price);
+  const Saving({required Price price}) : super(price: price);
 }
 
 class Reload extends HomeState {
@@ -19,7 +20,7 @@ class Reload extends HomeState {
 }
 
 class Calculated extends HomeState {
-  Calculated({
+  const Calculated({
     required Price price,
     required this.situation,
     required this.debt,
@@ -27,4 +28,10 @@ class Calculated extends HomeState {
 
   final Situation? situation;
   final double? debt;
+}
+
+class Error extends HomeState {
+  const Error({required Price price, required this.error}) : super(price: price);
+
+  final AppException error;
 }

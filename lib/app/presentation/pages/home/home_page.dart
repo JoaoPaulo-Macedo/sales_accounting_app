@@ -4,6 +4,7 @@ import 'package:get_it/get_it.dart';
 import 'package:lucky_triangle/app/domain/usecases/get_week_common_values_usecase.dart';
 import 'package:lucky_triangle/app/domain/usecases/set_week_common_values_usecase.dart';
 import 'package:lucky_triangle/app/presentation/common/app_design.dart';
+import 'package:lucky_triangle/app/presentation/pages/home/components/app_snackbar.dart';
 import 'package:lucky_triangle/app/presentation/pages/home/components/cards_component.dart';
 import 'package:lucky_triangle/app/presentation/pages/home/components/debt_component.dart';
 import 'package:lucky_triangle/app/presentation/pages/home/components/reckoning_component.dart';
@@ -49,61 +50,71 @@ class _HomePageState extends State<HomePage> {
       child: Scaffold(
         body: BlocProvider.value(
           value: cubit,
-          child: BlocBuilder<HomeCubit, HomeState>(
-            builder: (context, state) {
-              if (state is Loading) {
-                return const SizedBox();
-              }
+          child: BlocListener<HomeCubit, HomeState>(
+            listener: (context, state) {
+              if (state is Error) {
+                situation = null;
+                debt = null;
 
-              if (state is Calculated) {
-                situation = state.situation;
-                debt = state.debt;
+                AppSnackBar.show(context, message: state.error.message, type: AppSnackBarType.error);
               }
+            },
+            child: BlocBuilder<HomeCubit, HomeState>(
+              builder: (context, state) {
+                if (state is Loading) {
+                  return const SizedBox();
+                }
 
-              return Stack(
-                children: [
-                  SingleChildScrollView(
-                    physics: isKeyboardOpen ? null : const NeverScrollableScrollPhysics(),
-                    child: SizedBox(
-                      height: MediaQuery.of(context).size.height,
-                      child: SafeArea(
-                        child: Padding(
-                          padding: const EdgeInsets.all(15),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              CardsComponent(cubit),
-                              ReckoningComponent(cubit),
-                              DebtComponent(
-                                price: state.price,
-                                situation: situation,
-                                debt: debt,
-                                onPressed: cubit.changeSelected,
-                              ),
-                            ],
+                if (state is Calculated) {
+                  situation = state.situation;
+                  debt = state.debt;
+                }
+
+                return Stack(
+                  children: [
+                    SingleChildScrollView(
+                      physics: isKeyboardOpen ? null : const NeverScrollableScrollPhysics(),
+                      child: SizedBox(
+                        height: MediaQuery.of(context).size.height,
+                        child: SafeArea(
+                          child: Padding(
+                            padding: const EdgeInsets.all(15),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                CardsComponent(cubit),
+                                ReckoningComponent(cubit),
+                                DebtComponent(
+                                  price: state.price,
+                                  situation: situation,
+                                  debt: debt,
+                                  onPressed: cubit.changeSelected,
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ),
                     ),
-                  ),
-                  Visibility(
-                    visible: state is Saving,
-                    child: Center(
-                      child: Container(
-                        height: 50,
-                        width: 50,
-                        padding: const EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                          color: Colors.blue.withOpacity(0.2),
-                          borderRadius: AppDesign().borderRadius,
+                    Visibility(
+                      visible: state is Saving,
+                      child: Center(
+                        child: Container(
+                          height: 50,
+                          width: 50,
+                          padding: const EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                            color: Colors.blue.withOpacity(0.2),
+                            borderRadius: AppDesign().borderRadius,
+                          ),
+                          child: const CircularProgressIndicator(),
                         ),
-                        child: const CircularProgressIndicator(),
                       ),
                     ),
-                  ),
-                ],
-              );
-            },
+                  ],
+                );
+              },
+            ),
           ),
         ),
       ),

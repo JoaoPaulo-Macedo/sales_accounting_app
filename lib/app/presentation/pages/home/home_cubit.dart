@@ -95,9 +95,15 @@ class HomeCubit extends Cubit<HomeState> with HomeProperties {
 
       emit(Calculated(price: state.price, debt: debt, situation: situation));
     } on AppException catch (e) {
-      print(e.message);
-    } /* catch (e) {
-      print('Erro inexperado');
-    } */
+      if (state is Error && e.message == (state as Error).error.message) return;
+
+      emit(Error(price: state.price, error: e));
+    } catch (e) {
+      if (state is Error) return;
+
+      var error = AppException('Erro');
+
+      emit(Error(price: state.price, error: error));
+    }
   }
 }

@@ -11,24 +11,6 @@ extension HomeValidators on HomeCubit {
   }
 
   bool _validateFields() {
-    // total = int.tryParse(totalCtrl.text)!;
-    // sold = int.tryParse(soldCtrl.text)!;
-    // devolution = int.tryParse(devCtrl.text)!;
-    // missing = int.tryParse(missCtrl.text)!;
-    // tax = double.tryParse(taxCtrl.text)!;
-    // allowance = double.tryParse(allowanceCtrl.text)!;
-
-    // if (paidCtrl.text.isNotEmpty) {
-    //   paid = double.tryParse(paidCtrl.text)!;
-    // } else {
-    //   paid = 0;
-    // }
-    // if (depositCtrl.text.isNotEmpty) {
-    //   deposits = double.tryParse(depositCtrl.text)!;
-    // } else {
-    //   deposits = 0;
-    // }
-
     switch (state.price) {
       case Price.ten:
         _price = 10;
@@ -51,12 +33,13 @@ extension HomeValidators on HomeCubit {
 
     if (_sold! > _total!) throw AppException('Venda não pode ser maior que total de cartelas!');
     if (_devolution! > _total!) throw AppException('Devolução não pode ser maior que total de cartelas!');
+    if (_missing! > _total!) throw AppException('Faltas não pode ser maior que total de cartelas!');
     if (_sold! + _devolution! > _total!) {
       throw AppException('Venda mais devolução não pode ser maior que total de cartelas!');
     }
-    // if (sold + missing > total) throw Exception();
-    // if (sold! + devolution! + missing! > total!) throw AppException('Venda, devolução e faltas é maior que total de cartelas!');
-    // if (devolution + missing > total) throw Exception();
+    if (_sold! + _missing! > _total!) {
+      throw AppException('Venda mais faltas não pode ser maior que total de cartelas!');
+    }
 
     return true;
   }
