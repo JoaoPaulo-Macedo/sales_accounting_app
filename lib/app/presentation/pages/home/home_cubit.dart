@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:reckoning/app/domain/entities/raffle_week_entity.dart';
@@ -24,11 +26,8 @@ class HomeCubit extends Cubit<HomeState> with HomeProperties {
   void _init() async {
     await _fetchValues();
 
-    // _total = commonValues.totalCards;
     totalCtrl.text = commonValues.totalCards?.toString() ?? '';
-    // commonValues.tax = commonValues.tax;
     taxCtrl.text = commonValues.tax?.toString() ?? '';
-    // commonValues.allowance = commonValues.allowance;
     allowanceCtrl.text = commonValues.allowance?.toString() ?? '';
 
     commonValues.allowance = 200;
@@ -44,7 +43,11 @@ class HomeCubit extends Cubit<HomeState> with HomeProperties {
     });
 
     initControllers(
-      emitOnMissing: () => emit(Reload(price: state.price)),
+      emitOnMissing: () => emit(Reload(
+        price: raffle.price,
+        situation: reckoning.situation,
+        debt: reckoning.debt,
+      )),
     );
 
     emit(Fetched());
@@ -56,7 +59,7 @@ class HomeCubit extends Cubit<HomeState> with HomeProperties {
   }
 
   void _setValues() async {
-    emit(Saving(price: state.price));
+    emit(Saving(price: raffle.price, situation: reckoning.situation, debt: reckoning.debt));
 
     commonValues.totalCards = int.tryParse(totalCtrl.text);
     commonValues.tax = double.tryParse(taxCtrl.text);
@@ -66,48 +69,79 @@ class HomeCubit extends Cubit<HomeState> with HomeProperties {
 
     await _setCommonValuesUseCase(commonValues);
 
-    emit(Reload(price: state.price));
+    emit(Reload(price: raffle.price, situation: reckoning.situation, debt: reckoning.debt));
   }
 
   void changeSelected(Price price) {
-    emit(Reload(price: price));
+    raffle.price = price;
+    emit(Reload(price: price, situation: reckoning.situation, debt: reckoning.debt));
 
     _calculate();
   }
 
   void _calculate() {
+    log('Calculate');
     if (!_validateToCalculate()) {
-      emit(Calculated(price: state.price, debt: null, situation: null));
+      log('Did not validate');
+
+      if (reckoning.situation != Situation.none) {
+        reckoning.situation = Situation.none;
+        emit(Reload(price: raffle.price, situation: reckoning.situation, debt: reckoning.debt));
+      }
 
       return;
     }
+    log('Validated');
 
     try {
-      if (state.price == Price.none) return;
       if (!_validateFields()) return;
 
-      double grossDebt = raffle.sold! * (raffle.price! * 0.82);
-      double earnRate = raffle.price! * 0.08;
+      double price = 0;
+
+      switch (raffle.price) {
+        case Price.ten:
+          price = 10;
+          break;
+        case Price.fifteen:
+          price = 15;
+          break;
+        case Price.twenty:
+          price = 20;
+          break;
+        case Price.twentyFive:
+          price = 25;
+          break;
+        case Price.thirty:
+          price = 30;
+          break;
+        case Price.none:
+          throw Exception();
+      }
+
+      double grossDebt = raffle.sold! * (price * 0.82);
+      double earnRate = price * 0.08;
       double taxRate = commonValues.tax! / 100;
       double taxDebt = (raffle.sold! * earnRate) * taxRate;
-      double missingDebt = raffle.missing! > 0 ? raffle.missing! * raffle.price! : 0;
+      double missingDebt = raffle.missing! > 0 ? raffle.missing! * price : 0;
 
-      double debt =
-          grossDebt + missingDebt + taxDebt - reckoning.money! - reckoning.deposits! - commonValues.allowance!;
+      reckoning.debt =
+          grossDebt + missingDebt + taxDebt - reckoning.money - reckoning.deposits - commonValues.allowance!;
 
-      Situation situation = debt > 0 ? Situation.debt : Situation.credit;
+      reckoning.situation = reckoning.debt > 0 ? Situation.debt : Situation.credit;
 
-      emit(Calculated(price: state.price, debt: debt, situation: situation));
+      emit(Reload(price: raffle.price, situation: reckoning.situation, debt: reckoning.debt));
     } on AppException catch (e) {
       if (state is Error && e.message == (state as Error).error.message) return;
 
-      emit(Error(price: state.price, error: e));
-    } /* catch (e) {
+      emit(Error(error: e, price: raffle.price));
+    } catch (e) {
+      debugPrint(e.toString());
+
       if (state is Error) return;
 
       var error = AppException('Erro');
 
-      emit(Error(price: state.price, error: error));
-    } */
+      emit(Error(error: error, price: raffle.price));
+    }
   }
 }

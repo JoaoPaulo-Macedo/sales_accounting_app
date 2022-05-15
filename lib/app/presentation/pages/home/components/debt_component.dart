@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:reckoning/app/presentation/common/app_sizes.dart';
-import 'package:reckoning/app/presentation/pages/home/home_cubit.dart';
 import 'package:reckoning/app/presentation/pages/home/utils/home_enums.dart';
 import 'package:reckoning/app/presentation/pages/home/widgets/debt_card.dart';
 import 'package:reckoning/app/presentation/pages/home/widgets/price_card.dart';
@@ -15,8 +14,8 @@ class DebtComponent extends StatelessWidget {
   }) : super(key: key);
 
   final Price price;
-  final Situation? situation;
-  final double? debt;
+  final Situation situation;
+  final double debt;
   final Function(Price price) onPressed;
   final sizes = const AppSizes();
 
@@ -27,7 +26,7 @@ class DebtComponent extends StatelessWidget {
       children: [
         PriceCard(price: price, onPressed: onPressed),
         SizedBox(height: sizes.smallSpacing),
-        DebtCard(value: debt, situation: situation),
+        DebtCard(debt: debt, situation: situation),
       ],
     );
   }
