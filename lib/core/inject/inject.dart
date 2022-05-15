@@ -1,12 +1,12 @@
 import 'package:get_it/get_it.dart';
-import 'package:lucky_triangle/app/data/datasources/week_common_values_datasource.dart';
-import 'package:lucky_triangle/app/data/repositories/week_common_values_repository_imp.dart';
-import 'package:lucky_triangle/app/domain/repositories/week_common_values_repository.dart';
-import 'package:lucky_triangle/app/domain/usecases/get_week_common_values_usecase.dart';
-import 'package:lucky_triangle/app/domain/usecases/set_week_common_values_usecase.dart';
-import 'package:lucky_triangle/app/external/week_common_values_datasource_imp.dart';
-import 'package:lucky_triangle/core/data/services/preferences_service_imp.dart';
-import 'package:lucky_triangle/core/domain/services/local_data_service.dart';
+import 'package:reckoning/app/data/datasources/week_common_values_datasource.dart';
+import 'package:reckoning/app/data/repositories/week_common_values_repository_imp.dart';
+import 'package:reckoning/app/domain/repositories/week_common_values_repository.dart';
+import 'package:reckoning/app/domain/usecases/get_week_common_values_usecase.dart';
+import 'package:reckoning/app/domain/usecases/set_week_common_values_usecase.dart';
+import 'package:reckoning/app/external/week_common_values_datasource_imp.dart';
+import 'package:reckoning/core/data/services/preferences_service_imp.dart';
+import 'package:reckoning/core/domain/services/local_data_service.dart';
 
 class Inject {
   static final GetIt _getIt = GetIt.instance;

@@ -1,12 +1,14 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:lucky_triangle/app/domain/entities/week_common_values_entity.dart';
-import 'package:lucky_triangle/app/domain/usecases/get_week_common_values_usecase.dart';
-import 'package:lucky_triangle/app/domain/usecases/set_week_common_values_usecase.dart';
-import 'package:lucky_triangle/app/presentation/pages/home/home_states.dart';
-import 'package:lucky_triangle/core/utils/app_exception.dart';
+import 'package:reckoning/app/domain/entities/raffle_week_entity.dart';
+import 'package:reckoning/app/domain/entities/reckoning_entity.dart';
+import 'package:reckoning/app/domain/entities/week_common_values_entity.dart';
+import 'package:reckoning/app/domain/usecases/get_week_common_values_usecase.dart';
+import 'package:reckoning/app/domain/usecases/set_week_common_values_usecase.dart';
+import 'package:reckoning/app/presentation/pages/home/home_states.dart';
+import 'package:reckoning/app/presentation/pages/home/utils/home_enums.dart';
+import 'package:reckoning/core/utils/app_exception.dart';
 
-part 'utils/home_enums.dart';
 part 'utils/home_properties.dart';
 part 'utils/home_validators.dart';
 part 'utils/home_text_controllers_helper.dart';
@@ -18,17 +20,18 @@ class HomeCubit extends Cubit<HomeState> with HomeProperties {
 
   final GetWeekCommonValuesUseCase _getCommonValuesUseCase;
   final SetWeekCommonValuesUseCase _setCommonValuesUseCase;
-  late WeekCommonValuesEntity _valuesEntity;
 
   void _init() async {
     await _fetchValues();
 
-    _total = _valuesEntity.totalCards;
-    totalCtrl.text = _total?.toString() ?? '';
-    _tax = _valuesEntity.tax;
-    taxCtrl.text = _tax?.toString() ?? '';
-    _allowance = _valuesEntity.allowance;
-    allowanceCtrl.text = _allowance?.toString() ?? '';
+    // _total = commonValues.totalCards;
+    totalCtrl.text = commonValues.totalCards?.toString() ?? '';
+    // commonValues.tax = commonValues.tax;
+    taxCtrl.text = commonValues.tax?.toString() ?? '';
+    // commonValues.allowance = commonValues.allowance;
+    allowanceCtrl.text = commonValues.allowance?.toString() ?? '';
+
+    commonValues.allowance = 200;
 
     _commonsTyped.addListener(() async {
       if (_commonsTyped.value) {
@@ -48,20 +51,20 @@ class HomeCubit extends Cubit<HomeState> with HomeProperties {
   }
 
   Future _fetchValues() async {
-    _valuesEntity =
+    commonValues =
         await _getCommonValuesUseCase() ?? WeekCommonValuesEntity(totalCards: null, tax: null, allowance: null);
   }
 
   void _setValues() async {
     emit(Saving(price: state.price));
 
-    _valuesEntity.totalCards = int.tryParse(totalCtrl.text);
-    _valuesEntity.tax = double.tryParse(taxCtrl.text);
-    _valuesEntity.allowance = double.tryParse(allowanceCtrl.text);
+    commonValues.totalCards = int.tryParse(totalCtrl.text);
+    commonValues.tax = double.tryParse(taxCtrl.text);
+    commonValues.allowance = double.tryParse(allowanceCtrl.text);
 
     await Future.delayed(const Duration(seconds: 1));
 
-    await _setCommonValuesUseCase(_valuesEntity);
+    await _setCommonValuesUseCase(commonValues);
 
     emit(Reload(price: state.price));
   }
@@ -83,13 +86,14 @@ class HomeCubit extends Cubit<HomeState> with HomeProperties {
       if (state.price == Price.none) return;
       if (!_validateFields()) return;
 
-      double grossDebt = _sold! * (_price! * 0.82);
-      double earnRate = _price! * 0.08;
-      double taxRate = _tax! / 100;
-      double taxDebt = (_sold! * earnRate) * taxRate;
-      double missingDebt = _missing! > 0 ? _missing! * _price! : 0;
+      double grossDebt = raffle.sold! * (raffle.price! * 0.82);
+      double earnRate = raffle.price! * 0.08;
+      double taxRate = commonValues.tax! / 100;
+      double taxDebt = (raffle.sold! * earnRate) * taxRate;
+      double missingDebt = raffle.missing! > 0 ? raffle.missing! * raffle.price! : 0;
 
-      double debt = grossDebt + missingDebt + taxDebt - _paid - _deposits - _allowance!;
+      double debt =
+          grossDebt + missingDebt + taxDebt - reckoning.money! - reckoning.deposits! - commonValues.allowance!;
 
       Situation situation = debt > 0 ? Situation.debt : Situation.credit;
 
@@ -98,12 +102,12 @@ class HomeCubit extends Cubit<HomeState> with HomeProperties {
       if (state is Error && e.message == (state as Error).error.message) return;
 
       emit(Error(price: state.price, error: e));
-    } catch (e) {
+    } /* catch (e) {
       if (state is Error) return;
 
       var error = AppException('Erro');
 
       emit(Error(price: state.price, error: error));
-    }
+    } */
   }
 }

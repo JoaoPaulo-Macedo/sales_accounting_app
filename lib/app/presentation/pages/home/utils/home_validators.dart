@@ -13,31 +13,31 @@ extension HomeValidators on HomeCubit {
   bool _validateFields() {
     switch (state.price) {
       case Price.ten:
-        _price = 10;
+        raffle.price = 10;
         break;
       case Price.fifteen:
-        _price = 15;
+        raffle.price = 15;
         break;
       case Price.twenty:
-        _price = 20;
+        raffle.price = 20;
         break;
       case Price.twentyFive:
-        _price = 25;
+        raffle.price = 25;
         break;
       case Price.thirty:
-        _price = 30;
+        raffle.price = 30;
         break;
       case Price.none:
         throw Exception();
     }
 
-    if (_sold! > _total!) throw AppException('Venda não pode ser maior que total de cartelas!');
-    if (_devolution! > _total!) throw AppException('Devolução não pode ser maior que total de cartelas!');
-    if (_missing! > _total!) throw AppException('Faltas não pode ser maior que total de cartelas!');
-    if (_sold! + _devolution! > _total!) {
+    if (raffle.sold! > commonValues.totalCards!) throw AppException('Venda não pode ser maior que total de cartelas!');
+    if (raffle.devolution! > commonValues.totalCards!) throw AppException('Devolução não pode ser maior que total de cartelas!');
+    if (raffle.missing! > commonValues.totalCards!) throw AppException('Faltas não pode ser maior que total de cartelas!');
+    if (raffle.sold! + raffle.devolution! > commonValues.totalCards!) {
       throw AppException('Venda mais devolução não pode ser maior que total de cartelas!');
     }
-    if (_sold! + _missing! > _total!) {
+    if (raffle.sold! + raffle.missing! > commonValues.totalCards!) {
       throw AppException('Venda mais faltas não pode ser maior que total de cartelas!');
     }
 

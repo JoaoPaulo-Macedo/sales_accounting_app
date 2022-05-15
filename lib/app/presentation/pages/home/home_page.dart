@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
-import 'package:lucky_triangle/app/domain/usecases/get_week_common_values_usecase.dart';
-import 'package:lucky_triangle/app/domain/usecases/set_week_common_values_usecase.dart';
-import 'package:lucky_triangle/app/presentation/common/app_design.dart';
-import 'package:lucky_triangle/app/presentation/pages/home/components/app_snackbar.dart';
-import 'package:lucky_triangle/app/presentation/pages/home/components/cards_component.dart';
-import 'package:lucky_triangle/app/presentation/pages/home/components/debt_component.dart';
-import 'package:lucky_triangle/app/presentation/pages/home/components/reckoning_component.dart';
-import 'package:lucky_triangle/app/presentation/pages/home/home_cubit.dart';
-import 'package:lucky_triangle/app/presentation/pages/home/home_states.dart';
+import 'package:reckoning/app/domain/usecases/get_week_common_values_usecase.dart';
+import 'package:reckoning/app/domain/usecases/set_week_common_values_usecase.dart';
+import 'package:reckoning/app/presentation/common/app_design.dart';
+import 'package:reckoning/app/presentation/pages/home/components/app_snackbar.dart';
+import 'package:reckoning/app/presentation/pages/home/components/cards_component.dart';
+import 'package:reckoning/app/presentation/pages/home/components/debt_component.dart';
+import 'package:reckoning/app/presentation/pages/home/components/reckoning_component.dart';
+import 'package:reckoning/app/presentation/pages/home/home_cubit.dart';
+import 'package:reckoning/app/presentation/pages/home/home_states.dart';
+import 'package:reckoning/app/presentation/pages/home/utils/home_enums.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);

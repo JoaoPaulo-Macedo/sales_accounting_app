@@ -4,6 +4,6 @@ class ReckoningEntity {
     required this.deposits,
   });
   
-  final List<double> money;
-  final double deposits;
+  double? money;
+  double? deposits;
 }

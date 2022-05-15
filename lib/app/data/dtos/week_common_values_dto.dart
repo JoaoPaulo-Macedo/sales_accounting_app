@@ -1,4 +1,4 @@
-import 'package:lucky_triangle/app/domain/entities/week_common_values_entity.dart';
+import 'package:reckoning/app/domain/entities/week_common_values_entity.dart';
 
 extension WeekCommonValuesDTO on WeekCommonValuesEntity {
   static WeekCommonValuesEntity fromJson(Map json) {
@@ -11,7 +11,7 @@ extension WeekCommonValuesDTO on WeekCommonValuesEntity {
 
   Map toJson() {
     final json = {};
-    
+
     json['total_cards'] = totalCards;
     json['tax'] = tax;
     json['allowance'] = allowance;

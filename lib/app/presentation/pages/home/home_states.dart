@@ -1,5 +1,6 @@
-import 'package:lucky_triangle/app/presentation/pages/home/home_cubit.dart';
-import 'package:lucky_triangle/core/utils/app_exception.dart';
+import 'package:reckoning/app/presentation/pages/home/home_cubit.dart';
+import 'package:reckoning/app/presentation/pages/home/utils/home_enums.dart';
+import 'package:reckoning/core/utils/app_exception.dart';
 
 abstract class HomeState {
   const HomeState({this.price = Price.none});

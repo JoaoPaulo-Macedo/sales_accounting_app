@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:lucky_triangle/app/presentation/common/app_design.dart';
-import 'package:lucky_triangle/app/presentation/pages/home/home_cubit.dart';
+import 'package:reckoning/app/presentation/common/app_design.dart';
+import 'package:reckoning/app/presentation/pages/home/home_cubit.dart';
+import 'package:reckoning/app/presentation/pages/home/utils/home_enums.dart';
 
 class DebtCard extends StatelessWidget {
   const DebtCard({

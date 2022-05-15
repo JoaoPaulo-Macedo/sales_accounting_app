@@ -1,4 +1,4 @@
-package com.example.lucky_triangle
+package com.example.reckoning
 
 import io.flutter.embedding.android.FlutterActivity
 

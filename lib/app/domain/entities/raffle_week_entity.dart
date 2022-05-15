@@ -6,8 +6,8 @@ class RaffleWeekEntity {
     required this.price,
   });
 
-  final int sold;
-  final int devolution;
-  final int missing;
-  final double price;
+  int? sold;
+  int? devolution;
+  int? missing;
+  double? price;
 }

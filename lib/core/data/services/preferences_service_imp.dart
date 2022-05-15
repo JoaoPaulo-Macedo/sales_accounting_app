@@ -1,4 +1,4 @@
-import 'package:lucky_triangle/core/domain/services/local_data_service.dart';
+import 'package:reckoning/core/domain/services/local_data_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class PreferencesServiceImp extends LocalDataService {
@@ -18,26 +18,10 @@ class PreferencesServiceImp extends LocalDataService {
   }
 
   @override
-  Future<List<String>?> getStringList(String key) async {
-    if (_prefs == null) await init();
-
-    List<String>? data = _prefs!.getStringList(key);
-
-    return data;
-  }
-
-  @override
   Future<bool> setString(String key, String value) async {
     if (_prefs == null) await init();
 
     return await _prefs!.setString(key, value);
-  }
-
-  @override
-  Future<bool> setStringList(String key, List<String> value) async {
-    if (_prefs == null) await init();
-
-    return await _prefs!.setStringList(key, value);
   }
 
   @override
