@@ -43,7 +43,8 @@ class CalculateUseCaseImp extends CalculateUseCase {
         throw Exception();
     }
 
-    double grossDebt = raffle.sold! * (price * 0.82);
+    double fee = price * 0.82;
+    double grossDebt = raffle.sold! * fee;
     double earnRate = price * 0.08;
     double taxRate = commonValues.tax! / 100;
     double taxDebt = (raffle.sold! * earnRate) * taxRate;
