@@ -15,8 +15,14 @@ class HomeProperties {
   bool _blockAutoGenerate = false;
 
   late WeekCommonValuesEntity commonValues;
-  final reckoning = ReckoningEntity(money: 0, deposits: 0, debt: 0, situation: Situation.none);
   final raffle = RaffleWeekEntity(sold: null, devolution: null, missing: null, price: Price.none);
+
+  ReckoningEntity reckoning = ReckoningEntity(
+    money: 0,
+    deposits: 0,
+    debt: 0,
+    situation: Situation.none,
+  );
 
   /// Notifies when one of the common values fields are typed in order to controll data saving.
   ValueNotifier<bool> _commonsTyped = ValueNotifier<bool>(false);

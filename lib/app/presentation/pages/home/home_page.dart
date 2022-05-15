@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
+import 'package:reckoning/app/domain/usecases/calculate_usecase.dart';
 import 'package:reckoning/app/domain/usecases/get_week_common_values_usecase.dart';
 import 'package:reckoning/app/domain/usecases/set_week_common_values_usecase.dart';
 import 'package:reckoning/app/presentation/common/app_design.dart';
@@ -26,6 +27,7 @@ class _HomePageState extends State<HomePage> {
     super.initState();
 
     cubit = HomeCubit(
+      GetIt.I.get<CalculateUseCase>(),
       GetIt.I.get<GetWeekCommonValuesUseCase>(),
       GetIt.I.get<SetWeekCommonValuesUseCase>(),
     );
