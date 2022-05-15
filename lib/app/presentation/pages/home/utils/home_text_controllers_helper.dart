@@ -51,9 +51,8 @@ extension HomeTextControllersHelper on HomeCubit {
       _onType();
     });
     taxCtrl.addListener(() {
+      //TODO: add regex so that no unwanted chars come by paste, ex: %
       _replaceCommaByDot(taxCtrl);
-
-      if (taxCtrl.text.contains(',')) taxCtrl.text = taxCtrl.text.replaceFirst(',', '.');
 
       commonValues.tax = double.tryParse(taxCtrl.text);
 

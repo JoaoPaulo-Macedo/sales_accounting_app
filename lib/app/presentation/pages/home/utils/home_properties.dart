@@ -3,15 +3,6 @@
 part of '../home_cubit.dart';
 
 class HomeProperties {
-  // int? _total;
-  // int? _sold;
-  // int? _devolution;
-  // int? _missing;
-  // double _paid = 0;
-  // double _deposits = 0;
-  // double? _tax;
-  // double? _allowance;
-  // double? _price;
   bool _blockAutoGenerate = false;
 
   late WeekCommonValuesEntity commonValues;

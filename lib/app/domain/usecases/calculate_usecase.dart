@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:reckoning/app/domain/entities/raffle_week_entity.dart';
 import 'package:reckoning/app/domain/entities/reckoning_entity.dart';
 import 'package:reckoning/app/domain/entities/week_common_values_entity.dart';
@@ -7,13 +5,21 @@ import 'package:reckoning/app/presentation/pages/home/utils/home_enums.dart';
 import 'package:reckoning/core/utils/app_exception.dart';
 
 abstract class CalculateUseCase {
-  ReckoningEntity call(WeekCommonValuesEntity commonValues, RaffleWeekEntity raffle, ReckoningEntity reckoning);
+  ReckoningEntity call(
+    WeekCommonValuesEntity commonValues,
+    RaffleWeekEntity raffle,
+    ReckoningEntity reckoning,
+  );
 }
 
 class CalculateUseCaseImp extends CalculateUseCase {
   @override
-  ReckoningEntity call(WeekCommonValuesEntity commonValues, RaffleWeekEntity raffle, ReckoningEntity reckoning) {
-    _validateFields(commonValues, raffle);
+  ReckoningEntity call(
+    WeekCommonValuesEntity commonValues,
+    RaffleWeekEntity raffle,
+    ReckoningEntity reckoning,
+  ) {
+    validateFields(commonValues, raffle);
 
     double price = 0;
 
@@ -50,7 +56,7 @@ class CalculateUseCaseImp extends CalculateUseCase {
     return reckoning;
   }
 
-  _validateFields(WeekCommonValuesEntity commonValues, RaffleWeekEntity raffle) {
+  validateFields(WeekCommonValuesEntity commonValues, RaffleWeekEntity raffle) {
     if (raffle.sold! > commonValues.totalCards!) {
       throw AppException('Venda não pode ser maior que total de cartelas!');
     }

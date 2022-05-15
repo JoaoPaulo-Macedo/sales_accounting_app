@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:reckoning/app/domain/entities/raffle_week_entity.dart';
@@ -65,13 +63,9 @@ class HomeCubit extends Cubit<HomeState> with HomeProperties {
   void _setValues() async {
     emit(Saving(price: raffle.price, situation: reckoning.situation, debt: reckoning.debt));
 
-    commonValues.totalCards = int.tryParse(totalCtrl.text);
-    commonValues.tax = double.tryParse(taxCtrl.text);
-    commonValues.allowance = double.tryParse(allowanceCtrl.text);
+    await _setCommonValuesUseCase(commonValues);
 
     await Future.delayed(const Duration(seconds: 1));
-
-    await _setCommonValuesUseCase(commonValues);
 
     emit(Reload(price: raffle.price, situation: reckoning.situation, debt: reckoning.debt));
   }
@@ -84,19 +78,14 @@ class HomeCubit extends Cubit<HomeState> with HomeProperties {
   }
 
   void _calculate() {
-    log('Calculate');
     if (!_validateToCalculate()) {
-      log('Did not validate');
-
       if (reckoning.situation != Situation.none) {
-        log('Reload');
         reckoning.situation = Situation.none;
         emit(Reload(price: raffle.price, situation: reckoning.situation, debt: reckoning.debt));
       }
 
       return;
     }
-    log('Validated');
 
     try {
       reckoning = _calculateUseCase(commonValues, raffle, reckoning);
