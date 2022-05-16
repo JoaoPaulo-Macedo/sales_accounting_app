@@ -4,22 +4,30 @@
 
 * [Tecnologias](#tecnologias)
 * [Motivação](#motivação)
-* [Funcionalidades](#funcionalidades)
 * [Arquitetura](#arquitetura)
   * [Gestão de Estado](#gestão-de-estado)
   * [Injeção de Dependências](#injeção-de-dependências)
+* [Funcionalidades](#funcionalidades)
 
-# Tecnologias
+# :computer: Tecnologias
 O projeto foi desenvolvido com **Flutter**, incluindo packages como **shared_preferences**, **flutter_bloc** e **get_it**.
 
-# Motivação
+# :muscle: Motivação
 Possuo uma empresa de prestação de serviços na qual promovo a distribuição e venda de produtos. Nesse contexto, semanalmente há a prestação de contas do material distribuído, envolvendo cálculos que incluem comissão da minha empresa, comissão dos meus colaboradores e impostos, além de variáveis como o preço do produto, que varia semanalmente, material vendido, devolvido e extraviado/danificado.
 Para facilitar, criei esse aplicativo, oferecendo considerável agilidade, conforto e precisão aos cálculos.
 
-# Funcionalidades
+# :triangular_ruler: Arquitetura
+Em sua arquitetura, foi implementado o **Clean Dart**, proposto pela Flutterando, na qual, resumidamente, temos entities e usecases para a regra de negócio, repositories e datasources para comunicação com serviços.
+
+## :clapper: Gestão de Estado
+Para gestão de estado foi adotado o padrão **Cubit**, do package **flutter_bloc**, devido à sua simplicidade e por atender bem as necessidades do projeto, evitando o boilerplate gerado pelo BLoC tradicional com a criação de classes para gerenciar eventos.
+
+## :syringe: Injeção de Dependências
+A injeção de dependências foi implementada com o package **get_it**.
+
+# :pencil: Funcionalidades
  Primeiro, são informados os campos referentes ao material, como o total em posse, quanto foi vendido, devolvido e extraviado.
  Valores meramente ilustrativos para o exemplo.
- 
 <div>
  <img src="https://user-images.githubusercontent.com/58576452/168648741-9d6383f5-5c83-4289-8ed6-b5c9e79842cb.gif" alt="vendas" width="180"/>
 </div>
@@ -41,12 +49,3 @@ Por último é informado o preço de venda do material.
 <div>
  <img src="https://user-images.githubusercontent.com/58576452/168651320-f893739e-1661-4d04-bad9-82c49ef7c454.gif" alt="vendas" width="180"/>
 </div>
-
-# Arquitetura
-Em sua arquitetura, foi implementado o **Clean Dart**, proposto pela Flutterando, na qual, resumidamente, temos entities e usecases para a regra de negócio, repositories e datasources para comunicação com serviços.
-
-## Gestão de Estado
-Para gestão de estado foi adotado o padrão **Cubit**, do package **flutter_bloc**, devido à sua simplicidade e por atender bem as necessidades do projeto, evitando o boilerplate gerado pelo BLoC tradicional com a criação de classes para gerenciar eventos.
-
-## Injeção de Dependências
-A injeção de dependências foi implementada com o package **get_it**.
