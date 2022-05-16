@@ -17,7 +17,12 @@ Possuo uma empresa de prestação de serviços na qual promovo a distribuição 
 Para facilitar, criei esse aplicativo, oferecendo considerável agilidade, conforto e precisão aos cálculos.
 
 # :triangular_ruler: Arquitetura
-Em sua arquitetura, foi implementado o **Clean Dart**, proposto pela Flutterando, na qual, resumidamente, temos entities e usecases para a regra de negócio, repositories e datasources para comunicação com serviços.
+Em sua arquitetura, foi implementado o [**Clean Dart**](https://github.com/Flutterando/Clean-Dart) proposto pela **Flutterando** como implementação da **Clean Architechture** no Flutter. Esse modelo pode ser divido do seguinte modo:
+* Entities como regras de negócio da empresa ou organização.
+* Usecases como regras de negócio da aplicação.
+* Repositories e Datasources para comunicação com serviços.
+
+Além disso, o Clean Architecture propõe o conjunto de princípios conhecido como **SOLID**.
 
 ## :clapper: Gestão de Estado
 Para gestão de estado foi adotado o padrão **Cubit**, do package **flutter_bloc**, devido à sua simplicidade e por atender bem as necessidades do projeto, evitando o boilerplate gerado pelo BLoC tradicional com a criação de classes para gerenciar eventos.
