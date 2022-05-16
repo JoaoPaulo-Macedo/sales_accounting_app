@@ -51,4 +51,4 @@ Veja o vídeo exemplo a seguir:
 * Os campos "Total de Cartelas", "Imposto" e "Ajuda de Custo" são comuns a todas as semanas, sendo então salvos no aparelho. O processo de salvamento é mostrado ao usuário por um indicador de progresso, como demonstrado em vídeo.
 
 Observações:
-* Valores meramente ilustrativos para o exemplo.
+* Valores ilustrativos para o exemplo.
