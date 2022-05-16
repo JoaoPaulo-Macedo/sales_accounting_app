@@ -42,12 +42,12 @@ A injeção de dependências foi implementada com o package **get_it**. Escolhid
 1. Informe os campos referentes ao material (total em posse, venda, devolução e faltas).
 2. Informe os campos referentes ao financeiro.
 3. Informe o preço de venda do material.
+* O cálculo é automático assim que todos os campos obrigatórios são informados.
+* Há tratamento de erros, sendo eles mostrados ao usuário com um SnackBar na parte inferior.
 
 Veja o vídeo exemplo a seguir:
 [Video from YouTube](https://youtube.com/shorts/_f7lDF6bzig?feature=share)
 
-* O cálculo é automático assim que todos os campos obrigatórios são informados.
-* Há tratamento de erros, sendo eles mostrados ao usuário com um snackbar na parte inferior.
 * Os campos "Total de Cartelas", "Imposto" e "Ajuda de Custo" são comuns a todas as semanas, sendo então salvos no aparelho. O processo de salvamento é mostrado ao usuário por um indicador de progresso, como demonstrado em vídeo.
 
 Observações:
