@@ -1,7 +1,7 @@
 <h1 align="center"> Acerto de Vendas </h1>
 
 <div align="center">
-:dollar: Aplicativo pessoal para cálculo e acerto de vendas, com finalidade de facilitar o trabalho em minha empresa pessoal. :dollar:
+:dollar: Aplicativo para cálculo e acerto de vendas, com finalidade de facilitar o trabalho em meus negócios pessoais. :dollar:
 </div>
 <br>
 <div align="center">
