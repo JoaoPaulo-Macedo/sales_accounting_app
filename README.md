@@ -39,26 +39,16 @@ Para gestão de estado foi adotado o **Cubit** do package **flutter_bloc**. A es
 A injeção de dependências foi implementada com o package **get_it**. Escolhido por ser um package simples que atende bem as demandas do aplicativo, contribuindo na implementação do princípio SOLID da inversão de dependências.
 
 # :pencil: Funcionalidades
- Primeiro, são informados os campos referentes ao material, como o total em posse, quanto foi vendido, devolvido e extraviado.
- Valores meramente ilustrativos para o exemplo.
-<div>
- <img src="https://user-images.githubusercontent.com/58576452/168648741-9d6383f5-5c83-4289-8ed6-b5c9e79842cb.gif" alt="vendas" width="180"/>
-</div>
+1. Informe os campos referentes ao material (total em posse, venda, devolução e faltas).
+2. Informe os campos referentes ao financeiro.
+3. Informe o preço de venda do material.
 
-Em seguida, são informados os campos referentes ao financeiro.
+Veja o vídeo exemplo a seguir:
+[Video from YouTube](https://youtube.com/shorts/_f7lDF6bzig?feature=share)
 
-<div>
- <img src="https://user-images.githubusercontent.com/58576452/168650440-a0c3503d-728b-4f71-851c-b9cecd0b95a1.gif" alt="vendas" width="180"/>
-</div>
+* O cálculo é automático assim que todos os campos obrigatórios são informados.
+* Há tratamento de erros, sendo eles mostrados ao usuário com um snackbar na parte inferior.
+* Os campos "Total de Cartelas", "Imposto" e "Ajuda de Custo" são comuns a todas as semanas, sendo então salvos no aparelho. O processo de salvamento é mostrado ao usuário por um indicador de progresso, como demonstrado em vídeo.
 
-Por último é informado o preço de venda do material.
-
-<div>
- <img src="https://user-images.githubusercontent.com/58576452/168650835-1b9f2399-1f14-4ed1-b359-f99716a71a76.gif" alt="vendas" width="180"/>
-</div>
-
-É possível fazer alterações, o cálculo é automático.
-
-<div>
- <img src="https://user-images.githubusercontent.com/58576452/168651320-f893739e-1661-4d04-bad9-82c49ef7c454.gif" alt="vendas" width="180"/>
-</div>
+Observações:
+* Valores meramente ilustrativos para o exemplo.
