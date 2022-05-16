@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:lucky_triangle/app/presentation/common/app_design.dart';
-import 'package:lucky_triangle/app/presentation/pages/home/home_cubit.dart';
+import 'package:reckoning/app/presentation/common/app_design.dart';
+import 'package:reckoning/app/presentation/pages/home/utils/home_enums.dart';
 
 class DebtCard extends StatelessWidget {
   const DebtCard({
     Key? key,
-    required this.value,
+    required this.debt,
     required this.situation,
   }) : super(key: key);
 
-  final double? value;
-  final Situation? situation;
+  final double debt;
+  final Situation situation;
 
   @override
   Widget build(BuildContext context) {
@@ -18,17 +18,16 @@ class DebtCard extends StatelessWidget {
 
     Color? color;
     String message;
-    String value;
+    String debt;
 
-    if (this.value == null) {
-      value = '';
+    if (situation == Situation.none) {
+      debt = '';
     } else {
-      value = 'R\$ ${this.value!.toStringAsFixed(2)}';
+      debt = 'R\$ ${this.debt.toStringAsFixed(2)}';
     }
 
     switch (situation) {
       case Situation.none:
-      case null:
         message = 'Preencha os campos';
         color = Colors.grey[300];
         break;
@@ -47,14 +46,14 @@ class DebtCard extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 17, vertical: 12),
       decoration: design.boxDecoration,
       child: Row(
-        mainAxisAlignment: situation == null ? MainAxisAlignment.center : MainAxisAlignment.spaceBetween,
+        mainAxisAlignment: situation == Situation.none ? MainAxisAlignment.center : MainAxisAlignment.spaceBetween,
         children: [
           Text(
             message,
             style: TextStyle(fontSize: 20, color: color, fontWeight: FontWeight.bold),
           ),
           Text(
-            value,
+            debt,
             style: TextStyle(fontSize: 20, color: color, fontWeight: FontWeight.bold),
           ),
         ],

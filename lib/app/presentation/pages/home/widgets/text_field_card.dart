@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lucky_triangle/app/presentation/common/app_design.dart';
+import 'package:reckoning/app/presentation/common/app_design.dart';
 
 class TextFieldCard extends StatelessWidget {
   const TextFieldCard({

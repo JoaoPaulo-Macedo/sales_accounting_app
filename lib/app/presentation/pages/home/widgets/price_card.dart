@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-
-import 'package:lucky_triangle/app/presentation/common/app_design.dart';
-import 'package:lucky_triangle/app/presentation/common/app_sizes.dart';
-import 'package:lucky_triangle/app/presentation/pages/home/home_cubit.dart';
+import 'package:reckoning/app/presentation/common/app_design.dart';
+import 'package:reckoning/app/presentation/common/app_sizes.dart';
+import 'package:reckoning/app/presentation/pages/home/utils/home_enums.dart';
 
 class PriceCard extends StatelessWidget {
   const PriceCard({Key? key, required this.price, required this.onPressed}) : super(key: key);

@@ -1,3 +1,5 @@
+import 'package:reckoning/app/presentation/pages/home/utils/home_enums.dart';
+
 class RaffleWeekEntity {
   RaffleWeekEntity({
     required this.sold,
@@ -6,8 +8,8 @@ class RaffleWeekEntity {
     required this.price,
   });
 
-  final int sold;
-  final int devolution;
-  final int missing;
-  final double price;
+  int? sold;
+  int? devolution;
+  int? missing;
+  Price price;
 }

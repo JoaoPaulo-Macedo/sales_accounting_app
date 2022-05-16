@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
-import 'package:lucky_triangle/app/domain/usecases/get_week_common_values_usecase.dart';
-import 'package:lucky_triangle/app/domain/usecases/set_week_common_values_usecase.dart';
-import 'package:lucky_triangle/app/presentation/common/app_design.dart';
-import 'package:lucky_triangle/app/presentation/pages/home/components/app_snackbar.dart';
-import 'package:lucky_triangle/app/presentation/pages/home/components/cards_component.dart';
-import 'package:lucky_triangle/app/presentation/pages/home/components/debt_component.dart';
-import 'package:lucky_triangle/app/presentation/pages/home/components/reckoning_component.dart';
-import 'package:lucky_triangle/app/presentation/pages/home/home_cubit.dart';
-import 'package:lucky_triangle/app/presentation/pages/home/home_states.dart';
+import 'package:reckoning/app/domain/usecases/calculate_usecase.dart';
+import 'package:reckoning/app/domain/usecases/get_week_common_values_usecase.dart';
+import 'package:reckoning/app/domain/usecases/set_week_common_values_usecase.dart';
+import 'package:reckoning/app/presentation/common/app_design.dart';
+import 'package:reckoning/app/presentation/pages/home/components/app_snackbar.dart';
+import 'package:reckoning/app/presentation/pages/home/components/cards_component.dart';
+import 'package:reckoning/app/presentation/pages/home/components/debt_component.dart';
+import 'package:reckoning/app/presentation/pages/home/components/reckoning_component.dart';
+import 'package:reckoning/app/presentation/pages/home/home_cubit.dart';
+import 'package:reckoning/app/presentation/pages/home/home_states.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -20,15 +21,13 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   late HomeCubit cubit;
-  Situation? situation;
-  double? debt;
-  //TODO: isn't it state? Shouldn't it be on HomeState abstract class?
 
   @override
   void initState() {
     super.initState();
 
     cubit = HomeCubit(
+      GetIt.I.get<CalculateUseCase>(),
       GetIt.I.get<GetWeekCommonValuesUseCase>(),
       GetIt.I.get<SetWeekCommonValuesUseCase>(),
     );
@@ -53,9 +52,6 @@ class _HomePageState extends State<HomePage> {
           child: BlocListener<HomeCubit, HomeState>(
             listener: (context, state) {
               if (state is Error) {
-                situation = null;
-                debt = null;
-
                 AppSnackBar.show(context, message: state.error.message, type: AppSnackBarType.error);
               }
             },
@@ -63,11 +59,6 @@ class _HomePageState extends State<HomePage> {
               builder: (context, state) {
                 if (state is Loading) {
                   return const SizedBox();
-                }
-
-                if (state is Calculated) {
-                  situation = state.situation;
-                  debt = state.debt;
                 }
 
                 return Stack(
@@ -86,8 +77,8 @@ class _HomePageState extends State<HomePage> {
                                 ReckoningComponent(cubit),
                                 DebtComponent(
                                   price: state.price,
-                                  situation: situation,
-                                  debt: debt,
+                                  situation: state.situation,
+                                  debt: state.debt,
                                   onPressed: cubit.changeSelected,
                                 ),
                               ],

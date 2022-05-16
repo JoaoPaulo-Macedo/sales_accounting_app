@@ -1,34 +1,38 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:lucky_triangle/app/domain/entities/week_common_values_entity.dart';
-import 'package:lucky_triangle/app/domain/usecases/get_week_common_values_usecase.dart';
-import 'package:lucky_triangle/app/domain/usecases/set_week_common_values_usecase.dart';
-import 'package:lucky_triangle/app/presentation/pages/home/home_states.dart';
-import 'package:lucky_triangle/core/utils/app_exception.dart';
+import 'package:reckoning/app/domain/entities/raffle_week_entity.dart';
+import 'package:reckoning/app/domain/entities/reckoning_entity.dart';
+import 'package:reckoning/app/domain/entities/week_common_values_entity.dart';
+import 'package:reckoning/app/domain/usecases/calculate_usecase.dart';
+import 'package:reckoning/app/domain/usecases/get_week_common_values_usecase.dart';
+import 'package:reckoning/app/domain/usecases/set_week_common_values_usecase.dart';
+import 'package:reckoning/app/presentation/pages/home/home_states.dart';
+import 'package:reckoning/app/presentation/pages/home/utils/home_enums.dart';
+import 'package:reckoning/core/utils/app_exception.dart';
 
-part 'utils/home_enums.dart';
 part 'utils/home_properties.dart';
 part 'utils/home_validators.dart';
 part 'utils/home_text_controllers_helper.dart';
 
 class HomeCubit extends Cubit<HomeState> with HomeProperties {
-  HomeCubit(this._getCommonValuesUseCase, this._setCommonValuesUseCase) : super(Loading()) {
+  HomeCubit(
+    this._calculateUseCase,
+    this._getCommonValuesUseCase,
+    this._setCommonValuesUseCase,
+  ) : super(Loading()) {
     _init();
   }
 
+  final CalculateUseCase _calculateUseCase;
   final GetWeekCommonValuesUseCase _getCommonValuesUseCase;
   final SetWeekCommonValuesUseCase _setCommonValuesUseCase;
-  late WeekCommonValuesEntity _valuesEntity;
 
   void _init() async {
     await _fetchValues();
 
-    _total = _valuesEntity.totalCards;
-    totalCtrl.text = _total?.toString() ?? '';
-    _tax = _valuesEntity.tax;
-    taxCtrl.text = _tax?.toString() ?? '';
-    _allowance = _valuesEntity.allowance;
-    allowanceCtrl.text = _allowance?.toString() ?? '';
+    totalCtrl.text = commonValues.totalCards?.toString() ?? '';
+    taxCtrl.text = commonValues.tax?.toString() ?? '';
+    allowanceCtrl.text = commonValues.allowance?.toString() ?? '';
 
     _commonsTyped.addListener(() async {
       if (_commonsTyped.value) {
@@ -41,69 +45,64 @@ class HomeCubit extends Cubit<HomeState> with HomeProperties {
     });
 
     initControllers(
-      emitOnMissing: () => emit(Reload(price: state.price)),
+      emitOnMissing: () => emit(Reload(
+        price: raffle.price,
+        situation: reckoning.situation,
+        debt: reckoning.debt,
+      )),
     );
 
     emit(Fetched());
   }
 
   Future _fetchValues() async {
-    _valuesEntity =
+    commonValues =
         await _getCommonValuesUseCase() ?? WeekCommonValuesEntity(totalCards: null, tax: null, allowance: null);
   }
 
   void _setValues() async {
-    emit(Saving(price: state.price));
+    emit(Saving(price: raffle.price, situation: reckoning.situation, debt: reckoning.debt));
 
-    _valuesEntity.totalCards = int.tryParse(totalCtrl.text);
-    _valuesEntity.tax = double.tryParse(taxCtrl.text);
-    _valuesEntity.allowance = double.tryParse(allowanceCtrl.text);
+    await _setCommonValuesUseCase(commonValues);
 
     await Future.delayed(const Duration(seconds: 1));
 
-    await _setCommonValuesUseCase(_valuesEntity);
-
-    emit(Reload(price: state.price));
+    emit(Reload(price: raffle.price, situation: reckoning.situation, debt: reckoning.debt));
   }
 
   void changeSelected(Price price) {
-    emit(Reload(price: price));
+    raffle.price = price;
+    emit(Reload(price: price, situation: reckoning.situation, debt: reckoning.debt));
 
     _calculate();
   }
 
   void _calculate() {
     if (!_validateToCalculate()) {
-      emit(Calculated(price: state.price, debt: null, situation: null));
+      if (reckoning.situation != Situation.none) {
+        reckoning.situation = Situation.none;
+        emit(Reload(price: raffle.price, situation: reckoning.situation, debt: reckoning.debt));
+      }
 
       return;
     }
 
     try {
-      if (state.price == Price.none) return;
-      if (!_validateFields()) return;
+      reckoning = _calculateUseCase(commonValues, raffle, reckoning);
 
-      double grossDebt = _sold! * (_price! * 0.82);
-      double earnRate = _price! * 0.08;
-      double taxRate = _tax! / 100;
-      double taxDebt = (_sold! * earnRate) * taxRate;
-      double missingDebt = _missing! > 0 ? _missing! * _price! : 0;
-
-      double debt = grossDebt + missingDebt + taxDebt - _paid - _deposits - _allowance!;
-
-      Situation situation = debt > 0 ? Situation.debt : Situation.credit;
-
-      emit(Calculated(price: state.price, debt: debt, situation: situation));
+      emit(Reload(price: raffle.price, situation: reckoning.situation, debt: reckoning.debt));
     } on AppException catch (e) {
       if (state is Error && e.message == (state as Error).error.message) return;
 
-      emit(Error(price: state.price, error: e));
+      emit(Error(error: e, price: raffle.price));
     } catch (e) {
+      debugPrint(e.toString());
+
       if (state is Error) return;
 
       var error = AppException('Erro');
 
-      emit(Error(price: state.price, error: error));
+      emit(Error(error: error, price: raffle.price));
     }
   }
 }
