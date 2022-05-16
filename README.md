@@ -46,7 +46,7 @@ A injeção de dependências foi implementada com o package **get_it**. Escolhid
 * Há tratamento de erros, sendo eles mostrados ao usuário com um SnackBar na parte inferior.
 
 Veja o vídeo exemplo a seguir:
-[Video from YouTube](https://youtube.com/shorts/_f7lDF6bzig?feature=share)
+[Video from YouTube](https://youtu.be/RR8lL_BUnvY)
 
 * Os campos "Total de Cartelas", "Imposto" e "Ajuda de Custo" são comuns a todas as semanas, sendo então salvos no aparelho. O processo de salvamento é mostrado ao usuário por um indicador de progresso, como demonstrado em vídeo.
 
