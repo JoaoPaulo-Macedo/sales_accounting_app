@@ -21,17 +21,26 @@ Para facilitar, criei esse aplicativo, oferecendo considerável agilidade, confo
  Valores meramente ilustrativos para o exemplo.
  
 <div>
- <img src="https://user-images.githubusercontent.com/58576452/168648741-9d6383f5-5c83-4289-8ed6-b5c9e79842cb.gif" alt="vendas" width="150"/>
+ <img src="https://user-images.githubusercontent.com/58576452/168648741-9d6383f5-5c83-4289-8ed6-b5c9e79842cb.gif" alt="vendas" width="180"/>
 </div>
 
 Em seguida, são informados os campos referentes ao financeiro.
 
 <div>
- <img src="https://user-images.githubusercontent.com/58576452/168650440-a0c3503d-728b-4f71-851c-b9cecd0b95a1.gif" alt="vendas" width="150"/>
+ <img src="https://user-images.githubusercontent.com/58576452/168650440-a0c3503d-728b-4f71-851c-b9cecd0b95a1.gif" alt="vendas" width="180"/>
 </div>
 
-Por último, é informado o preço de venda do material. 
-O cálculo é automático.
+Por último é informado o preço de venda do material.
+
+<div>
+ <img src="https://user-images.githubusercontent.com/58576452/168650835-1b9f2399-1f14-4ed1-b359-f99716a71a76.gif" alt="vendas" width="180"/>
+</div>
+
+É possível fazer alterações, o cálculo é automático.
+
+<div>
+ <img src="https://user-images.githubusercontent.com/58576452/168651320-f893739e-1661-4d04-bad9-82c49ef7c454.gif" alt="vendas" width="180"/>
+</div>
 
 # Arquitetura
 Em sua arquitetura, foi implementado o **Clean Dart**, proposto pela Flutterando, na qual, resumidamente, temos entities e usecases para a regra de negócio, repositories e datasources para comunicação com serviços.
