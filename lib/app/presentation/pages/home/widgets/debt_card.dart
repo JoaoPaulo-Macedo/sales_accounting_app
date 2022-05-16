@@ -24,6 +24,7 @@ class DebtCard extends StatelessWidget {
       debt = '';
     } else {
       debt = 'R\$ ${this.debt.toStringAsFixed(2)}';
+      debt = debt.replaceAll('-', '');
     }
 
     switch (situation) {
