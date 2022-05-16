@@ -1,13 +1,21 @@
 <h1 align="center"> Acerto de Vendas </h1>
 
-:dollar: Aplicativo pessoal para cálculo e acerto de vendas, com finalidade de facilitar o trabalho em minha empresa pessoal.
+<div align="center">
+:dollar: Aplicativo pessoal para cálculo e acerto de vendas, com finalidade de facilitar o trabalho em minha empresa pessoal. :dollar:
+</div>
+<br>
+<div align="center">
+ <img src="https://user-images.githubusercontent.com/58576452/168661029-e29c66f6-a406-48e9-9ea2-019bd151108a.jpg" alt="vendas" width="150"/>
+</div>
 
-* [Tecnologias](#tecnologias)
-* [Motivação](#motivação)
-* [Arquitetura](#arquitetura)
-  * [Gestão de Estado](#gestão-de-estado)
-  * [Injeção de Dependências](#injeção-de-dependências)
-* [Funcionalidades](#funcionalidades)
+---
+
+* [Tecnologias](#computer-tecnologias)
+* [Motivação](#muscle-motivação)
+* [Arquitetura](#triangular_ruler-arquitetura)
+  * [Gestão de Estado](#clapper-gestão-de-estado)
+  * [Injeção de Dependências](#syringe-injeção-de-dependências)
+* [Funcionalidades](#pencil-funcionalidades)
 
 # :computer: Tecnologias
 O projeto foi desenvolvido com **Flutter**, incluindo packages como **shared_preferences**, **flutter_bloc** e **get_it**.
@@ -20,15 +28,15 @@ Para facilitar, criei esse aplicativo, oferecendo considerável agilidade, confo
 Em sua arquitetura, foi implementado o [**Clean Dart**](https://github.com/Flutterando/Clean-Dart) proposto pela **Flutterando** como implementação da **Clean Architechture** no Flutter. Esse modelo pode ser divido do seguinte modo:
 * Entities como regras de negócio da empresa ou organização.
 * Usecases como regras de negócio da aplicação.
-* Repositories e Datasources para comunicação com serviços.
+* Repositories e Datasources para comunicação com serviços e demais tratamentos.
 
 Além disso, o Clean Architecture propõe o conjunto de princípios conhecido como **SOLID**.
 
 ## :clapper: Gestão de Estado
-Para gestão de estado foi adotado o padrão **Cubit**, do package **flutter_bloc**, devido à sua simplicidade e por atender bem as necessidades do projeto, evitando o boilerplate gerado pelo BLoC tradicional com a criação de classes para gerenciar eventos.
+Para gestão de estado foi adotado o **Cubit** do package **flutter_bloc**. A escolha se deu devido à sua simplicidade e agilidade na implementação, evitando o boilerplate gerado pelo BLoC tradicional com a criação de classes para gerenciar eventos, atendendo bem às necessidades do projeto.
 
 ## :syringe: Injeção de Dependências
-A injeção de dependências foi implementada com o package **get_it**.
+A injeção de dependências foi implementada com o package **get_it**. Escolhido por ser um package simples que atende bem as demandas do aplicativo, contribuindo na implementação do princípio SOLID da inversão de dependências.
 
 # :pencil: Funcionalidades
  Primeiro, são informados os campos referentes ao material, como o total em posse, quanto foi vendido, devolvido e extraviado.
