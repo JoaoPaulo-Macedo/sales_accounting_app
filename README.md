@@ -52,7 +52,7 @@ A injeção de dependências foi implementada com o package **get_it**. Escolhid
 2. Informe os campos referentes ao financeiro.
 3. Informe o preço de venda do material.
 * O cálculo é automático assim que todos os campos obrigatórios são informados.
-* Há tratamento de erros, sendo eles mostrados ao usuário por meio de um SnackBar na parte inferior.
+* Há tratamento de erros, sendo eles mostrados ao usuário através de um SnackBar na parte inferior.
 
 Veja o vídeo exemplo a seguir:
 [Video from YouTube](https://youtu.be/RR8lL_BUnvY)
