@@ -1,7 +1,7 @@
 <h1 align="center"> Acerto de Vendas </h1>
 
 <div align="center">
-:dollar: Aplicativo para cálculo e acerto de vendas, com finalidade de facilitar o trabalho em meus negócios pessoais. :dollar:
+:dollar: Aplicativo para cálculo e acerto de vendas, com finalidade de facilitar o trabalho na minha última empresa. :dollar:
 </div>
 <br>
 <div align="center">
@@ -21,14 +21,23 @@
 O projeto foi desenvolvido com **Flutter**, e inclui packages como **shared_preferences**, **flutter_bloc** e **get_it**.
 
 # :muscle: Motivação
-Possuo uma empresa de prestação de serviços na qual promovo a distribuição e venda de produtos. Nesse contexto, semanalmente há a prestação de contas do material distribuído, envolvendo cálculos que incluem comissão da minha empresa, comissão dos meus colaboradores e impostos, além de variáveis como o preço do produto, que varia semanalmente, material vendido, devolvido e extraviado/danificado.
+Trabalhei em uma empresa de prestação de serviços a qual promovia distribuição e venda de produtos. Nesse contexto, semanalmente havia a prestação de contas do material distribuído, envolvendo cálculos que incluem comissão da empresa, comissão dos colaboradores e impostos, além de variáveis como o preço do produto, que varia semanalmente, material vendido, devolvido e extraviado/danificado.
 Para facilitar, criei esse aplicativo, oferecendo considerável agilidade, conforto e precisão aos cálculos.
 
 # :triangular_ruler: Arquitetura
 Em sua arquitetura, foi implementado o [**Clean Dart**](https://github.com/Flutterando/Clean-Dart) proposto pela **Flutterando** como implementação da **Clean Architecture** no Flutter. Esse modelo pode ser dividido do seguinte modo:
-* Entities como regras de negócio da empresa ou organização.
-* Usecases como regras de negócio da aplicação.
-* Repositories e Datasources para comunicação com serviços e demais tratamentos.
+* **Presentation** (UI, Flutter, Controllers, State Manager, etc).
+* **Domain** (apenas regras de negócios).
+  * Entities: regras de negócio da empresa.
+  * Usecases: regras de negócio da aplicação.
+  * Interfaces/contratos de Repositories.
+* **Data**
+  * Implementação de Repositories.
+  * Tratamento dos dados externos.
+  * Interfaces/contratos de DataSources.
+* **External**
+  * Implementação de DataSources.
+  * Acessos externos que dependem de packages, drivers, APIs, etc.
 
 Além disso, o Clean Architecture propõe o conjunto de princípios conhecido como **SOLID**.
 
