@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:reckoning/app/presentation/common/app_sizes.dart';
-import 'package:reckoning/app/presentation/pages/home/home_cubit.dart';
-import 'package:reckoning/app/presentation/pages/home/widgets/text_field_card.dart';
+import 'package:sales_accounting/app/presentation/common/app_sizes.dart';
+import 'package:sales_accounting/app/presentation/pages/home/home_cubit.dart';
+import 'package:sales_accounting/app/presentation/pages/home/widgets/text_field_card.dart';
 
 class CardsComponent extends StatelessWidget {
   const CardsComponent(this.cubit, {Key? key}) : super(key: key);

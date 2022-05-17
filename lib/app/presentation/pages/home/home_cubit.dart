@@ -1,14 +1,14 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:reckoning/app/domain/entities/raffle_week_entity.dart';
-import 'package:reckoning/app/domain/entities/reckoning_entity.dart';
-import 'package:reckoning/app/domain/entities/week_common_values_entity.dart';
-import 'package:reckoning/app/domain/usecases/calculate_usecase.dart';
-import 'package:reckoning/app/domain/usecases/get_week_common_values_usecase.dart';
-import 'package:reckoning/app/domain/usecases/set_week_common_values_usecase.dart';
-import 'package:reckoning/app/presentation/pages/home/home_states.dart';
-import 'package:reckoning/app/presentation/pages/home/utils/home_enums.dart';
-import 'package:reckoning/core/utils/app_exception.dart';
+import 'package:sales_accounting/app/domain/entities/raffle_week_entity.dart';
+import 'package:sales_accounting/app/domain/entities/reckoning_entity.dart';
+import 'package:sales_accounting/app/domain/entities/week_common_values_entity.dart';
+import 'package:sales_accounting/app/domain/usecases/calculate_usecase.dart';
+import 'package:sales_accounting/app/domain/usecases/get_week_common_values_usecase.dart';
+import 'package:sales_accounting/app/domain/usecases/set_week_common_values_usecase.dart';
+import 'package:sales_accounting/app/presentation/pages/home/home_states.dart';
+import 'package:sales_accounting/app/presentation/pages/home/utils/home_enums.dart';
+import 'package:sales_accounting/core/utils/app_exception.dart';
 
 part 'utils/home_properties.dart';
 part 'utils/home_validators.dart';

@@ -1,4 +1,4 @@
-# reckoning
+# sales_accounting
 
 A new Flutter project.
 

@@ -1,4 +1,4 @@
-import 'package:reckoning/app/domain/entities/week_common_values_entity.dart';
+import 'package:sales_accounting/app/domain/entities/week_common_values_entity.dart';
 
 extension WeekCommonValuesDTO on WeekCommonValuesEntity {
   static WeekCommonValuesEntity fromJson(Map json) {

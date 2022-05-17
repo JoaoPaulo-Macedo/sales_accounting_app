@@ -1,4 +1,4 @@
-import 'package:reckoning/app/presentation/pages/home/utils/home_enums.dart';
+import 'package:sales_accounting/app/presentation/pages/home/utils/home_enums.dart';
 
 class ReckoningEntity {
   ReckoningEntity({
