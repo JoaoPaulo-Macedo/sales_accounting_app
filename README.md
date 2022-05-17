@@ -18,7 +18,7 @@
 * [Funcionalidades](#pencil-funcionalidades)
 
 # :computer: Tecnologias
-O projeto foi desenvolvido com **Flutter**, incluindo packages como **shared_preferences**, **flutter_bloc** e **get_it**.
+O projeto foi desenvolvido com **Flutter**, e inclui packages como **shared_preferences**, **flutter_bloc** e **get_it**.
 
 # :muscle: Motivação
 Possuo uma empresa de prestação de serviços na qual promovo a distribuição e venda de produtos. Nesse contexto, semanalmente há a prestação de contas do material distribuído, envolvendo cálculos que incluem comissão da minha empresa, comissão dos meus colaboradores e impostos, além de variáveis como o preço do produto, que varia semanalmente, material vendido, devolvido e extraviado/danificado.
