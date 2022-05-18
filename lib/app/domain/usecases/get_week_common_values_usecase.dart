@@ -1,5 +1,5 @@
-import 'package:reckoning/app/domain/entities/week_common_values_entity.dart';
-import 'package:reckoning/app/domain/repositories/week_common_values_repository.dart';
+import 'package:sales_accounting/app/domain/entities/week_common_values_entity.dart';
+import 'package:sales_accounting/app/domain/repositories/week_common_values_repository.dart';
 
 abstract class GetWeekCommonValuesUseCase {
   Future<WeekCommonValuesEntity?> call();

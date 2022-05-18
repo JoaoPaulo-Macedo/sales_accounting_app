@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:reckoning/app/presentation/pages/initial/app_initial_widget.dart';
-import 'package:reckoning/core/inject/inject.dart';
+import 'package:sales_accounting/app/presentation/pages/initial/app_initial_widget.dart';
+import 'package:sales_accounting/core/inject/inject.dart';
 
 void main() {
   Inject.init();

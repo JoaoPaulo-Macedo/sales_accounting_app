@@ -1,4 +1,4 @@
-package com.example.reckoning
+package com.example.sales_accounting
 
 import io.flutter.embedding.android.FlutterActivity
 

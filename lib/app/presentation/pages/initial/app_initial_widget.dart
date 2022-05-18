@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:reckoning/app/presentation/pages/home/home_page.dart';
-import 'package:reckoning/app/presentation/routes_name.dart';
+import 'package:sales_accounting/app/presentation/pages/home/home_page.dart';
+import 'package:sales_accounting/app/presentation/routes_name.dart';
 
 class AppInitialWidget extends StatelessWidget {
   const AppInitialWidget({Key? key}) : super(key: key);

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:reckoning/app/presentation/common/app_design.dart';
+import 'package:sales_accounting/app/presentation/common/app_design.dart';
 
 enum AppSnackBarType { error, success, warning }
 

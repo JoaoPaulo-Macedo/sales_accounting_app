@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:reckoning/app/presentation/common/app_design.dart';
-import 'package:reckoning/app/presentation/pages/home/utils/home_enums.dart';
+import 'package:sales_accounting/app/presentation/common/app_design.dart';
+import 'package:sales_accounting/app/presentation/pages/home/utils/home_enums.dart';
 
 class DebtCard extends StatelessWidget {
   const DebtCard({
@@ -24,6 +24,7 @@ class DebtCard extends StatelessWidget {
       debt = '';
     } else {
       debt = 'R\$ ${this.debt.toStringAsFixed(2)}';
+      debt = debt.replaceAll('-', '');
     }
 
     switch (situation) {
