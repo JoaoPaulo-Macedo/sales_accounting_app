@@ -54,7 +54,6 @@ A injeção de dependências foi implementada com o package **get_it**. Escolhid
 * O cálculo é automático assim que todos os campos obrigatórios são informados.
 * Há tratamento de erros, sendo eles mostrados ao usuário através de um SnackBar na parte inferior.
 
-Veja o vídeo exemplo a seguir:
-[Video from YouTube](https://youtu.be/RR8lL_BUnvY)
+Veja o vídeo exemplo a seguir: [video from YouTube](https://youtu.be/XQvI-MfT6Ro)
 
 * Os campos "Total de Cartelas", "Imposto" e "Ajuda de Custo" são comuns a todas as semanas, sendo por isso salvos no aparelho. O processo de salvamento é mostrado ao usuário por um indicador de progresso, como demonstrado em vídeo.
