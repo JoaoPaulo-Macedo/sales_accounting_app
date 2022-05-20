@@ -25,7 +25,8 @@ Trabalhei em uma empresa de prestação de serviços a qual promovia distribuiç
 Para facilitar, criei esse aplicativo, oferecendo considerável agilidade, conforto e precisão aos cálculos.
 
 # :triangular_ruler: Arquitetura
-Em sua arquitetura, foi implementado o [**Clean Dart**](https://github.com/Flutterando/Clean-Dart) proposto pela **Flutterando** como implementação da **Clean Architecture** no Flutter. Esse modelo pode ser dividido do seguinte modo:
+Em sua arquitetura foi implementado o [**Clean Dart**](https://github.com/Flutterando/Clean-Dart) proposto pela **Flutterando** como implementação da **Clean Architecture** no Flutter. Apesar de ser um aplicativo simples, foi optado pelo Clean Dart por fins de estudo, além de o aplicativo possuir possibilidade de futura expansão. <br>
+O Clean Dart pode ser dividido do seguinte modo:
 * **Presentation** (UI, Flutter, Controllers, State Manager, etc).
 * **Domain** (apenas regras de negócios).
   * Entities: regras de negócio da empresa.
